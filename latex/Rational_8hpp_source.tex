@@ -1,0 +1,339 @@
+\doxysection{Rational.\+hpp}
+\hypertarget{Rational_8hpp_source}{}\label{Rational_8hpp_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ "{}Exceptions.hpp"{}}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <limits>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <stdexcept>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <sstream>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <cmath>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <cstring>}\ \ \ }
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <sstream>}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{comment}{//\ \#include\ "{}CompRationalArithmetic.hpp"{}}}
+\DoxyCodeLine{00018\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ numerator\_T>}
+\DoxyCodeLine{00019\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classRational}{Rational}}\ \{}
+\DoxyCodeLine{00020\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00022\ \ \ \ \ \mbox{\hyperlink{classComplex}{numerator\_T}}\ \mbox{\hyperlink{classRational_a9af86af9d44a6e954c94f724c4ae0c9a}{\_numerator}};}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long}\ \mbox{\hyperlink{classRational_a854fd139381a4612f13a47968bbb7f71}{\_denominator}};}
+\DoxyCodeLine{00026\ \ \ \ \ }
+\DoxyCodeLine{00027\ \ \ \ \ \mbox{\hyperlink{classRational}{Rational}}()\ :\ \mbox{\hyperlink{classRational_a9af86af9d44a6e954c94f724c4ae0c9a}{\_numerator}}(0),\ \mbox{\hyperlink{classRational_a854fd139381a4612f13a47968bbb7f71}{\_denominator}}(1)\ \{\}}
+\DoxyCodeLine{00028\ \ \ \ \ }
+\DoxyCodeLine{00036\ \ \ \ \ \mbox{\hyperlink{classRational_a8593137861479d56a9dce8646ccd0bb5}{Rational}}(\mbox{\hyperlink{classComplex}{numerator\_T}}\ numerator,\ \textcolor{keywordtype}{unsigned}\ \mbox{\hyperlink{classComplex}{denominator}})\ \{}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classComplex}{denominator}}\ ==\ 0)}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \mbox{\hyperlink{classDivisionByZeroException}{DivisionByZeroException}}(numerator);}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (numerator\ ==\ 0)\ \{}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classRational_a9af86af9d44a6e954c94f724c4ae0c9a}{\_numerator}}\ =\ numerator;}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classRational_a854fd139381a4612f13a47968bbb7f71}{\_denominator}}\ =\ 1;}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classRational_a9af86af9d44a6e954c94f724c4ae0c9a}{\_numerator}}\ =\ numerator;}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classRational_a854fd139381a4612f13a47968bbb7f71}{\_denominator}}\ =\ \mbox{\hyperlink{classComplex}{denominator}};}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00047\ \ \ \ \ \}}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00054\ \ \ \ \ \mbox{\hyperlink{classRational_a6e28aa527891b4a348d08da7c4cab071}{Rational}}(\mbox{\hyperlink{classComplex}{numerator\_T}}\ numerator)\ \{}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classRational_a9af86af9d44a6e954c94f724c4ae0c9a}{\_numerator}}\ =\ numerator;}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classRational_a854fd139381a4612f13a47968bbb7f71}{\_denominator}}\ =\ 1;}
+\DoxyCodeLine{00057\ \ \ \ \ \}}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classRational_a7651c202ba0f26886e6ce6afffc43ace}{isInteger}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{classComplex}{str}})\ \{}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!\mbox{\hyperlink{classComplex}{str}}\ ||\ *\mbox{\hyperlink{classComplex}{str}}\ ==\ \textcolor{charliteral}{'\(\backslash\)0'})\ \{}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (*\mbox{\hyperlink{classComplex}{str}}\ ==\ \textcolor{charliteral}{'-\/'}\ ||\ *\mbox{\hyperlink{classComplex}{str}}\ ==\ \textcolor{charliteral}{'+'})\ \{}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \ \ \ \ ++\mbox{\hyperlink{classComplex}{str}};}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (*\mbox{\hyperlink{classComplex}{str}})\ \{}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!std::isdigit(*\mbox{\hyperlink{classComplex}{str}}))\ \{}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \ \ \ \ ++\mbox{\hyperlink{classComplex}{str}};}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00080\ \ \ \ \ \}}
+\DoxyCodeLine{00081\ \ \ \ \ }
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{classRational_a82a0acaaa93668bae75de36d43f2f071}{Rational}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{classComplex}{str}})\ \{}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *\mbox{\hyperlink{classComplex}{slash}}\ =\ std::strchr(\mbox{\hyperlink{classComplex}{str}},\ \textcolor{charliteral}{'/'});}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classComplex}{slash}})\ \{}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \ \ \ \ std::string\ numerator(\mbox{\hyperlink{classComplex}{str}},\ \mbox{\hyperlink{classComplex}{slash}}\ -\/\ \mbox{\hyperlink{classComplex}{str}});}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!\mbox{\hyperlink{classRational_a7651c202ba0f26886e6ce6afffc43ace}{isInteger}}(numerator.c\_str()))\ \{}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \mbox{\hyperlink{classInvalidArgument}{InvalidArgument}}(\textcolor{stringliteral}{"{}Numerator\ must\ be\ an\ integer."{}});}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classRational_a9af86af9d44a6e954c94f724c4ae0c9a}{\_numerator}}\ =\ \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{classComplex}{numerator\_T}}\textcolor{keyword}{>}(std::stoll(numerator));}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \ \ \ \ std::string\ \mbox{\hyperlink{classComplex}{denominator}}(\mbox{\hyperlink{classComplex}{slash}}\ +\ 1);}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classComplex}{denominator}}.size()\ ==\ 0)\ \{}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \mbox{\hyperlink{classInvalidArgument}{InvalidArgument}}(\textcolor{stringliteral}{"{}Input\ must\ be\ in\ the\ form\ of\ 'numerator/denominator'\ or\ an\ integer."{}});}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!\mbox{\hyperlink{classRational_a7651c202ba0f26886e6ce6afffc43ace}{isInteger}}(\mbox{\hyperlink{classComplex}{denominator}}.c\_str()))\ \{}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \mbox{\hyperlink{classInvalidArgument}{InvalidArgument}}(\textcolor{stringliteral}{"{}Denominator\ must\ be\ an\ unsigned\ integer."{}});}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classComplex}{denominator}}[0]\ ==\ \textcolor{charliteral}{'-\/'})\ \{}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \mbox{\hyperlink{classInvalidArgument}{InvalidArgument}}(\textcolor{stringliteral}{"{}Denominator\ must\ be\ an\ unsigned\ integer."{}});}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long}\ \mbox{\hyperlink{classComplex}{temp}}\ =\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long}\textcolor{keyword}{>}(std::stoull(\mbox{\hyperlink{classComplex}{denominator}}));}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classComplex}{temp}}\ ==\ 0)\ \{}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \mbox{\hyperlink{classDivisionByZeroException}{DivisionByZeroException}}(\mbox{\hyperlink{classRational_a9af86af9d44a6e954c94f724c4ae0c9a}{\_numerator}});}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classRational_a9af86af9d44a6e954c94f724c4ae0c9a}{\_numerator}}\ ==\ 0)\ \{}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classRational_a854fd139381a4612f13a47968bbb7f71}{\_denominator}}\ =\ 1;}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classRational_a854fd139381a4612f13a47968bbb7f71}{\_denominator}}\ =\ \mbox{\hyperlink{classComplex}{temp}};}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \ \ \ \ std::string\ numerator(\mbox{\hyperlink{classComplex}{str}});}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!\mbox{\hyperlink{classRational_a7651c202ba0f26886e6ce6afffc43ace}{isInteger}}(numerator.c\_str()))\ \{}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \mbox{\hyperlink{classInvalidArgument}{InvalidArgument}}(\textcolor{stringliteral}{"{}Input\ must\ be\ in\ the\ form\ of\ 'numerator/denominator'\ or\ an\ integer."{}});}
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classRational_a9af86af9d44a6e954c94f724c4ae0c9a}{\_numerator}}\ =\ \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{classComplex}{numerator\_T}}\textcolor{keyword}{>}(std::stoll(\mbox{\hyperlink{classComplex}{str}}));}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classRational_a854fd139381a4612f13a47968bbb7f71}{\_denominator}}\ =\ 1;}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00126\ \ \ \ \ \}}
+\DoxyCodeLine{00127\ \ }
+\DoxyCodeLine{00139\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{classComplex}{numerator\_T}}\ \mbox{\hyperlink{classRational_a8a963e778123e191feccb2db589766cc}{gcd}}(\mbox{\hyperlink{classComplex}{numerator\_T}}\ \mbox{\hyperlink{classComplex}{a}},\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long}\ \mbox{\hyperlink{classComplex}{b}})\ \{}
+\DoxyCodeLine{00140\ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classComplex}{a}}\ ==\ 0\ \&\&\ \mbox{\hyperlink{classComplex}{b}}\ ==\ 0)\ \{}
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \mbox{\hyperlink{classInvalidArgument}{InvalidArgument}}(\textcolor{stringliteral}{"{}GCD\ of\ 0\ and\ 0\ is\ undefined."{}});}
+\DoxyCodeLine{00142\ \ \ \ \ \}}
+\DoxyCodeLine{00143\ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classComplex}{b}}\ ==\ 0)\ \{}
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex}{a}}\ <\ 0\ ?\ -\/\mbox{\hyperlink{classComplex}{a}}\ :\ \mbox{\hyperlink{classComplex}{a}};\ \ \textcolor{comment}{//\ Возвращаем\ модуль\ a}}
+\DoxyCodeLine{00145\ \ \ \ \ \}}
+\DoxyCodeLine{00146\ \ \ \ \ \mbox{\hyperlink{classComplex}{a}}\ =\ \mbox{\hyperlink{classComplex}{a}}\ <\ 0\ ?\ -\/\mbox{\hyperlink{classComplex}{a}}\ :\ \mbox{\hyperlink{classComplex}{a}};\ \ \textcolor{comment}{//\ Берём\ модуль\ a}}
+\DoxyCodeLine{00147\ \ \ \ \ \mbox{\hyperlink{classComplex}{b}}\ =\ \mbox{\hyperlink{classComplex}{b}}\ <\ 0\ ?\ -\/\mbox{\hyperlink{classComplex}{b}}\ :\ \mbox{\hyperlink{classComplex}{b}};\ \ \textcolor{comment}{//\ Берём\ модуль\ b}}
+\DoxyCodeLine{00148\ \ \ \ \ \textcolor{keywordflow}{while}\ (\mbox{\hyperlink{classComplex}{b}}\ !=\ 0)\ \{}
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classComplex}{numerator\_T}}\ \mbox{\hyperlink{classComplex}{t}}\ =\ \mbox{\hyperlink{classComplex}{a}}\ \%\ \mbox{\hyperlink{classComplex}{b}};}
+\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classComplex}{a}}\ =\ \mbox{\hyperlink{classComplex}{b}};}
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classComplex}{b}}\ =\ \mbox{\hyperlink{classComplex}{t}};}
+\DoxyCodeLine{00152\ \ \ \ \ \}}
+\DoxyCodeLine{00153\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex}{a}};}
+\DoxyCodeLine{00154\ \}}
+\DoxyCodeLine{00155\ \ \ \ \ }
+\DoxyCodeLine{00165\ \ \ \ \ \mbox{\hyperlink{classRational}{Rational}}\ \mbox{\hyperlink{classRational_a2df0266d9842ccdcdee52e6f154882c0}{make\_canonical}}()\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00166\ \textcolor{keyword}{\ \ \ \ }\{}
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classRational_a9af86af9d44a6e954c94f724c4ae0c9a}{\_numerator}}\ ==\ 0)\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex}{Rational<numerator\_T>}}(0,\ 1);}
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classComplex}{numerator\_T}}\ \mbox{\hyperlink{classComplex}{nod}}\ =\ \mbox{\hyperlink{classRational_a8a963e778123e191feccb2db589766cc}{gcd}}(\mbox{\hyperlink{classRational_a9af86af9d44a6e954c94f724c4ae0c9a}{\_numerator}},\ \mbox{\hyperlink{classRational_a854fd139381a4612f13a47968bbb7f71}{\_denominator}});}
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex}{Rational<numerator\_T>}}(\mbox{\hyperlink{classRational_a9af86af9d44a6e954c94f724c4ae0c9a}{\_numerator}}\ /\ \mbox{\hyperlink{classComplex}{nod}},\ \mbox{\hyperlink{classRational_a854fd139381a4612f13a47968bbb7f71}{\_denominator}}\ /\ \mbox{\hyperlink{classComplex}{nod}});}
+\DoxyCodeLine{00170\ \ \ \ \ \}}
+\DoxyCodeLine{00171\ \ \ \ \ }
+\DoxyCodeLine{00180\ \ \ \ \ \textcolor{keyword}{operator}\ \mbox{\hyperlink{classComplex}{int}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(\mbox{\hyperlink{classRational_a9af86af9d44a6e954c94f724c4ae0c9a}{\_numerator}}\ /\ \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{classComplex}{numerator\_T}}\textcolor{keyword}{>}(\mbox{\hyperlink{classRational_a854fd139381a4612f13a47968bbb7f71}{\_denominator}}));}
+\DoxyCodeLine{00182\ \ \ \ \ \}}
+\DoxyCodeLine{00183\ }
+\DoxyCodeLine{00191\ \ \ \ \ \textcolor{keyword}{operator}\ \mbox{\hyperlink{classComplex}{double}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00192\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{double}\textcolor{keyword}{>}(\mbox{\hyperlink{classRational_a9af86af9d44a6e954c94f724c4ae0c9a}{\_numerator}})\ /\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{double}\textcolor{keyword}{>}(\mbox{\hyperlink{classRational_a854fd139381a4612f13a47968bbb7f71}{\_denominator}});}
+\DoxyCodeLine{00193\ \ \ \ \ \}}
+\DoxyCodeLine{00194\ }
+\DoxyCodeLine{00203\ \ \ \ \ \mbox{\hyperlink{classComplex}{numerator\_T}}\ \mbox{\hyperlink{classRational_a7a3a157680a49eeba670a5595d766259}{floor}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00204\ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classRational_a9af86af9d44a6e954c94f724c4ae0c9a}{\_numerator}}\ <\ 0\ \&\&\ \mbox{\hyperlink{classRational_a9af86af9d44a6e954c94f724c4ae0c9a}{\_numerator}}\ \%\ \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{classComplex}{numerator\_T}}\textcolor{keyword}{>}(\mbox{\hyperlink{classRational_a854fd139381a4612f13a47968bbb7f71}{\_denominator}})\ !=\ 0)\ \{}
+\DoxyCodeLine{00205\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classRational_a9af86af9d44a6e954c94f724c4ae0c9a}{\_numerator}}\ /\ \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{classComplex}{numerator\_T}}\textcolor{keyword}{>}(\mbox{\hyperlink{classRational_a854fd139381a4612f13a47968bbb7f71}{\_denominator}})\ -\/\ 1;}
+\DoxyCodeLine{00206\ \ \ \ \ \}}
+\DoxyCodeLine{00207\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classRational_a9af86af9d44a6e954c94f724c4ae0c9a}{\_numerator}}\ /\ \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{classComplex}{numerator\_T}}\textcolor{keyword}{>}(\mbox{\hyperlink{classRational_a854fd139381a4612f13a47968bbb7f71}{\_denominator}});}
+\DoxyCodeLine{00208\ \}}
+\DoxyCodeLine{00209\ }
+\DoxyCodeLine{00218\ \ \ \ \ \mbox{\hyperlink{classComplex}{numerator\_T}}\ \mbox{\hyperlink{classRational_a51cd744a82553789c16caf9d72e791c8}{round}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00219\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classRational_a9af86af9d44a6e954c94f724c4ae0c9a}{\_numerator}}\ >=\ 0)\ \{}
+\DoxyCodeLine{00220\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{classComplex}{numerator\_T}}\textcolor{keyword}{>}(\mbox{\hyperlink{classRational_a9af86af9d44a6e954c94f724c4ae0c9a}{\_numerator}}\ +\ \mbox{\hyperlink{classRational_a854fd139381a4612f13a47968bbb7f71}{\_denominator}}\ /\ 2)\ /\ \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{classComplex}{numerator\_T}}\textcolor{keyword}{>}(\mbox{\hyperlink{classRational_a854fd139381a4612f13a47968bbb7f71}{\_denominator}});}
+\DoxyCodeLine{00221\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00222\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{classComplex}{numerator\_T}}\textcolor{keyword}{>}(\mbox{\hyperlink{classRational_a9af86af9d44a6e954c94f724c4ae0c9a}{\_numerator}}\ -\/\ \mbox{\hyperlink{classRational_a854fd139381a4612f13a47968bbb7f71}{\_denominator}}\ /\ 2)\ /\ \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{classComplex}{numerator\_T}}\textcolor{keyword}{>}(\mbox{\hyperlink{classRational_a854fd139381a4612f13a47968bbb7f71}{\_denominator}});}
+\DoxyCodeLine{00223\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00224\ \ \ \ \ \}}
+\DoxyCodeLine{00225\ \ \ \ \ }
+\DoxyCodeLine{00235\ \ \ \ \ std::string\ \mbox{\hyperlink{classRational_ac91be9e4fde54fb5ae5d843927931b4d}{to\_string}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00236\ \ \ \ \ \ \ \ \ std::stringstream\ \mbox{\hyperlink{classComplex}{ss}};}
+\DoxyCodeLine{00237\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classComplex}{ss}}\ <<\ \mbox{\hyperlink{classRational_a9af86af9d44a6e954c94f724c4ae0c9a}{\_numerator}}\ <<\ \textcolor{charliteral}{'/'}\ <<\ \mbox{\hyperlink{classRational_a854fd139381a4612f13a47968bbb7f71}{\_denominator}};}
+\DoxyCodeLine{00238\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex}{ss}}.str();}
+\DoxyCodeLine{00239\ \ \ \ \ \}}
+\DoxyCodeLine{00240\ }
+\DoxyCodeLine{00241\ \ \ \ \ \mbox{\hyperlink{classComplex}{Rational<numerator\_T>}}\ operator-\/()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00242\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classRational}{Rational}}(-\/\mbox{\hyperlink{classRational_a9af86af9d44a6e954c94f724c4ae0c9a}{\_numerator}},\ \mbox{\hyperlink{classRational_a854fd139381a4612f13a47968bbb7f71}{\_denominator}});}
+\DoxyCodeLine{00243\ \ \ \ \ \}}
+\DoxyCodeLine{00244\ }
+\DoxyCodeLine{00245\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ other\_T>}
+\DoxyCodeLine{00246\ \ \ \ \ \textcolor{keywordtype}{bool}\ operator==(\textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex}{Rational<other\_T>}}\&\ \mbox{\hyperlink{classComplex}{other}})\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00247\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classComplex}{Rational<other\_T>}}\ \mbox{\hyperlink{classComplex}{other\_canon}}\ =\ \mbox{\hyperlink{classComplex}{other}}.make\_canonical();}
+\DoxyCodeLine{00248\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classComplex}{Rational<numerator\_T>}}\ \mbox{\hyperlink{classComplex}{this\_canon}}\ =\ this-\/>\mbox{\hyperlink{classRational_a2df0266d9842ccdcdee52e6f154882c0}{make\_canonical}}();}
+\DoxyCodeLine{00249\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (this\_canon.\_numerator\ ==\ \mbox{\hyperlink{classComplex}{other\_canon}}.\_numerator)\ \&\&\ (\mbox{\hyperlink{classComplex}{this\_canon}}.\_denominator\ ==\ \mbox{\hyperlink{classComplex}{other\_canon}}.\_denominator);}
+\DoxyCodeLine{00250\ \ \ \ \ \}}
+\DoxyCodeLine{00251\ }
+\DoxyCodeLine{00252\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ other\_T>}
+\DoxyCodeLine{00253\ \ \ \ \ \textcolor{keywordtype}{bool}\ operator!=(\textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex}{Rational<other\_T>}}\&\ \mbox{\hyperlink{classComplex}{other}})\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00254\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ !(*\textcolor{keyword}{this}\ ==\ \mbox{\hyperlink{classComplex}{other}});}
+\DoxyCodeLine{00255\ \ \ \ \ \}}
+\DoxyCodeLine{00256\ }
+\DoxyCodeLine{00257\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ other\_T>}
+\DoxyCodeLine{00258\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classComplex}{operator<}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex}{Rational<other\_T>}}\&\ \mbox{\hyperlink{classComplex}{other}})\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00259\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{classComplex}{common\_type}}\ =\ std::common\_type\_t<numerator\_T,\ other\_T>;}
+\DoxyCodeLine{00260\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classComplex}{common\_type}}\ \mbox{\hyperlink{classComplex}{left}}\ =\ \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{classComplex}{common\_type}}\textcolor{keyword}{>}(\mbox{\hyperlink{classRational_a9af86af9d44a6e954c94f724c4ae0c9a}{\_numerator}})\ *\ \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{classComplex}{common\_type}}\textcolor{keyword}{>}(\mbox{\hyperlink{classComplex}{other}}.\_denominator);}
+\DoxyCodeLine{00261\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classComplex}{common\_type}}\ \mbox{\hyperlink{classComplex}{right}}\ =\ \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{classComplex}{common\_type}}\textcolor{keyword}{>}(\mbox{\hyperlink{classRational_a854fd139381a4612f13a47968bbb7f71}{\_denominator}})\ *\ \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{classComplex}{common\_type}}\textcolor{keyword}{>}(\mbox{\hyperlink{classComplex}{other}}.\_numerator);}
+\DoxyCodeLine{00262\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex}{left}}\ <\ \mbox{\hyperlink{classComplex}{right}};}
+\DoxyCodeLine{00263\ \ \ \ \ \}}
+\DoxyCodeLine{00264\ }
+\DoxyCodeLine{00265\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ other\_T>}
+\DoxyCodeLine{00266\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classComplex}{operator<=}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex}{Rational<other\_T>}}\&\ \mbox{\hyperlink{classComplex}{other}})\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00267\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{classComplex}{common\_type}}\ =\ std::common\_type\_t<numerator\_T,\ other\_T>;}
+\DoxyCodeLine{00268\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classComplex}{common\_type}}\ \mbox{\hyperlink{classComplex}{left}}\ =\ \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{classComplex}{common\_type}}\textcolor{keyword}{>}(\mbox{\hyperlink{classRational_a9af86af9d44a6e954c94f724c4ae0c9a}{\_numerator}})\ *\ \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{classComplex}{common\_type}}\textcolor{keyword}{>}(\mbox{\hyperlink{classComplex}{other}}.\_denominator);}
+\DoxyCodeLine{00269\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classComplex}{common\_type}}\ \mbox{\hyperlink{classComplex}{right}}\ =\ \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{classComplex}{common\_type}}\textcolor{keyword}{>}(\mbox{\hyperlink{classRational_a854fd139381a4612f13a47968bbb7f71}{\_denominator}})\ *\ \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{classComplex}{common\_type}}\textcolor{keyword}{>}(\mbox{\hyperlink{classComplex}{other}}.\_numerator);}
+\DoxyCodeLine{00270\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex}{left}}\ <=\ \mbox{\hyperlink{classComplex}{right}};}
+\DoxyCodeLine{00271\ \ \ \ \ \}}
+\DoxyCodeLine{00272\ }
+\DoxyCodeLine{00273\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ other\_T>}
+\DoxyCodeLine{00274\ \ \ \ \ \textcolor{keywordtype}{bool}\ operator>(\textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex}{Rational<other\_T>}}\&\ \mbox{\hyperlink{classComplex}{other}})\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00275\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{classComplex}{common\_type}}\ =\ std::common\_type\_t<numerator\_T,\ other\_T>;}
+\DoxyCodeLine{00276\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classComplex}{common\_type}}\ \mbox{\hyperlink{classComplex}{left}}\ =\ \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{classComplex}{common\_type}}\textcolor{keyword}{>}(\mbox{\hyperlink{classRational_a9af86af9d44a6e954c94f724c4ae0c9a}{\_numerator}})\ *\ \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{classComplex}{common\_type}}\textcolor{keyword}{>}(\mbox{\hyperlink{classComplex}{other}}.\_denominator);}
+\DoxyCodeLine{00277\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classComplex}{common\_type}}\ \mbox{\hyperlink{classComplex}{right}}\ =\ \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{classComplex}{common\_type}}\textcolor{keyword}{>}(\mbox{\hyperlink{classRational_a854fd139381a4612f13a47968bbb7f71}{\_denominator}})\ *\ \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{classComplex}{common\_type}}\textcolor{keyword}{>}(\mbox{\hyperlink{classComplex}{other}}.\_numerator);}
+\DoxyCodeLine{00278\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex}{left}}\ >\ \mbox{\hyperlink{classComplex}{right}};}
+\DoxyCodeLine{00279\ \ \ \ \ \}}
+\DoxyCodeLine{00280\ }
+\DoxyCodeLine{00281\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ other\_T>}
+\DoxyCodeLine{00282\ \ \ \ \ \textcolor{keywordtype}{bool}\ operator>=(\textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex}{Rational<other\_T>}}\&\ \mbox{\hyperlink{classComplex}{other}})\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00283\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{classComplex}{common\_type}}\ =\ std::common\_type\_t<numerator\_T,\ other\_T>;}
+\DoxyCodeLine{00284\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classComplex}{common\_type}}\ \mbox{\hyperlink{classComplex}{left}}\ =\ \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{classComplex}{common\_type}}\textcolor{keyword}{>}(\mbox{\hyperlink{classRational_a9af86af9d44a6e954c94f724c4ae0c9a}{\_numerator}})\ *\ \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{classComplex}{common\_type}}\textcolor{keyword}{>}(\mbox{\hyperlink{classComplex}{other}}.\_denominator);}
+\DoxyCodeLine{00285\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classComplex}{common\_type}}\ \mbox{\hyperlink{classComplex}{right}}\ =\ \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{classComplex}{common\_type}}\textcolor{keyword}{>}(\mbox{\hyperlink{classRational_a854fd139381a4612f13a47968bbb7f71}{\_denominator}})\ *\ \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{classComplex}{common\_type}}\textcolor{keyword}{>}(\mbox{\hyperlink{classComplex}{other}}.\_numerator);}
+\DoxyCodeLine{00286\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex}{left}}\ >=\ \mbox{\hyperlink{classComplex}{right}};}
+\DoxyCodeLine{00287\ \ \ \ \ \}}
+\DoxyCodeLine{00288\ }
+\DoxyCodeLine{00289\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ other\_T>}
+\DoxyCodeLine{00290\ \ \ \ \ \mbox{\hyperlink{classRational}{Rational}}\ operator+(\textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex}{Rational<other\_T>}}\&\ \mbox{\hyperlink{classComplex}{other}})\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00291\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classComplex}{numerator\_T}}\ \mbox{\hyperlink{classComplex}{new\_numerator}}\ =\ \mbox{\hyperlink{classRational_a9af86af9d44a6e954c94f724c4ae0c9a}{\_numerator}}\ *\ \mbox{\hyperlink{classComplex}{other}}.\_denominator\ +\ }
+\DoxyCodeLine{00292\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classComplex}{other}}.\_numerator\ *\ \mbox{\hyperlink{classRational_a854fd139381a4612f13a47968bbb7f71}{\_denominator}};}
+\DoxyCodeLine{00293\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long}\ \mbox{\hyperlink{classComplex}{new\_denominator}}\ =\ \mbox{\hyperlink{classRational_a854fd139381a4612f13a47968bbb7f71}{\_denominator}}\ *\ \mbox{\hyperlink{classComplex}{other}}.\_denominator;}
+\DoxyCodeLine{00294\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex}{Rational<numerator\_T>}}(\mbox{\hyperlink{classComplex}{new\_numerator}},\ \mbox{\hyperlink{classComplex}{new\_denominator}}).make\_canonical();}
+\DoxyCodeLine{00295\ \ \ \ \ \}}
+\DoxyCodeLine{00296\ }
+\DoxyCodeLine{00297\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ other\_T>}
+\DoxyCodeLine{00298\ \ \ \ \ \mbox{\hyperlink{classComplex}{Rational<numerator\_T>}}\ operator-\/(\textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex}{Rational<other\_T>}}\&\ \mbox{\hyperlink{classComplex}{other}})\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00299\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classComplex}{numerator\_T}}\ \mbox{\hyperlink{classComplex}{new\_numerator}}\ =\ (\mbox{\hyperlink{classRational_a9af86af9d44a6e954c94f724c4ae0c9a}{\_numerator}})\ *\ \mbox{\hyperlink{classComplex}{other}}.\_denominator\ -\/\ }
+\DoxyCodeLine{00300\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (\mbox{\hyperlink{classComplex}{other}}.\_numerator)\ *\ \mbox{\hyperlink{classRational_a854fd139381a4612f13a47968bbb7f71}{\_denominator}};}
+\DoxyCodeLine{00301\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long}\ \mbox{\hyperlink{classComplex}{new\_denominator}}\ =\ \mbox{\hyperlink{classRational_a854fd139381a4612f13a47968bbb7f71}{\_denominator}}\ *\ \mbox{\hyperlink{classComplex}{other}}.\_denominator;}
+\DoxyCodeLine{00302\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex}{Rational<numerator\_T>}}(\mbox{\hyperlink{classComplex}{new\_numerator}},\ \mbox{\hyperlink{classComplex}{new\_denominator}}).make\_canonical();}
+\DoxyCodeLine{00303\ \ \ \ \ \}}
+\DoxyCodeLine{00304\ }
+\DoxyCodeLine{00305\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ other\_T>}
+\DoxyCodeLine{00306\ \ \ \ \ \mbox{\hyperlink{classComplex}{Rational<numerator\_T>}}\ operator*(\textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex}{Rational<other\_T>}}\&\ \mbox{\hyperlink{classComplex}{other}})\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00307\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classComplex}{numerator\_T}}\ \mbox{\hyperlink{classComplex}{new\_numerator}}\ =\ (\mbox{\hyperlink{classRational_a9af86af9d44a6e954c94f724c4ae0c9a}{\_numerator}})\ *\ (\mbox{\hyperlink{classComplex}{other}}.\_numerator);}
+\DoxyCodeLine{00308\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long}\ \mbox{\hyperlink{classComplex}{new\_denominator}}\ =\ \mbox{\hyperlink{classRational_a854fd139381a4612f13a47968bbb7f71}{\_denominator}}\ *\ \mbox{\hyperlink{classComplex}{other}}.\_denominator;}
+\DoxyCodeLine{00309\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex}{Rational<numerator\_T>}}(\mbox{\hyperlink{classComplex}{new\_numerator}},\ \mbox{\hyperlink{classComplex}{new\_denominator}}).make\_canonical();}
+\DoxyCodeLine{00310\ \ \ \ \ \}}
+\DoxyCodeLine{00311\ }
+\DoxyCodeLine{00312\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ other\_T>}
+\DoxyCodeLine{00313\ \ \ \ \ \mbox{\hyperlink{classComplex}{Rational<numerator\_T>}}\ operator/(\textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex}{Rational<other\_T>}}\&\ \mbox{\hyperlink{classComplex}{other}})\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00314\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classComplex}{other}}.\_numerator\ ==\ 0)\ \{}
+\DoxyCodeLine{00315\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \mbox{\hyperlink{classDivisionByZeroException}{DivisionByZeroException}}(\mbox{\hyperlink{classRational_a9af86af9d44a6e954c94f724c4ae0c9a}{\_numerator}});}
+\DoxyCodeLine{00316\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00317\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classComplex}{numerator\_T}}\ \mbox{\hyperlink{classComplex}{new\_numerator}}\ =\ (\mbox{\hyperlink{classRational_a9af86af9d44a6e954c94f724c4ae0c9a}{\_numerator}})\ *\ (\mbox{\hyperlink{classComplex}{other}}.\_denominator);}
+\DoxyCodeLine{00318\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classComplex}{numerator\_T}}\ \mbox{\hyperlink{classComplex}{new\_denominator}}\ =\ (\mbox{\hyperlink{classRational_a854fd139381a4612f13a47968bbb7f71}{\_denominator}})\ *\ (\mbox{\hyperlink{classComplex}{other}}.\_numerator);}
+\DoxyCodeLine{00319\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classComplex}{new\_denominator}}\ <\ 0)\ \{}
+\DoxyCodeLine{00320\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classComplex}{new\_numerator}}\ =\ -\/\mbox{\hyperlink{classComplex}{new\_numerator}};}
+\DoxyCodeLine{00321\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classComplex}{new\_denominator}}\ =\ -\/\mbox{\hyperlink{classComplex}{new\_denominator}};}
+\DoxyCodeLine{00322\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00323\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex}{Rational<numerator\_T>}}(\mbox{\hyperlink{classComplex}{new\_numerator}},\ \mbox{\hyperlink{classComplex}{new\_denominator}}).make\_canonical();}
+\DoxyCodeLine{00324\ \ \ \ \ \}}
+\DoxyCodeLine{00325\ }
+\DoxyCodeLine{00326\ \ \ \ \ \textcolor{keyword}{friend}\ \mbox{\hyperlink{classRational}{Rational}}\ abs(\textcolor{keyword}{const}\ \mbox{\hyperlink{classRational}{Rational}}\&\ r)\ \{}
+\DoxyCodeLine{00327\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classRational}{Rational}}(std::abs(r.\mbox{\hyperlink{classRational_a9af86af9d44a6e954c94f724c4ae0c9a}{\_numerator}}),\ r.\mbox{\hyperlink{classRational_a854fd139381a4612f13a47968bbb7f71}{\_denominator}});}
+\DoxyCodeLine{00328\ \ \ \ \ \}}
+\DoxyCodeLine{00329\ \};}
+\DoxyCodeLine{00330\ }
+\DoxyCodeLine{00331\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ Numeric,\ \textcolor{keyword}{typename}\ numerator\_T>}
+\DoxyCodeLine{00332\ std::enable\_if\_t<std::is\_arithmetic<Numeric>::value,\ \mbox{\hyperlink{classComplex}{Rational<std::common\_type\_t<numerator\_T,\ Numeric>}}>>}
+\DoxyCodeLine{00333\ operator+(\textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex}{Numeric}}\&\ \mbox{\hyperlink{classComplex}{value}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex}{Rational<numerator\_T>}}\&\ \mbox{\hyperlink{classComplex}{rational}})\ \{}
+\DoxyCodeLine{00334\ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{classComplex}{common\_type}}\ =\ std::common\_type\_t<numerator\_T,\ Numeric>;}
+\DoxyCodeLine{00335\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex}{Rational<common\_type>}}(\textcolor{keyword}{static\_cast<}\mbox{\hyperlink{classComplex}{common\_type}}\textcolor{keyword}{>}(\mbox{\hyperlink{classComplex}{value}}),\ 1)\ +\ \mbox{\hyperlink{classComplex}{rational}};}
+\DoxyCodeLine{00336\ \}}
+\DoxyCodeLine{00337\ }
+\DoxyCodeLine{00338\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ Numeric,\ \textcolor{keyword}{typename}\ numerator\_T>}
+\DoxyCodeLine{00339\ std::enable\_if\_t<std::is\_arithmetic<Numeric>::value,\ \mbox{\hyperlink{classComplex}{Rational<std::common\_type\_t<numerator\_T,\ Numeric>}}>>}
+\DoxyCodeLine{00340\ operator-\/(\textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex}{Numeric}}\&\ \mbox{\hyperlink{classComplex}{value}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex}{Rational<numerator\_T>}}\&\ \mbox{\hyperlink{classComplex}{rational}})\ \{}
+\DoxyCodeLine{00341\ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{classComplex}{common\_type}}\ =\ std::common\_type\_t<numerator\_T,\ Numeric>;}
+\DoxyCodeLine{00342\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex}{Rational<common\_type>}}(\textcolor{keyword}{static\_cast<}\mbox{\hyperlink{classComplex}{common\_type}}\textcolor{keyword}{>}(\mbox{\hyperlink{classComplex}{value}}),\ 1)\ -\/\ \mbox{\hyperlink{classComplex}{rational}};}
+\DoxyCodeLine{00343\ \}}
+\DoxyCodeLine{00344\ }
+\DoxyCodeLine{00345\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ Numeric,\ \textcolor{keyword}{typename}\ numerator\_T>}
+\DoxyCodeLine{00346\ std::enable\_if\_t<std::is\_arithmetic<Numeric>::value,\ \mbox{\hyperlink{classComplex}{Rational<std::common\_type\_t<numerator\_T,\ Numeric>}}>>}
+\DoxyCodeLine{00347\ operator*(\textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex}{Numeric}}\&\ \mbox{\hyperlink{classComplex}{value}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex}{Rational<numerator\_T>}}\&\ \mbox{\hyperlink{classComplex}{rational}})\ \{}
+\DoxyCodeLine{00348\ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{classComplex}{common\_type}}\ =\ std::common\_type\_t<numerator\_T,\ Numeric>;}
+\DoxyCodeLine{00349\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex}{Rational<common\_type>}}(\textcolor{keyword}{static\_cast<}\mbox{\hyperlink{classComplex}{common\_type}}\textcolor{keyword}{>}(\mbox{\hyperlink{classComplex}{value}}),\ 1)\ *\ \mbox{\hyperlink{classComplex}{rational}};}
+\DoxyCodeLine{00350\ \}}
+\DoxyCodeLine{00351\ }
+\DoxyCodeLine{00352\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ Numeric,\ \textcolor{keyword}{typename}\ numerator\_T>}
+\DoxyCodeLine{00353\ std::enable\_if\_t<std::is\_arithmetic<Numeric>::value,\ \mbox{\hyperlink{classComplex}{Rational<std::common\_type\_t<numerator\_T,\ Numeric>}}>>}
+\DoxyCodeLine{00354\ operator/(\textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex}{Numeric}}\&\ \mbox{\hyperlink{classComplex}{value}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex}{Rational<numerator\_T>}}\&\ \mbox{\hyperlink{classComplex}{rational}})\ \{}
+\DoxyCodeLine{00355\ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{classComplex}{common\_type}}\ =\ std::common\_type\_t<numerator\_T,\ Numeric>;}
+\DoxyCodeLine{00356\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex}{Rational<common\_type>}}(\textcolor{keyword}{static\_cast<}\mbox{\hyperlink{classComplex}{common\_type}}\textcolor{keyword}{>}(\mbox{\hyperlink{classComplex}{value}}),\ 1)\ /\ \mbox{\hyperlink{classComplex}{rational}};}
+\DoxyCodeLine{00357\ \}}
+\DoxyCodeLine{00358\ }
+\DoxyCodeLine{00359\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ numerator\_T>}
+\DoxyCodeLine{00360\ std::ostream\&\ \mbox{\hyperlink{classComplex}{operator<<}}(std::ostream\&\ \mbox{\hyperlink{classComplex}{os}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex}{Rational<numerator\_T>}}\&\ \mbox{\hyperlink{classComplex}{obj}})\ \{}
+\DoxyCodeLine{00361\ \ \ \ \ \mbox{\hyperlink{classComplex}{os}}\ <<\ \mbox{\hyperlink{classComplex}{obj}}.to\_string();}
+\DoxyCodeLine{00362\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex}{os}};}
+\DoxyCodeLine{00363\ \}}
+\DoxyCodeLine{00364\ }
+\DoxyCodeLine{00365\ \textcolor{comment}{//\ RATIONAL\ AND\ BASIC\ TYPES}}
+\DoxyCodeLine{00366\ }
+\DoxyCodeLine{00367\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ \textcolor{keywordtype}{int}\_t,\ \textcolor{keyword}{typename}\ type\_\textcolor{keywordtype}{int}>}
+\DoxyCodeLine{00368\ \textcolor{keywordtype}{bool}\ operator==(\textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex}{Rational<int\_t>}}\ \&r,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex}{type\_int}}\ \&\mbox{\hyperlink{classComplex}{a}})}
+\DoxyCodeLine{00369\ \{}
+\DoxyCodeLine{00370\ \ \ \ \ \textcolor{keywordflow}{return}\ r\ ==\ \mbox{\hyperlink{classRational}{Rational}}(\mbox{\hyperlink{classComplex}{a}});}
+\DoxyCodeLine{00371\ \}}
+\DoxyCodeLine{00372\ }
+\DoxyCodeLine{00373\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ \textcolor{keywordtype}{int}\_t,\ \textcolor{keyword}{typename}\ type\_\textcolor{keywordtype}{int}>}
+\DoxyCodeLine{00374\ \textcolor{keywordtype}{bool}\ operator!=(\textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex}{Rational<int\_t>}}\ \&r,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex}{type\_int}}\ \&\mbox{\hyperlink{classComplex}{a}})}
+\DoxyCodeLine{00375\ \{}
+\DoxyCodeLine{00376\ \ \ \ \ \textcolor{keywordflow}{return}\ r\ !=\ \mbox{\hyperlink{classRational}{Rational}}(\mbox{\hyperlink{classComplex}{a}});}
+\DoxyCodeLine{00377\ \}}
+\DoxyCodeLine{00378\ }
+\DoxyCodeLine{00379\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ \textcolor{keywordtype}{int}\_t,\ \textcolor{keyword}{typename}\ type\_\textcolor{keywordtype}{int}>}
+\DoxyCodeLine{00380\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classComplex}{operator<}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex}{Rational<int\_t>}}\ \&r,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex}{type\_int}}\ \&\mbox{\hyperlink{classComplex}{a}})}
+\DoxyCodeLine{00381\ \{}
+\DoxyCodeLine{00382\ \ \ \ \ \textcolor{keywordflow}{return}\ r\ <=\ \mbox{\hyperlink{classRational}{Rational}}(\mbox{\hyperlink{classComplex}{a}});}
+\DoxyCodeLine{00383\ \}}
+\DoxyCodeLine{00384\ }
+\DoxyCodeLine{00385\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ \textcolor{keywordtype}{int}\_t,\ \textcolor{keyword}{typename}\ type\_\textcolor{keywordtype}{int}>}
+\DoxyCodeLine{00386\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classComplex}{operator<=}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex}{Rational<int\_t>}}\ \&r,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex}{type\_int}}\ \&\mbox{\hyperlink{classComplex}{a}})}
+\DoxyCodeLine{00387\ \{}
+\DoxyCodeLine{00388\ \ \ \ \ \textcolor{keywordflow}{return}\ r\ <=\ \mbox{\hyperlink{classRational}{Rational}}(\mbox{\hyperlink{classComplex}{a}});}
+\DoxyCodeLine{00389\ \}}
+\DoxyCodeLine{00390\ }
+\DoxyCodeLine{00391\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ \textcolor{keywordtype}{int}\_t,\ \textcolor{keyword}{typename}\ type\_\textcolor{keywordtype}{int}>}
+\DoxyCodeLine{00392\ \textcolor{keywordtype}{bool}\ operator>(\textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex}{Rational<int\_t>}}\ \&r,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex}{type\_int}}\ \&\mbox{\hyperlink{classComplex}{a}})}
+\DoxyCodeLine{00393\ \{}
+\DoxyCodeLine{00394\ \ \ \ \ \textcolor{keywordflow}{return}\ r\ >\ \mbox{\hyperlink{classRational}{Rational}}(\mbox{\hyperlink{classComplex}{a}});}
+\DoxyCodeLine{00395\ \}}
+\DoxyCodeLine{00396\ }
+\DoxyCodeLine{00397\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ \textcolor{keywordtype}{int}\_t,\ \textcolor{keyword}{typename}\ type\_\textcolor{keywordtype}{int}>}
+\DoxyCodeLine{00398\ \textcolor{keywordtype}{bool}\ operator>=(\textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex}{Rational<int\_t>}}\ \&r,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex}{type\_int}}\ \&\mbox{\hyperlink{classComplex}{a}})}
+\DoxyCodeLine{00399\ \{}
+\DoxyCodeLine{00400\ \ \ \ \ \textcolor{keywordflow}{return}\ r\ >=\ \mbox{\hyperlink{classRational}{Rational}}(\mbox{\hyperlink{classComplex}{a}});}
+\DoxyCodeLine{00401\ \}}
+\DoxyCodeLine{00402\ }
+\DoxyCodeLine{00403\ }
+\DoxyCodeLine{00404\ \textcolor{comment}{//\ Rational\ and\ numeric}}
+\DoxyCodeLine{00405\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ Numeric,\ \textcolor{keyword}{typename}\ numerator\_T>}
+\DoxyCodeLine{00406\ std::enable\_if\_t<std::is\_arithmetic<Numeric>::value,\ \mbox{\hyperlink{classComplex}{Rational<std::common\_type\_t<numerator\_T,\ Numeric>}}>>}
+\DoxyCodeLine{00407\ operator+(\textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex}{Rational<numerator\_T>}}\&\ \mbox{\hyperlink{classComplex}{rational}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex}{Numeric}}\&\ \mbox{\hyperlink{classComplex}{value}})\ \{}
+\DoxyCodeLine{00408\ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{classComplex}{common\_type}}\ =\ std::common\_type\_t<numerator\_T,\ Numeric>;}
+\DoxyCodeLine{00409\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex}{Rational<common\_type>}}(\textcolor{keyword}{static\_cast<}\mbox{\hyperlink{classComplex}{common\_type}}\textcolor{keyword}{>}(\mbox{\hyperlink{classComplex}{value}}),\ 1)\ +\ \mbox{\hyperlink{classComplex}{rational}};}
+\DoxyCodeLine{00410\ \}}
+\DoxyCodeLine{00411\ }
+\DoxyCodeLine{00412\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ Numeric,\ \textcolor{keyword}{typename}\ numerator\_T>}
+\DoxyCodeLine{00413\ std::enable\_if\_t<std::is\_arithmetic<Numeric>::value,\ \mbox{\hyperlink{classComplex}{Rational<std::common\_type\_t<numerator\_T,\ Numeric>}}>>}
+\DoxyCodeLine{00414\ operator-\/(\textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex}{Rational<numerator\_T>}}\&\ \mbox{\hyperlink{classComplex}{rational}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex}{Numeric}}\&\ \mbox{\hyperlink{classComplex}{value}})\ \{}
+\DoxyCodeLine{00415\ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{classComplex}{common\_type}}\ =\ std::common\_type\_t<numerator\_T,\ Numeric>;}
+\DoxyCodeLine{00416\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex}{rational}}\ -\/\ \mbox{\hyperlink{classComplex}{Rational<common\_type>}}(\textcolor{keyword}{static\_cast<}\mbox{\hyperlink{classComplex}{common\_type}}\textcolor{keyword}{>}(\mbox{\hyperlink{classComplex}{value}}),\ 1);}
+\DoxyCodeLine{00417\ \}}
+\DoxyCodeLine{00418\ }
+\DoxyCodeLine{00419\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ Numeric,\ \textcolor{keyword}{typename}\ numerator\_T>}
+\DoxyCodeLine{00420\ std::enable\_if\_t<std::is\_arithmetic<Numeric>::value,\ \mbox{\hyperlink{classComplex}{Rational<std::common\_type\_t<numerator\_T,\ Numeric>}}>>}
+\DoxyCodeLine{00421\ operator*(\textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex}{Rational<numerator\_T>}}\&\ \mbox{\hyperlink{classComplex}{rational}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex}{Numeric}}\&\ \mbox{\hyperlink{classComplex}{value}})\ \{}
+\DoxyCodeLine{00422\ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{classComplex}{common\_type}}\ =\ std::common\_type\_t<numerator\_T,\ Numeric>;}
+\DoxyCodeLine{00423\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex}{Rational<common\_type>}}(\textcolor{keyword}{static\_cast<}\mbox{\hyperlink{classComplex}{common\_type}}\textcolor{keyword}{>}(\mbox{\hyperlink{classComplex}{value}}),\ 1)\ *\ \mbox{\hyperlink{classComplex}{rational}};}
+\DoxyCodeLine{00424\ \}}
+\DoxyCodeLine{00425\ }
+\DoxyCodeLine{00426\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ Numeric,\ \textcolor{keyword}{typename}\ numerator\_T>}
+\DoxyCodeLine{00427\ \mbox{\hyperlink{classComplex}{Rational<numerator\_T>}}\ operator/(\textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex}{Rational<numerator\_T>}}\&\ \mbox{\hyperlink{classComplex}{rational}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex}{Numeric}}\&\ \mbox{\hyperlink{classComplex}{value}})\ \{}
+\DoxyCodeLine{00428\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex}{rational}}\ /\ \mbox{\hyperlink{classComplex}{Rational<numerator\_T>}}(\mbox{\hyperlink{classComplex}{value}});}
+\DoxyCodeLine{00429\ \}}
+
+\end{DoxyCode}

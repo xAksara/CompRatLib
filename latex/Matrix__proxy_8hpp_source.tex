@@ -1,0 +1,207 @@
+\doxysection{Matrix\+\_\+proxy.\+hpp}
+\hypertarget{Matrix__proxy_8hpp_source}{}\label{Matrix__proxy_8hpp_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ "{}Matrix.hpp"{}}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <stdexcept>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <map>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}Exceptions.hpp"{}}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ element\_T,\ \textcolor{keyword}{typename}\ container\_T>}
+\DoxyCodeLine{00010\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classMatrix}{Matrix}};}
+\DoxyCodeLine{00022\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ element\_T\ =\ \textcolor{keywordtype}{double},\ \textcolor{keyword}{typename}\ container\_T\ =\ std::map<std::pair<\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int},\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}>,\ element\_T>>}
+\DoxyCodeLine{00023\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classMatrix__proxy}{Matrix\_proxy}}\ \{}
+\DoxyCodeLine{00024\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ r1,\ r2,\ c1,\ c2;}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordtype}{void}\ copyMatrixSlice()\ \{}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!has\_local\_copy)\ \{}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Making\ copy!"{}}\ <<\ std::endl;}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classComplex}{Matrix<element\_T,\ container\_T>}}*\ \mbox{\hyperlink{classComplex}{M\_new}}\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classComplex}{Matrix<element\_T,\ container\_T>}}(r2\ -\/\ r1\ +\ 1,\ c2\ -\/\ c1\ +\ 1,\ M-\/>eps);}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classComplex}{i}}\ =\ 0;\ \mbox{\hyperlink{classComplex}{i}}\ <\ r2\ -\/\ r1;\ ++\mbox{\hyperlink{classComplex}{i}})\ \{}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classComplex}{j}}\ =\ 0;\ \mbox{\hyperlink{classComplex}{j}}\ <\ c2\ -\/\ c1;\ ++\mbox{\hyperlink{classComplex}{j}})\ \{}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classComplex}{element\_T}}\ \mbox{\hyperlink{classComplex}{elem}}\ =\ (*M)(r1\ +\ \mbox{\hyperlink{classComplex}{i}},\ c1\ +\ \mbox{\hyperlink{classComplex}{j}});}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classComplex}{elem}}\ !=\ 0)\ \{}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classComplex}{M\_new}}-\/>set(\mbox{\hyperlink{classComplex}{i}},\ \mbox{\hyperlink{classComplex}{j}},\ \mbox{\hyperlink{classComplex}{elem}});}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \ \ \ \ has\_local\_copy\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \ \ \ \ M\ =\ \mbox{\hyperlink{classComplex}{M\_new}};}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00047\ \ \ \ \ \}}
+\DoxyCodeLine{00048\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keywordtype}{bool}\ has\_local\_copy\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00050\ \ \ \ \ \mbox{\hyperlink{classComplex}{Matrix<element\_T,\ container\_T>}}*\ M;}
+\DoxyCodeLine{00060\ \ \ \ \ \mbox{\hyperlink{classMatrix__proxy_a8f16689a5f35c76073cfe1f46473f84e}{Matrix\_proxy}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex}{Matrix<element\_T,\ container\_T>}}\&\ M,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ r1,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ c1,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ r2,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ c2)\ \ :\ }
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ M(\mbox{\hyperlink{classComplex}{const\_cast}}<\mbox{\hyperlink{classMatrix}{Matrix}}<\mbox{\hyperlink{classComplex}{element\_T}},\ \mbox{\hyperlink{classComplex}{container\_T}}>*>(\&M)),\ r1(r1),\ c1(c1),\ r2(r2),\ c2(c2)\ \{\ \}}
+\DoxyCodeLine{00067\ \ \ \ \ \mbox{\hyperlink{classMatrix__proxy_ae7f7d09d728f9eed710b01570cb1cc54}{\string~Matrix\_proxy}}()\ \{}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (has\_local\_copy\ \&\&\ M\ !=\ \textcolor{keyword}{nullptr})\ \{}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ M;}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00071\ \ \ \ \ \}}
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex}{element\_T}}\&\ \mbox{\hyperlink{classMatrix__proxy_ad032b0b1ec1bf46cee4f133bfeb45c52}{operator()}}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classComplex}{row}},\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classComplex}{col}})\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (M\ ==\ \textcolor{keyword}{nullptr})\ \{}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \mbox{\hyperlink{classEmptyContainerError}{EmptyContainerError}}();}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classComplex}{source\_row}}\ =\ r1\ +\ \mbox{\hyperlink{classComplex}{row}};}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classComplex}{source\_col}}\ =\ c1\ +\ \mbox{\hyperlink{classComplex}{col}};}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classComplex}{source\_row}}\ >\ r2\ ||\ \mbox{\hyperlink{classComplex}{source\_col}}\ >\ c2)\ \{}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \mbox{\hyperlink{classOutOfRangeException}{OutOfRangeException}}(\mbox{\hyperlink{classComplex}{row}},\ \mbox{\hyperlink{classComplex}{col}},\ r2\ -\/\ r1,\ c2\ -\/\ c1);}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (has\_local\_copy)\ \{}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ M-\/>operator()(\mbox{\hyperlink{classComplex}{row}},\ \mbox{\hyperlink{classComplex}{col}});\ }
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ M-\/>operator()(\mbox{\hyperlink{classComplex}{source\_row}},\ \mbox{\hyperlink{classComplex}{source\_col}});}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00095\ \ \ \ \ \}}
+\DoxyCodeLine{00105\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classMatrix__proxy_a7c54aecece61c4d8d26eae92428edcbc}{set}}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classComplex}{row}},\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classComplex}{col}},\ \mbox{\hyperlink{classComplex}{element\_T}}\ \mbox{\hyperlink{classComplex}{value}})\ \{}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (M\ ==\ \textcolor{keyword}{nullptr})\ \{}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \mbox{\hyperlink{classEmptyContainerError}{EmptyContainerError}}();}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classComplex}{source\_row}}\ =\ r1\ +\ \mbox{\hyperlink{classComplex}{row}};}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classComplex}{source\_col}}\ =\ c1\ +\ \mbox{\hyperlink{classComplex}{col}};}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classComplex}{source\_row}}\ >\ r2\ ||\ \mbox{\hyperlink{classComplex}{source\_col}}\ >\ c2)\ \{}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \mbox{\hyperlink{classOutOfRangeException}{OutOfRangeException}}(\mbox{\hyperlink{classComplex}{row}},\ \mbox{\hyperlink{classComplex}{col}},\ r2\ -\/\ r1,\ c2\ -\/\ c1);}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!has\_local\_copy)}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \ \ \ \ copyMatrixSlice();\ }
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ M-\/>set(\mbox{\hyperlink{classComplex}{row}},\ \mbox{\hyperlink{classComplex}{col}},\ \mbox{\hyperlink{classComplex}{value}});}
+\DoxyCodeLine{00117\ \ \ \ \ \}}
+\DoxyCodeLine{00118\ }
+\DoxyCodeLine{00124\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classMatrix__proxy_a8897f204c9e3fe2995ebb4ba9250a761}{clearPointer}}()\ \{}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (has\_local\_copy\ \&\&\ M\ !=\ \textcolor{keyword}{nullptr})\ \{}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ M;}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ this-\/>M\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ has\_local\_copy\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00130\ \ \ \ \ \}}
+\DoxyCodeLine{00131\ \};}
+\DoxyCodeLine{00132\ }
+\DoxyCodeLine{00133\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ element\_T\ =\ \textcolor{keywordtype}{double},\ \textcolor{keyword}{typename}\ container\_T\ =\ std::map<std::pair<\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int},\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}>,\ element\_T>>}
+\DoxyCodeLine{00134\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classMatrix__proxy__row}{Matrix\_proxy\_row}}\ \{}
+\DoxyCodeLine{00135\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00136\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ r,\ c1,\ c2;}
+\DoxyCodeLine{00137\ \ \ \ \ \textcolor{keywordtype}{void}\ copyMatrixSlice()\ \{}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!has\_local\_copy)\ \{}
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Making\ copy!"{}}\ <<\ std::endl;}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classComplex}{Matrix<element\_T,\ container\_T>}}*\ \mbox{\hyperlink{classComplex}{M\_new}}\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classComplex}{Matrix<element\_T,\ container\_T>}}(1,\ c2\ -\/\ c1\ +\ 1,\ M-\/>eps);}
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classComplex}{j}}\ =\ 0;\ \mbox{\hyperlink{classComplex}{j}}\ <\ c2\ -\/\ c1;\ ++\mbox{\hyperlink{classComplex}{j}})\ \{}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classComplex}{element\_T}}\ \mbox{\hyperlink{classComplex}{elem}}\ =\ (*M)(r,\ c1\ +\ \mbox{\hyperlink{classComplex}{j}});}
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classComplex}{elem}}\ !=\ 0)\ \{}
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classComplex}{M\_new}}-\/>set(0,\ \mbox{\hyperlink{classComplex}{j}},\ \mbox{\hyperlink{classComplex}{elem}});}
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ \ \ \ \ has\_local\_copy\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ \ \ \ \ M\ =\ \mbox{\hyperlink{classComplex}{M\_new}};}
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00150\ \ \ \ \ \}}
+\DoxyCodeLine{00151\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00152\ \ \ \ \ \textcolor{keywordtype}{bool}\ has\_local\_copy\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00153\ \ \ \ \ \mbox{\hyperlink{classComplex}{Matrix<element\_T,\ container\_T>}}*\ M;}
+\DoxyCodeLine{00154\ \ \ \ \ }
+\DoxyCodeLine{00155\ \ \ \ \ \mbox{\hyperlink{classMatrix__proxy__row}{Matrix\_proxy\_row}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex}{Matrix<element\_T,\ container\_T>}}\&\ M,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ r,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ c1,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ c2)\ :\ }
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ M(\textcolor{keyword}{const\_cast<}\mbox{\hyperlink{classComplex}{Matrix<element\_T,\ container\_T>}}*\textcolor{keyword}{>}(\&M)),\ r(r),\ c1(c1),\ c2(c2)\ \{\ \}}
+\DoxyCodeLine{00157\ }
+\DoxyCodeLine{00158\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex}{element\_T}}\&\ operator()(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classComplex}{col}})\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (M\ ==\ \textcolor{keyword}{nullptr})\ \{}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \mbox{\hyperlink{classEmptyContainerError}{EmptyContainerError}}();}
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classComplex}{source\_row}}\ =\ r;}
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classComplex}{source\_col}}\ =\ c1\ +\ \mbox{\hyperlink{classComplex}{col}};}
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classComplex}{source\_col}}\ >\ c2)\ \{}
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \mbox{\hyperlink{classOutOfRangeException}{OutOfRangeException}}(\mbox{\hyperlink{classComplex}{col}},\ c2\ -\/\ c1);}
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (has\_local\_copy)\ \{}
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ M-\/>operator()(0,\ \mbox{\hyperlink{classComplex}{col}});\ }
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ M-\/>operator()(\mbox{\hyperlink{classComplex}{source\_row}},\ \mbox{\hyperlink{classComplex}{source\_col}});}
+\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00172\ \ \ \ \ \}}
+\DoxyCodeLine{00173\ \ \ \ \ \textcolor{keywordtype}{void}\ set(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classComplex}{col}},\ \mbox{\hyperlink{classComplex}{element\_T}}\ \mbox{\hyperlink{classComplex}{value}})\ \{}
+\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (M\ ==\ \textcolor{keyword}{nullptr})\ \{}
+\DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \mbox{\hyperlink{classEmptyContainerError}{EmptyContainerError}}();}
+\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classComplex}{source\_row}}\ =\ r;}
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classComplex}{source\_col}}\ =\ c1\ +\ \mbox{\hyperlink{classComplex}{col}};}
+\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classComplex}{source\_col}}\ >\ c2)\ \{}
+\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \mbox{\hyperlink{classOutOfRangeException}{OutOfRangeException}}(\mbox{\hyperlink{classComplex}{col}},\ c2\ -\/\ c1);}
+\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!has\_local\_copy)}
+\DoxyCodeLine{00183\ \ \ \ \ \ \ \ \ \ \ \ \ copyMatrixSlice();\ }
+\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ M-\/>set(0,\ \mbox{\hyperlink{classComplex}{col}},\ \mbox{\hyperlink{classComplex}{value}});}
+\DoxyCodeLine{00185\ \ \ \ \ \}}
+\DoxyCodeLine{00186\ \ \ \ \ \textcolor{keywordtype}{void}\ clearPointer()\ \{}
+\DoxyCodeLine{00187\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (has\_local\_copy\ \&\&\ M\ !=\ \textcolor{keyword}{nullptr})\ \{}
+\DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ M;}
+\DoxyCodeLine{00189\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ M\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00191\ \ \ \ \ \ \ \ \ has\_local\_copy\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00192\ \ \ \ \ \}}
+\DoxyCodeLine{00193\ \};}
+\DoxyCodeLine{00194\ }
+\DoxyCodeLine{00195\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ element\_T\ =\ \textcolor{keywordtype}{double},\ \textcolor{keyword}{typename}\ container\_T\ =\ std::map<std::pair<\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int},\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}>,\ element\_T>>}
+\DoxyCodeLine{00196\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classMatrix__proxy__col}{Matrix\_proxy\_col}}\ \{}
+\DoxyCodeLine{00197\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00198\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ c,\ r1,\ r2;}
+\DoxyCodeLine{00199\ \ \ \ \ \textcolor{keywordtype}{void}\ copyMatrixSlice()\ \{}
+\DoxyCodeLine{00200\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!has\_local\_copy)\ \{}
+\DoxyCodeLine{00201\ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Making\ copy!"{}}\ <<\ std::endl;}
+\DoxyCodeLine{00202\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classComplex}{Matrix<element\_T,\ container\_T>}}*\ \mbox{\hyperlink{classComplex}{M\_new}}\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classComplex}{Matrix<element\_T,\ container\_T>}}(r2\ -\/\ r1\ +\ 1,1,\ M-\/>eps);}
+\DoxyCodeLine{00203\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classComplex}{j}}\ =\ 0;\ \mbox{\hyperlink{classComplex}{j}}\ <\ r2\ -\/\ r1;\ ++\mbox{\hyperlink{classComplex}{j}})\ \{}
+\DoxyCodeLine{00204\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classComplex}{element\_T}}\ \mbox{\hyperlink{classComplex}{elem}}\ =\ (*M)(r1\ +\ \mbox{\hyperlink{classComplex}{j}},\ c);}
+\DoxyCodeLine{00205\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classComplex}{elem}}\ !=\ 0)\ \{}
+\DoxyCodeLine{00206\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classComplex}{M\_new}}-\/>set(\mbox{\hyperlink{classComplex}{j}},\ 0,\ \mbox{\hyperlink{classComplex}{elem}});}
+\DoxyCodeLine{00207\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00208\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00209\ \ \ \ \ \ \ \ \ \ \ \ \ has\_local\_copy\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00210\ \ \ \ \ \ \ \ \ \ \ \ \ M\ =\ \mbox{\hyperlink{classComplex}{M\_new}};}
+\DoxyCodeLine{00211\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00212\ \ \ \ \ \}}
+\DoxyCodeLine{00213\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00214\ \ \ \ \ \textcolor{keywordtype}{bool}\ has\_local\_copy\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00215\ \ \ \ \ \mbox{\hyperlink{classComplex}{Matrix<element\_T,\ container\_T>}}*\ M;}
+\DoxyCodeLine{00216\ \ \ \ \ }
+\DoxyCodeLine{00217\ \ \ \ \ \mbox{\hyperlink{classMatrix__proxy__col}{Matrix\_proxy\_col}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex}{Matrix<element\_T,\ container\_T>}}\&\ M,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ c,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ r1,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ r2)\ :\ }
+\DoxyCodeLine{00218\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ M(\textcolor{keyword}{const\_cast<}\mbox{\hyperlink{classComplex}{Matrix<element\_T,\ container\_T>}}*\textcolor{keyword}{>}(\&M)),\ c(c),\ r1(r1),\ r2(r2)\ \{\ \}}
+\DoxyCodeLine{00219\ }
+\DoxyCodeLine{00220\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex}{element\_T}}\&\ operator()(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classComplex}{row}})\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00221\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (M\ ==\ \textcolor{keyword}{nullptr})\ \{}
+\DoxyCodeLine{00222\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \mbox{\hyperlink{classEmptyContainerError}{EmptyContainerError}}();}
+\DoxyCodeLine{00223\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00224\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classComplex}{source\_row}}\ =\ r1\ +\ \mbox{\hyperlink{classComplex}{row}};}
+\DoxyCodeLine{00225\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classComplex}{source\_col}}\ =\ c;}
+\DoxyCodeLine{00226\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classComplex}{source\_row}}\ >\ r2)\ \{}
+\DoxyCodeLine{00227\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \mbox{\hyperlink{classOutOfRangeException}{OutOfRangeException}}(\mbox{\hyperlink{classComplex}{row}},\ r2\ -\/\ r1);}
+\DoxyCodeLine{00228\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00229\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (has\_local\_copy)\ \{}
+\DoxyCodeLine{00230\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ M-\/>operator()(\mbox{\hyperlink{classComplex}{row}},\ 0);\ }
+\DoxyCodeLine{00231\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00232\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ M-\/>operator()(\mbox{\hyperlink{classComplex}{source\_row}},\ \mbox{\hyperlink{classComplex}{source\_col}});}
+\DoxyCodeLine{00233\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00234\ \ \ \ \ \}}
+\DoxyCodeLine{00235\ }
+\DoxyCodeLine{00236\ \ \ \ \ \textcolor{keywordtype}{void}\ set(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classComplex}{row}},\ \mbox{\hyperlink{classComplex}{element\_T}}\ \mbox{\hyperlink{classComplex}{value}})\ \{}
+\DoxyCodeLine{00237\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (M\ ==\ \textcolor{keyword}{nullptr})\ \{}
+\DoxyCodeLine{00238\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \mbox{\hyperlink{classEmptyContainerError}{EmptyContainerError}}();}
+\DoxyCodeLine{00239\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00240\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classComplex}{source\_row}}\ =\ r1\ +\ \mbox{\hyperlink{classComplex}{row}};}
+\DoxyCodeLine{00241\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classComplex}{source\_col}}\ =\ c;}
+\DoxyCodeLine{00242\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classComplex}{source\_row}}\ >\ r2)\ \{}
+\DoxyCodeLine{00243\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \mbox{\hyperlink{classOutOfRangeException}{OutOfRangeException}}(\mbox{\hyperlink{classComplex}{row}},\ r2\ -\/\ r1);}
+\DoxyCodeLine{00244\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00245\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!has\_local\_copy)}
+\DoxyCodeLine{00246\ \ \ \ \ \ \ \ \ \ \ \ \ copyMatrixSlice();\ }
+\DoxyCodeLine{00247\ \ \ \ \ \ \ \ \ M-\/>set(\mbox{\hyperlink{classComplex}{row}},\ 0,\ \mbox{\hyperlink{classComplex}{value}});}
+\DoxyCodeLine{00248\ \ \ \ \ \}}
+\DoxyCodeLine{00249\ \ \ \ \ \textcolor{keywordtype}{void}\ clearPointer()\ \{}
+\DoxyCodeLine{00250\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (has\_local\_copy\ \&\&\ M\ !=\ \textcolor{keyword}{nullptr})\ \{}
+\DoxyCodeLine{00251\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ M;}
+\DoxyCodeLine{00252\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00253\ \ \ \ \ \ \ \ \ M\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00254\ \ \ \ \ \ \ \ \ has\_local\_copy\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00255\ \ \ \ \ \}}
+\DoxyCodeLine{00256\ \};}
+
+\end{DoxyCode}

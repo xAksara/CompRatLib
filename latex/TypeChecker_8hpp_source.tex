@@ -1,0 +1,20 @@
+\doxysection{Type\+Checker.\+hpp}
+\hypertarget{TypeChecker_8hpp_source}{}\label{TypeChecker_8hpp_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ "{}Rational.hpp"{}}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}Complex.hpp"{}}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00006\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structis__rational}{is\_rational}}\ :\ std::false\_type\ \{\};}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00009\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structis__rational}{is\_rational}}<\mbox{\hyperlink{classRational}{Rational}}<\mbox{\hyperlink{classComplex}{T}}>>\ :\ std::true\_type\ \{\};}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00012\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structis__complex}{is\_complex}}\ :\ std::false\_type\ \{\};}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T1,\ \textcolor{keyword}{typename}\ T2>}
+\DoxyCodeLine{00015\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structis__complex}{is\_complex}}<\mbox{\hyperlink{classComplex}{Complex}}<\mbox{\hyperlink{classComplex}{T1}},\ \mbox{\hyperlink{classComplex}{T2}}>>\ :\ std::true\_type\ \{\};}
+
+\end{DoxyCode}

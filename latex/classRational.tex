@@ -1,0 +1,319 @@
+\doxysection{Rational\texorpdfstring{$<$}{<} numerator\+\_\+T \texorpdfstring{$>$}{>} Class Template Reference}
+\hypertarget{classRational}{}\label{classRational}\index{Rational$<$ numerator\_T $>$@{Rational$<$ numerator\_T $>$}}
+
+
+Represents a rational number with a numerator and a denominator.  
+
+
+
+
+{\ttfamily \#include $<$Rational.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classRational_a8593137861479d56a9dce8646ccd0bb5}{Rational}} (\mbox{\hyperlink{classComplex}{numerator\+\_\+T}} numerator, \mbox{\hyperlink{classComplex}{unsigned}} \mbox{\hyperlink{classComplex}{denominator}})
+\begin{DoxyCompactList}\small\item\em Constructs a rational number from a numerator and a denominator. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classRational_a6e28aa527891b4a348d08da7c4cab071}{Rational}} (\mbox{\hyperlink{classComplex}{numerator\+\_\+T}} numerator)
+\begin{DoxyCompactList}\small\item\em Constructs a rational number with the given numerator and a denominator of 1. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classComplex}{bool}} \mbox{\hyperlink{classRational_a7651c202ba0f26886e6ce6afffc43ace}{is\+Integer}} (\mbox{\hyperlink{classComplex}{const}} \mbox{\hyperlink{classComplex}{char}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{classComplex}{str}})
+\begin{DoxyCompactList}\small\item\em Checks if the given string represents an integer. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classRational_a82a0acaaa93668bae75de36d43f2f071}{Rational}} (\mbox{\hyperlink{classComplex}{const}} \mbox{\hyperlink{classComplex}{char}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{classComplex}{str}})
+\begin{DoxyCompactList}\small\item\em Constructs a rational number from a string representation. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classRational}{Rational}} \mbox{\hyperlink{classRational_a2df0266d9842ccdcdee52e6f154882c0}{make\+\_\+canonical}} () \mbox{\hyperlink{classComplex}{const}}
+\begin{DoxyCompactList}\small\item\em Converts the rational number to its canonical form. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classRational_a1fbeca9c1890623ad866b560e602f9ee}{operator int}} () \mbox{\hyperlink{classComplex}{const}}
+\begin{DoxyCompactList}\small\item\em Converts the rational number to an integer. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classRational_a9e4dad1505ffb906c4127a35af112922}{operator double}} () \mbox{\hyperlink{classComplex}{const}}
+\begin{DoxyCompactList}\small\item\em Converts the rational number to a double. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classComplex}{numerator\+\_\+T}} \mbox{\hyperlink{classRational_a7a3a157680a49eeba670a5595d766259}{floor}} () \mbox{\hyperlink{classComplex}{const}}
+\begin{DoxyCompactList}\small\item\em Rounds the rational number down to the nearest integer. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classComplex}{numerator\+\_\+T}} \mbox{\hyperlink{classRational_a51cd744a82553789c16caf9d72e791c8}{round}} () \mbox{\hyperlink{classComplex}{const}}
+\begin{DoxyCompactList}\small\item\em Rounds the rational number to the nearest integer. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{classRational_ac91be9e4fde54fb5ae5d843927931b4d}{to\+\_\+string}} () \mbox{\hyperlink{classComplex}{const}}
+\begin{DoxyCompactList}\small\item\em Converts the rational number to its string representation. \end{DoxyCompactList}\item 
+\Hypertarget{classRational_ac26204fcdef9bd07105a29be57bfe2b5}\label{classRational_ac26204fcdef9bd07105a29be57bfe2b5} 
+\mbox{\hyperlink{classRational}{Rational}}$<$ \mbox{\hyperlink{classComplex}{numerator\+\_\+T}} $>$ {\bfseries operator-\/} () \mbox{\hyperlink{classComplex}{const}}
+\item 
+\Hypertarget{classRational_aff0f9bc1128a3f52fda1837351b01aaf}\label{classRational_aff0f9bc1128a3f52fda1837351b01aaf} 
+{\footnotesize template$<$\mbox{\hyperlink{classComplex}{typename}} \mbox{\hyperlink{classComplex}{other\+\_\+T}} $>$ }\\\mbox{\hyperlink{classComplex}{bool}} {\bfseries operator==} (\mbox{\hyperlink{classComplex}{const}} \mbox{\hyperlink{classRational}{Rational}}$<$ \mbox{\hyperlink{classComplex}{other\+\_\+T}} $>$ \&\mbox{\hyperlink{classComplex}{other}}) \mbox{\hyperlink{classComplex}{const}}
+\item 
+\Hypertarget{classRational_a745d22a11774cd9142e77fe497471cb8}\label{classRational_a745d22a11774cd9142e77fe497471cb8} 
+{\footnotesize template$<$\mbox{\hyperlink{classComplex}{typename}} \mbox{\hyperlink{classComplex}{other\+\_\+T}} $>$ }\\\mbox{\hyperlink{classComplex}{bool}} {\bfseries operator!=} (\mbox{\hyperlink{classComplex}{const}} \mbox{\hyperlink{classRational}{Rational}}$<$ \mbox{\hyperlink{classComplex}{other\+\_\+T}} $>$ \&\mbox{\hyperlink{classComplex}{other}}) \mbox{\hyperlink{classComplex}{const}}
+\item 
+\Hypertarget{classRational_af4241798929aa90a2ee58e56748f4601}\label{classRational_af4241798929aa90a2ee58e56748f4601} 
+{\footnotesize template$<$\mbox{\hyperlink{classComplex}{typename}} \mbox{\hyperlink{classComplex}{other\+\_\+T}} $>$ }\\\mbox{\hyperlink{classComplex}{bool}} {\bfseries operator$<$} (\mbox{\hyperlink{classComplex}{const}} \mbox{\hyperlink{classRational}{Rational}}$<$ \mbox{\hyperlink{classComplex}{other\+\_\+T}} $>$ \&\mbox{\hyperlink{classComplex}{other}}) \mbox{\hyperlink{classComplex}{const}}
+\item 
+\Hypertarget{classRational_a49b9a99257a7a3102b7dd5d2f63b2117}\label{classRational_a49b9a99257a7a3102b7dd5d2f63b2117} 
+{\footnotesize template$<$\mbox{\hyperlink{classComplex}{typename}} \mbox{\hyperlink{classComplex}{other\+\_\+T}} $>$ }\\\mbox{\hyperlink{classComplex}{bool}} {\bfseries operator$<$=} (\mbox{\hyperlink{classComplex}{const}} \mbox{\hyperlink{classRational}{Rational}}$<$ \mbox{\hyperlink{classComplex}{other\+\_\+T}} $>$ \&\mbox{\hyperlink{classComplex}{other}}) \mbox{\hyperlink{classComplex}{const}}
+\item 
+\Hypertarget{classRational_a6065c4533dfad9f2cbff094a90a5e943}\label{classRational_a6065c4533dfad9f2cbff094a90a5e943} 
+{\footnotesize template$<$\mbox{\hyperlink{classComplex}{typename}} \mbox{\hyperlink{classComplex}{other\+\_\+T}} $>$ }\\\mbox{\hyperlink{classComplex}{bool}} {\bfseries operator$>$} (\mbox{\hyperlink{classComplex}{const}} \mbox{\hyperlink{classRational}{Rational}}$<$ \mbox{\hyperlink{classComplex}{other\+\_\+T}} $>$ \&\mbox{\hyperlink{classComplex}{other}}) \mbox{\hyperlink{classComplex}{const}}
+\item 
+\Hypertarget{classRational_a59b418b66cade28b97aabed6fd5a7d59}\label{classRational_a59b418b66cade28b97aabed6fd5a7d59} 
+{\footnotesize template$<$\mbox{\hyperlink{classComplex}{typename}} \mbox{\hyperlink{classComplex}{other\+\_\+T}} $>$ }\\\mbox{\hyperlink{classComplex}{bool}} {\bfseries operator$>$=} (\mbox{\hyperlink{classComplex}{const}} \mbox{\hyperlink{classRational}{Rational}}$<$ \mbox{\hyperlink{classComplex}{other\+\_\+T}} $>$ \&\mbox{\hyperlink{classComplex}{other}}) \mbox{\hyperlink{classComplex}{const}}
+\item 
+\Hypertarget{classRational_aabc14b9c205316406cc906c649bf2f15}\label{classRational_aabc14b9c205316406cc906c649bf2f15} 
+{\footnotesize template$<$\mbox{\hyperlink{classComplex}{typename}} \mbox{\hyperlink{classComplex}{other\+\_\+T}} $>$ }\\\mbox{\hyperlink{classRational}{Rational}} {\bfseries operator+} (\mbox{\hyperlink{classComplex}{const}} \mbox{\hyperlink{classRational}{Rational}}$<$ \mbox{\hyperlink{classComplex}{other\+\_\+T}} $>$ \&\mbox{\hyperlink{classComplex}{other}}) \mbox{\hyperlink{classComplex}{const}}
+\item 
+\Hypertarget{classRational_a062c134e46c17f5fb8f870a89d1634c4}\label{classRational_a062c134e46c17f5fb8f870a89d1634c4} 
+{\footnotesize template$<$\mbox{\hyperlink{classComplex}{typename}} \mbox{\hyperlink{classComplex}{other\+\_\+T}} $>$ }\\\mbox{\hyperlink{classRational}{Rational}}$<$ \mbox{\hyperlink{classComplex}{numerator\+\_\+T}} $>$ {\bfseries operator-\/} (\mbox{\hyperlink{classComplex}{const}} \mbox{\hyperlink{classRational}{Rational}}$<$ \mbox{\hyperlink{classComplex}{other\+\_\+T}} $>$ \&\mbox{\hyperlink{classComplex}{other}}) \mbox{\hyperlink{classComplex}{const}}
+\item 
+\Hypertarget{classRational_aef6d032447775c6a3fee3a0e221fb5b7}\label{classRational_aef6d032447775c6a3fee3a0e221fb5b7} 
+{\footnotesize template$<$\mbox{\hyperlink{classComplex}{typename}} \mbox{\hyperlink{classComplex}{other\+\_\+T}} $>$ }\\\mbox{\hyperlink{classRational}{Rational}}$<$ \mbox{\hyperlink{classComplex}{numerator\+\_\+T}} $>$ {\bfseries operator\texorpdfstring{$\ast$}{*}} (\mbox{\hyperlink{classComplex}{const}} \mbox{\hyperlink{classRational}{Rational}}$<$ \mbox{\hyperlink{classComplex}{other\+\_\+T}} $>$ \&\mbox{\hyperlink{classComplex}{other}}) \mbox{\hyperlink{classComplex}{const}}
+\item 
+\Hypertarget{classRational_acbc23236cdd12e9fdc8d6bb2f0357bb1}\label{classRational_acbc23236cdd12e9fdc8d6bb2f0357bb1} 
+{\footnotesize template$<$\mbox{\hyperlink{classComplex}{typename}} \mbox{\hyperlink{classComplex}{other\+\_\+T}} $>$ }\\\mbox{\hyperlink{classRational}{Rational}}$<$ \mbox{\hyperlink{classComplex}{numerator\+\_\+T}} $>$ {\bfseries operator/} (\mbox{\hyperlink{classComplex}{const}} \mbox{\hyperlink{classRational}{Rational}}$<$ \mbox{\hyperlink{classComplex}{other\+\_\+T}} $>$ \&\mbox{\hyperlink{classComplex}{other}}) \mbox{\hyperlink{classComplex}{const}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classComplex}{static}} \mbox{\hyperlink{classComplex}{numerator\+\_\+T}} \mbox{\hyperlink{classRational_a8a963e778123e191feccb2db589766cc}{gcd}} (\mbox{\hyperlink{classComplex}{numerator\+\_\+T}} \mbox{\hyperlink{classComplex}{a}}, \mbox{\hyperlink{classComplex}{unsigned}} \mbox{\hyperlink{classComplex}{long}} \mbox{\hyperlink{classComplex}{long}} \mbox{\hyperlink{classComplex}{b}})
+\begin{DoxyCompactList}\small\item\em Computes the greatest common divisor (GCD) of two numbers. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classRational_a9af86af9d44a6e954c94f724c4ae0c9a}\label{classRational_a9af86af9d44a6e954c94f724c4ae0c9a} 
+\mbox{\hyperlink{classComplex}{numerator\+\_\+T}} {\bfseries \+\_\+numerator}
+\begin{DoxyCompactList}\small\item\em The numerator of the rational number. \end{DoxyCompactList}\item 
+\Hypertarget{classRational_a854fd139381a4612f13a47968bbb7f71}\label{classRational_a854fd139381a4612f13a47968bbb7f71} 
+\mbox{\hyperlink{classComplex}{unsigned}} \mbox{\hyperlink{classComplex}{long}} \mbox{\hyperlink{classComplex}{long}} {\bfseries \+\_\+denominator}
+\begin{DoxyCompactList}\small\item\em The denominator of the rational number. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classRational_a6ea33e15e80e544001fbc18e008d5aa0}\label{classRational_a6ea33e15e80e544001fbc18e008d5aa0} 
+\mbox{\hyperlink{classRational}{Rational}} {\bfseries abs} (\mbox{\hyperlink{classComplex}{const}} \mbox{\hyperlink{classRational}{Rational}} \&r)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$\mbox{\hyperlink{classComplex}{typename}} \mbox{\hyperlink{classComplex}{numerator\+\_\+T}}$>$\newline
+class Rational$<$ numerator\+\_\+\+T $>$}
+Represents a rational number with a numerator and a denominator. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em numerator\+\_\+T} & The type of the numerator, typically an integer type. \\
+\hline
+\end{DoxyTemplParams}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classRational_a8593137861479d56a9dce8646ccd0bb5}\label{classRational_a8593137861479d56a9dce8646ccd0bb5} 
+\index{Rational$<$ numerator\_T $>$@{Rational$<$ numerator\_T $>$}!Rational@{Rational}}
+\index{Rational@{Rational}!Rational$<$ numerator\_T $>$@{Rational$<$ numerator\_T $>$}}
+\doxysubsubsection{\texorpdfstring{Rational()}{Rational()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classComplex}{typename}} \mbox{\hyperlink{classComplex}{numerator\+\_\+T}} $>$ \\
+\mbox{\hyperlink{classRational}{Rational}}$<$ \mbox{\hyperlink{classComplex}{numerator\+\_\+T}} $>$\mbox{\hyperlink{classRational}{\+::\+Rational}} (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classComplex}{numerator\+\_\+T}}}]{numerator,  }\item[{\mbox{\hyperlink{classComplex}{unsigned}}}]{denominator }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Constructs a rational number from a numerator and a denominator. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em numerator} & The numerator of the rational number. \\
+\hline
+{\em denominator} & The denominator of the rational number. Must not be zero. \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \doxylink{classDivisionByZeroException}{Division\+By\+Zero\+Exception}} & If the denominator is zero. \\
+\hline
+\end{DoxyExceptions}
+\Hypertarget{classRational_a6e28aa527891b4a348d08da7c4cab071}\label{classRational_a6e28aa527891b4a348d08da7c4cab071} 
+\index{Rational$<$ numerator\_T $>$@{Rational$<$ numerator\_T $>$}!Rational@{Rational}}
+\index{Rational@{Rational}!Rational$<$ numerator\_T $>$@{Rational$<$ numerator\_T $>$}}
+\doxysubsubsection{\texorpdfstring{Rational()}{Rational()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classComplex}{typename}} \mbox{\hyperlink{classComplex}{numerator\+\_\+T}} $>$ \\
+\mbox{\hyperlink{classRational}{Rational}}$<$ \mbox{\hyperlink{classComplex}{numerator\+\_\+T}} $>$\mbox{\hyperlink{classRational}{\+::\+Rational}} (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classComplex}{numerator\+\_\+T}}}]{numerator }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Constructs a rational number with the given numerator and a denominator of 1. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em numerator} & The numerator of the rational number. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classRational_a82a0acaaa93668bae75de36d43f2f071}\label{classRational_a82a0acaaa93668bae75de36d43f2f071} 
+\index{Rational$<$ numerator\_T $>$@{Rational$<$ numerator\_T $>$}!Rational@{Rational}}
+\index{Rational@{Rational}!Rational$<$ numerator\_T $>$@{Rational$<$ numerator\_T $>$}}
+\doxysubsubsection{\texorpdfstring{Rational()}{Rational()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classComplex}{typename}} \mbox{\hyperlink{classComplex}{numerator\+\_\+T}} $>$ \\
+\mbox{\hyperlink{classRational}{Rational}}$<$ \mbox{\hyperlink{classComplex}{numerator\+\_\+T}} $>$\mbox{\hyperlink{classRational}{\+::\+Rational}} (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classComplex}{const}} \mbox{\hyperlink{classComplex}{char}} \texorpdfstring{$\ast$}{*}}]{str }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}
+
+
+
+Constructs a rational number from a string representation. 
+
+The string can be either a single integer (\doxylink{classComplex_ac2c1c571a855202d809d3df0f3d67af2}{e.\+g}., "{}5"{}) or a fraction (\doxylink{classComplex_ac2c1c571a855202d809d3df0f3d67af2}{e.\+g}., "{}5/7"{}).
+
+
+\begin{DoxyParams}{Parameters}
+{\em str} & The string representation of the rational number. \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \doxylink{classDivisionByZeroException}{Division\+By\+Zero\+Exception}} & If the denominator is zero. \\
+\hline
+{\em \doxylink{classInvalidArgument}{Invalid\+Argument}} & If the string is not a valid integer or fraction. \\
+\hline
+\end{DoxyExceptions}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classRational_a7a3a157680a49eeba670a5595d766259}\label{classRational_a7a3a157680a49eeba670a5595d766259} 
+\index{Rational$<$ numerator\_T $>$@{Rational$<$ numerator\_T $>$}!floor@{floor}}
+\index{floor@{floor}!Rational$<$ numerator\_T $>$@{Rational$<$ numerator\_T $>$}}
+\doxysubsubsection{\texorpdfstring{floor()}{floor()}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classComplex}{typename}} \mbox{\hyperlink{classComplex}{numerator\+\_\+T}} $>$ \\
+\mbox{\hyperlink{classComplex}{numerator\+\_\+T}} \mbox{\hyperlink{classRational}{Rational}}$<$ \mbox{\hyperlink{classComplex}{numerator\+\_\+T}} $>$\+::floor (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Rounds the rational number down to the nearest integer. 
+
+This method uses integer division to calculate the largest integer less than or equal to the rational number.
+
+\begin{DoxyReturn}{Returns}
+numerator\+\_\+T The largest integer less than or equal to the rational number. 
+\end{DoxyReturn}
+\Hypertarget{classRational_a8a963e778123e191feccb2db589766cc}\label{classRational_a8a963e778123e191feccb2db589766cc} 
+\index{Rational$<$ numerator\_T $>$@{Rational$<$ numerator\_T $>$}!gcd@{gcd}}
+\index{gcd@{gcd}!Rational$<$ numerator\_T $>$@{Rational$<$ numerator\_T $>$}}
+\doxysubsubsection{\texorpdfstring{gcd()}{gcd()}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classComplex}{typename}} \mbox{\hyperlink{classComplex}{numerator\+\_\+T}} $>$ \\
+\mbox{\hyperlink{classComplex}{static}} \mbox{\hyperlink{classComplex}{numerator\+\_\+T}} \mbox{\hyperlink{classRational}{Rational}}$<$ \mbox{\hyperlink{classComplex}{numerator\+\_\+T}} $>$\+::gcd (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classComplex}{numerator\+\_\+T}}}]{a,  }\item[{\mbox{\hyperlink{classComplex}{unsigned}} \mbox{\hyperlink{classComplex}{long}} \mbox{\hyperlink{classComplex}{long}}}]{b }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Computes the greatest common divisor (GCD) of two numbers. 
+
+This function calculates the GCD of two numbers using the Euclidean algorithm. The GCD is always a positive number.
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em numerator\+\_\+T} & The type of the first number, typically an integer type. \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em a} & The first number (can be negative or positive). \\
+\hline
+{\em b} & The second number (must be non-\/negative). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+numerator\+\_\+T The greatest common divisor of the two numbers. 
+\end{DoxyReturn}
+\Hypertarget{classRational_a7651c202ba0f26886e6ce6afffc43ace}\label{classRational_a7651c202ba0f26886e6ce6afffc43ace} 
+\index{Rational$<$ numerator\_T $>$@{Rational$<$ numerator\_T $>$}!isInteger@{isInteger}}
+\index{isInteger@{isInteger}!Rational$<$ numerator\_T $>$@{Rational$<$ numerator\_T $>$}}
+\doxysubsubsection{\texorpdfstring{isInteger()}{isInteger()}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classComplex}{typename}} \mbox{\hyperlink{classComplex}{numerator\+\_\+T}} $>$ \\
+\mbox{\hyperlink{classComplex}{bool}} \mbox{\hyperlink{classRational}{Rational}}$<$ \mbox{\hyperlink{classComplex}{numerator\+\_\+T}} $>$\+::is\+Integer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classComplex}{const}} \mbox{\hyperlink{classComplex}{char}} \texorpdfstring{$\ast$}{*}}]{str }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Checks if the given string represents an integer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em str} & The string to check. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true If the string represents an integer. 
+
+false Otherwise. 
+\end{DoxyReturn}
+\Hypertarget{classRational_a2df0266d9842ccdcdee52e6f154882c0}\label{classRational_a2df0266d9842ccdcdee52e6f154882c0} 
+\index{Rational$<$ numerator\_T $>$@{Rational$<$ numerator\_T $>$}!make\_canonical@{make\_canonical}}
+\index{make\_canonical@{make\_canonical}!Rational$<$ numerator\_T $>$@{Rational$<$ numerator\_T $>$}}
+\doxysubsubsection{\texorpdfstring{make\_canonical()}{make\_canonical()}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classComplex}{typename}} \mbox{\hyperlink{classComplex}{numerator\+\_\+T}} $>$ \\
+\mbox{\hyperlink{classRational}{Rational}} \mbox{\hyperlink{classRational}{Rational}}$<$ \mbox{\hyperlink{classComplex}{numerator\+\_\+T}} $>$\+::make\+\_\+canonical (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Converts the rational number to its canonical form. 
+
+A rational number is in canonical form if its numerator and denominator are reduced to their smallest values while maintaining equivalence. For example, "{}4/6"{} is reduced to "{}2/3"{}.
+
+\begin{DoxyReturn}{Returns}
+Rational$<$numerator\+\_\+\+T$>$ A new \doxylink{classRational}{Rational} object in canonical form. 
+\end{DoxyReturn}
+\Hypertarget{classRational_a9e4dad1505ffb906c4127a35af112922}\label{classRational_a9e4dad1505ffb906c4127a35af112922} 
+\index{Rational$<$ numerator\_T $>$@{Rational$<$ numerator\_T $>$}!operator double@{operator double}}
+\index{operator double@{operator double}!Rational$<$ numerator\_T $>$@{Rational$<$ numerator\_T $>$}}
+\doxysubsubsection{\texorpdfstring{operator double()}{operator double()}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classComplex}{typename}} \mbox{\hyperlink{classComplex}{numerator\+\_\+T}} $>$ \\
+\mbox{\hyperlink{classRational}{Rational}}$<$ \mbox{\hyperlink{classComplex}{numerator\+\_\+T}} $>$\mbox{\hyperlink{classComplex}{\+::operator}} \mbox{\hyperlink{classComplex}{double}} (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Converts the rational number to a double. 
+
+The conversion divides the numerator by the denominator as floating-\/point numbers.
+
+\begin{DoxyReturn}{Returns}
+double The double representation of the rational number. 
+\end{DoxyReturn}
+\Hypertarget{classRational_a1fbeca9c1890623ad866b560e602f9ee}\label{classRational_a1fbeca9c1890623ad866b560e602f9ee} 
+\index{Rational$<$ numerator\_T $>$@{Rational$<$ numerator\_T $>$}!operator int@{operator int}}
+\index{operator int@{operator int}!Rational$<$ numerator\_T $>$@{Rational$<$ numerator\_T $>$}}
+\doxysubsubsection{\texorpdfstring{operator int()}{operator int()}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classComplex}{typename}} \mbox{\hyperlink{classComplex}{numerator\+\_\+T}} $>$ \\
+\mbox{\hyperlink{classRational}{Rational}}$<$ \mbox{\hyperlink{classComplex}{numerator\+\_\+T}} $>$\mbox{\hyperlink{classComplex}{\+::operator}} \mbox{\hyperlink{classComplex}{int}} (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Converts the rational number to an integer. 
+
+The conversion truncates any fractional part, effectively performing floor division for positive numbers and truncation for negative numbers.
+
+\begin{DoxyReturn}{Returns}
+int The integer representation of the rational number. 
+\end{DoxyReturn}
+\Hypertarget{classRational_a51cd744a82553789c16caf9d72e791c8}\label{classRational_a51cd744a82553789c16caf9d72e791c8} 
+\index{Rational$<$ numerator\_T $>$@{Rational$<$ numerator\_T $>$}!round@{round}}
+\index{round@{round}!Rational$<$ numerator\_T $>$@{Rational$<$ numerator\_T $>$}}
+\doxysubsubsection{\texorpdfstring{round()}{round()}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classComplex}{typename}} \mbox{\hyperlink{classComplex}{numerator\+\_\+T}} $>$ \\
+\mbox{\hyperlink{classComplex}{numerator\+\_\+T}} \mbox{\hyperlink{classRational}{Rational}}$<$ \mbox{\hyperlink{classComplex}{numerator\+\_\+T}} $>$\+::round (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Rounds the rational number to the nearest integer. 
+
+This method adds \doxylink{classComplex_ac2c1c571a855202d809d3df0f3d67af2}{0.\+5} to the rational number for positive numbers, subtracts \doxylink{classComplex_ac2c1c571a855202d809d3df0f3d67af2}{0.\+5} for negative numbers, and then truncates the result.
+
+\begin{DoxyReturn}{Returns}
+numerator\+\_\+T The nearest integer to the rational number. 
+\end{DoxyReturn}
+\Hypertarget{classRational_ac91be9e4fde54fb5ae5d843927931b4d}\label{classRational_ac91be9e4fde54fb5ae5d843927931b4d} 
+\index{Rational$<$ numerator\_T $>$@{Rational$<$ numerator\_T $>$}!to\_string@{to\_string}}
+\index{to\_string@{to\_string}!Rational$<$ numerator\_T $>$@{Rational$<$ numerator\_T $>$}}
+\doxysubsubsection{\texorpdfstring{to\_string()}{to\_string()}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classComplex}{typename}} \mbox{\hyperlink{classComplex}{numerator\+\_\+T}} $>$ \\
+std\+::string \mbox{\hyperlink{classRational}{Rational}}$<$ \mbox{\hyperlink{classComplex}{numerator\+\_\+T}} $>$\+::to\+\_\+string (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Converts the rational number to its string representation. 
+
+The string representation is in the form "{}numerator/denominator"{}. For example, a rational number with numerator 3 and denominator 4 will be represented as "{}3/4"{}.
+
+\begin{DoxyReturn}{Returns}
+std\+::string The string representation of the rational number. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Rational.\+hpp\end{DoxyCompactItemize}

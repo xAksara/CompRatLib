@@ -1,0 +1,169 @@
+\doxysection{Matrix\+\_\+proxy\texorpdfstring{$<$}{<} element\+\_\+T, container\+\_\+T \texorpdfstring{$>$}{>} Class Template Reference}
+\hypertarget{classMatrix__proxy}{}\label{classMatrix__proxy}\index{Matrix\_proxy$<$ element\_T, container\_T $>$@{Matrix\_proxy$<$ element\_T, container\_T $>$}}
+
+
+Provides a proxy object to manipulate a slice of a larger matrix.  
+
+
+
+
+{\ttfamily \#include $<$Matrix\+\_\+proxy.\+hpp$>$}
+
+
+
+Collaboration diagram for Matrix\+\_\+proxy\texorpdfstring{$<$}{<} element\+\_\+T, container\+\_\+T \texorpdfstring{$>$}{>}\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=251pt]{classMatrix__proxy__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classMatrix__proxy_a8f16689a5f35c76073cfe1f46473f84e}{Matrix\+\_\+proxy}} (\mbox{\hyperlink{classComplex}{const}} \mbox{\hyperlink{classMatrix}{Matrix}}$<$ \mbox{\hyperlink{classComplex}{element\+\_\+T}}, \mbox{\hyperlink{classComplex}{container\+\_\+T}} $>$ \&M, \mbox{\hyperlink{classComplex}{unsigned}} \mbox{\hyperlink{classComplex}{int}} r1, \mbox{\hyperlink{classComplex}{unsigned}} \mbox{\hyperlink{classComplex}{int}} c1, \mbox{\hyperlink{classComplex}{unsigned}} \mbox{\hyperlink{classComplex}{int}} r2, \mbox{\hyperlink{classComplex}{unsigned}} \mbox{\hyperlink{classComplex}{int}} c2)
+\begin{DoxyCompactList}\small\item\em Constructs a proxy object for a slice of a matrix. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classMatrix__proxy_ae7f7d09d728f9eed710b01570cb1cc54}{\texorpdfstring{$\sim$}{\string~}\+Matrix\+\_\+proxy}} ()
+\begin{DoxyCompactList}\small\item\em Destructor for the proxy object. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classComplex}{const}} \mbox{\hyperlink{classComplex}{element\+\_\+T}} \& \mbox{\hyperlink{classMatrix__proxy_ad032b0b1ec1bf46cee4f133bfeb45c52}{operator()}} (\mbox{\hyperlink{classComplex}{unsigned}} \mbox{\hyperlink{classComplex}{int}} \mbox{\hyperlink{classComplex}{row}}, \mbox{\hyperlink{classComplex}{unsigned}} \mbox{\hyperlink{classComplex}{int}} \mbox{\hyperlink{classComplex}{col}}) \mbox{\hyperlink{classComplex}{const}}
+\begin{DoxyCompactList}\small\item\em Accesses an element within the proxy slice. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classComplex}{void}} \mbox{\hyperlink{classMatrix__proxy_a7c54aecece61c4d8d26eae92428edcbc}{set}} (\mbox{\hyperlink{classComplex}{unsigned}} \mbox{\hyperlink{classComplex}{int}} \mbox{\hyperlink{classComplex}{row}}, \mbox{\hyperlink{classComplex}{unsigned}} \mbox{\hyperlink{classComplex}{int}} \mbox{\hyperlink{classComplex}{col}}, \mbox{\hyperlink{classComplex}{element\+\_\+T}} \mbox{\hyperlink{classComplex}{value}})
+\begin{DoxyCompactList}\small\item\em Sets an element within the proxy slice. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classComplex}{void}} \mbox{\hyperlink{classMatrix__proxy_a8897f204c9e3fe2995ebb4ba9250a761}{clear\+Pointer}} ()
+\begin{DoxyCompactList}\small\item\em Clears the internal matrix pointer and deletes the local copy if it exists. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classMatrix__proxy_a2a9e86b40edbc7e0b53f4e2ddb641527}\label{classMatrix__proxy_a2a9e86b40edbc7e0b53f4e2ddb641527} 
+\mbox{\hyperlink{classComplex}{bool}} {\bfseries has\+\_\+local\+\_\+copy} = \mbox{\hyperlink{classComplex}{false}}
+\item 
+\Hypertarget{classMatrix__proxy_a76c1614f62a8c315e64d4b6e94c14895}\label{classMatrix__proxy_a76c1614f62a8c315e64d4b6e94c14895} 
+\mbox{\hyperlink{classMatrix}{Matrix}}$<$ \mbox{\hyperlink{classComplex}{element\+\_\+T}}, \mbox{\hyperlink{classComplex}{container\+\_\+T}} $>$ \texorpdfstring{$\ast$}{*} {\bfseries M}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$\mbox{\hyperlink{classComplex}{typename}} \mbox{\hyperlink{classComplex}{element\+\_\+T}} = double, \mbox{\hyperlink{classComplex}{typename}} \mbox{\hyperlink{classComplex}{container\+\_\+T}} = std\+::map$<$std\+::pair$<$unsigned int, unsigned int$>$, element\+\_\+\+T$>$$>$\newline
+class Matrix\+\_\+proxy$<$ element\+\_\+\+T, container\+\_\+\+T $>$}
+Provides a proxy object to manipulate a slice of a larger matrix. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em element\+\_\+T} & The type of elements stored in the matrix (default\+: double). \\
+\hline
+{\em container\+\_\+T} & The type of container used to store matrix elements (default\+: std\+::map\texorpdfstring{$<$}{<}std\+::pair$<$unsigned int, unsigned int$>$, element\+\_\+T\texorpdfstring{$>$}{>}).\\
+\hline
+\end{DoxyTemplParams}
+The {\ttfamily \doxylink{classMatrix__proxy}{Matrix\+\_\+proxy}} class represents a submatrix (slice) of a larger matrix. It enables both read and write access to elements within the defined slice. Changes made to the proxy are reflected in the original matrix unless a local copy is made. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classMatrix__proxy_a8f16689a5f35c76073cfe1f46473f84e}\label{classMatrix__proxy_a8f16689a5f35c76073cfe1f46473f84e} 
+\index{Matrix\_proxy$<$ element\_T, container\_T $>$@{Matrix\_proxy$<$ element\_T, container\_T $>$}!Matrix\_proxy@{Matrix\_proxy}}
+\index{Matrix\_proxy@{Matrix\_proxy}!Matrix\_proxy$<$ element\_T, container\_T $>$@{Matrix\_proxy$<$ element\_T, container\_T $>$}}
+\doxysubsubsection{\texorpdfstring{Matrix\_proxy()}{Matrix\_proxy()}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classComplex}{typename}} \mbox{\hyperlink{classComplex}{element\+\_\+T}}  = double, \mbox{\hyperlink{classComplex}{typename}} \mbox{\hyperlink{classComplex}{container\+\_\+T}}  = std\+::map$<$std\+::pair$<$unsigned int, unsigned int$>$, element\+\_\+\+T$>$$>$ \\
+\mbox{\hyperlink{classMatrix__proxy}{Matrix\+\_\+proxy}}$<$ \mbox{\hyperlink{classComplex}{element\+\_\+T}}, \mbox{\hyperlink{classComplex}{container\+\_\+T}} $>$\mbox{\hyperlink{classMatrix__proxy}{\+::\+Matrix\+\_\+proxy}} (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classComplex}{const}} \mbox{\hyperlink{classMatrix}{Matrix}}$<$ \mbox{\hyperlink{classComplex}{element\+\_\+T}}, \mbox{\hyperlink{classComplex}{container\+\_\+T}} $>$ \&}]{M,  }\item[{\mbox{\hyperlink{classComplex}{unsigned}} \mbox{\hyperlink{classComplex}{int}}}]{r1,  }\item[{\mbox{\hyperlink{classComplex}{unsigned}} \mbox{\hyperlink{classComplex}{int}}}]{c1,  }\item[{\mbox{\hyperlink{classComplex}{unsigned}} \mbox{\hyperlink{classComplex}{int}}}]{r2,  }\item[{\mbox{\hyperlink{classComplex}{unsigned}} \mbox{\hyperlink{classComplex}{int}}}]{c2 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Constructs a proxy object for a slice of a matrix. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em M} & The original matrix from which the slice is extracted. \\
+\hline
+{\em r1} & The starting row of the slice. \\
+\hline
+{\em c1} & The starting column of the slice. \\
+\hline
+{\em r2} & The ending row of the slice. \\
+\hline
+{\em c2} & The ending column of the slice. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classMatrix__proxy_ae7f7d09d728f9eed710b01570cb1cc54}\label{classMatrix__proxy_ae7f7d09d728f9eed710b01570cb1cc54} 
+\index{Matrix\_proxy$<$ element\_T, container\_T $>$@{Matrix\_proxy$<$ element\_T, container\_T $>$}!````~Matrix\_proxy@{\texorpdfstring{$\sim$}{\string~}Matrix\_proxy}}
+\index{````~Matrix\_proxy@{\texorpdfstring{$\sim$}{\string~}Matrix\_proxy}!Matrix\_proxy$<$ element\_T, container\_T $>$@{Matrix\_proxy$<$ element\_T, container\_T $>$}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}Matrix\_proxy()}{\string~Matrix\_proxy()}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classComplex}{typename}} \mbox{\hyperlink{classComplex}{element\+\_\+T}}  = double, \mbox{\hyperlink{classComplex}{typename}} \mbox{\hyperlink{classComplex}{container\+\_\+T}}  = std\+::map$<$std\+::pair$<$unsigned int, unsigned int$>$, element\+\_\+\+T$>$$>$ \\
+\mbox{\hyperlink{classMatrix__proxy}{Matrix\+\_\+proxy}}$<$ \mbox{\hyperlink{classComplex}{element\+\_\+T}}, \mbox{\hyperlink{classComplex}{container\+\_\+T}} $>$\+::\texorpdfstring{$\sim$}{\string~}\mbox{\hyperlink{classMatrix__proxy}{Matrix\+\_\+proxy}} (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Destructor for the proxy object. 
+
+If a local copy of the matrix has been created, it is properly deallocated to avoid memory leaks. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classMatrix__proxy_a8897f204c9e3fe2995ebb4ba9250a761}\label{classMatrix__proxy_a8897f204c9e3fe2995ebb4ba9250a761} 
+\index{Matrix\_proxy$<$ element\_T, container\_T $>$@{Matrix\_proxy$<$ element\_T, container\_T $>$}!clearPointer@{clearPointer}}
+\index{clearPointer@{clearPointer}!Matrix\_proxy$<$ element\_T, container\_T $>$@{Matrix\_proxy$<$ element\_T, container\_T $>$}}
+\doxysubsubsection{\texorpdfstring{clearPointer()}{clearPointer()}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classComplex}{typename}} \mbox{\hyperlink{classComplex}{element\+\_\+T}}  = double, \mbox{\hyperlink{classComplex}{typename}} \mbox{\hyperlink{classComplex}{container\+\_\+T}}  = std\+::map$<$std\+::pair$<$unsigned int, unsigned int$>$, element\+\_\+\+T$>$$>$ \\
+\mbox{\hyperlink{classComplex}{void}} \mbox{\hyperlink{classMatrix__proxy}{Matrix\+\_\+proxy}}$<$ \mbox{\hyperlink{classComplex}{element\+\_\+T}}, \mbox{\hyperlink{classComplex}{container\+\_\+T}} $>$\+::clear\+Pointer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Clears the internal matrix pointer and deletes the local copy if it exists. 
+
+After calling this method, the proxy object becomes invalid and cannot be used. \Hypertarget{classMatrix__proxy_ad032b0b1ec1bf46cee4f133bfeb45c52}\label{classMatrix__proxy_ad032b0b1ec1bf46cee4f133bfeb45c52} 
+\index{Matrix\_proxy$<$ element\_T, container\_T $>$@{Matrix\_proxy$<$ element\_T, container\_T $>$}!operator()@{operator()}}
+\index{operator()@{operator()}!Matrix\_proxy$<$ element\_T, container\_T $>$@{Matrix\_proxy$<$ element\_T, container\_T $>$}}
+\doxysubsubsection{\texorpdfstring{operator()()}{operator()()}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classComplex}{typename}} \mbox{\hyperlink{classComplex}{element\+\_\+T}}  = double, \mbox{\hyperlink{classComplex}{typename}} \mbox{\hyperlink{classComplex}{container\+\_\+T}}  = std\+::map$<$std\+::pair$<$unsigned int, unsigned int$>$, element\+\_\+\+T$>$$>$ \\
+\mbox{\hyperlink{classComplex}{const}} \mbox{\hyperlink{classComplex}{element\+\_\+T}} \& \mbox{\hyperlink{classMatrix__proxy}{Matrix\+\_\+proxy}}$<$ \mbox{\hyperlink{classComplex}{element\+\_\+T}}, \mbox{\hyperlink{classComplex}{container\+\_\+T}} $>$\mbox{\hyperlink{classComplex}{\+::operator}}() (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classComplex}{unsigned}} \mbox{\hyperlink{classComplex}{int}}}]{row,  }\item[{\mbox{\hyperlink{classComplex}{unsigned}} \mbox{\hyperlink{classComplex}{int}}}]{col }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Accesses an element within the proxy slice. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em row} & The row index of the element relative to the slice. \\
+\hline
+{\em col} & The column index of the element relative to the slice. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A constant reference to the requested element. 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \doxylink{classEmptyContainerError}{Empty\+Container\+Error}} & If the matrix is null. \\
+\hline
+{\em \doxylink{classOutOfRangeException}{Out\+Of\+Range\+Exception}} & If the requested indices are out of bounds for the slice. \\
+\hline
+\end{DoxyExceptions}
+\Hypertarget{classMatrix__proxy_a7c54aecece61c4d8d26eae92428edcbc}\label{classMatrix__proxy_a7c54aecece61c4d8d26eae92428edcbc} 
+\index{Matrix\_proxy$<$ element\_T, container\_T $>$@{Matrix\_proxy$<$ element\_T, container\_T $>$}!set@{set}}
+\index{set@{set}!Matrix\_proxy$<$ element\_T, container\_T $>$@{Matrix\_proxy$<$ element\_T, container\_T $>$}}
+\doxysubsubsection{\texorpdfstring{set()}{set()}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classComplex}{typename}} \mbox{\hyperlink{classComplex}{element\+\_\+T}}  = double, \mbox{\hyperlink{classComplex}{typename}} \mbox{\hyperlink{classComplex}{container\+\_\+T}}  = std\+::map$<$std\+::pair$<$unsigned int, unsigned int$>$, element\+\_\+\+T$>$$>$ \\
+\mbox{\hyperlink{classComplex}{void}} \mbox{\hyperlink{classMatrix__proxy}{Matrix\+\_\+proxy}}$<$ \mbox{\hyperlink{classComplex}{element\+\_\+T}}, \mbox{\hyperlink{classComplex}{container\+\_\+T}} $>$\+::set (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classComplex}{unsigned}} \mbox{\hyperlink{classComplex}{int}}}]{row,  }\item[{\mbox{\hyperlink{classComplex}{unsigned}} \mbox{\hyperlink{classComplex}{int}}}]{col,  }\item[{\mbox{\hyperlink{classComplex}{element\+\_\+T}}}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Sets an element within the proxy slice. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em row} & The row index of the element relative to the slice. \\
+\hline
+{\em col} & The column index of the element relative to the slice. \\
+\hline
+{\em value} & The new value to assign to the element. \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \doxylink{classEmptyContainerError}{Empty\+Container\+Error}} & If the matrix is null. \\
+\hline
+{\em \doxylink{classOutOfRangeException}{Out\+Of\+Range\+Exception}} & If the requested indices are out of bounds for the slice. \\
+\hline
+\end{DoxyExceptions}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Matrix\+\_\+proxy.\+hpp\end{DoxyCompactItemize}
