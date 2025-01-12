@@ -1,9 +1,0 @@
-<map id="VectorBase" name="VectorBase">
-<area shape="rect" id="Node000001" title=" " alt="" coords="113,79,208,104"/>
-<area shape="rect" id="Node000003" href="$classVector.html" title=" " alt="" coords="5,152,156,192"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="141,116,102,154,98,150,137,112"/>
-<area shape="rect" id="Node000004" href="$classVector_3_01bool_01_4.html" title=" " alt="" coords="180,159,301,185"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="184,112,231,157,227,161,181,116"/>
-<area shape="rect" id="Node000002" href="$classBase.html" title=" " alt="" coords="133,5,188,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="163,44,163,79,158,79,158,44"/>
-</map>

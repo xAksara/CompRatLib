@@ -1,8 +1,0 @@
-#fff
-#fff
-vector complex float float 50000
-
-1 (100)
-6000 (23,5.1)
-7 (5.5,3.5)
-22 (44,1.1)
