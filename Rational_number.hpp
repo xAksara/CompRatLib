@@ -6,6 +6,7 @@
 #include <limits> // для numeric_limits
 #include <sstream>
 #include "Exceptions.hpp"
+#include "Utils.hpp"
 
 
 
@@ -69,44 +70,6 @@ class Rational_number {
     num_type num;
     denom_type denom;
 private:
-    static bool isInteger(std::string str) {
-        if (str.size() == 0) return false;
-        size_t idx = 0;
-        if (str[0] == '-') ++idx;
-        for (;idx < str.size(); ++idx) {
-            if (!std::isdigit(str[idx])) return false;
-        }
-        return true;
-    }
-
-    template<typename T>
-    static T parseNumber(std::string str) {
-        unsigned long long result = 0; // потому что не знаем куда влезет
-        bool is_negative = false;
-        size_t idx = 0;
-        if (str[0] == '-') {
-            is_negative = true;
-            ++idx;
-        }
-        for (;idx < str.size(); ++idx) {
-            int digit = str[idx] - '0';
-            result *= 10;
-            result += digit;
-        }
-        if (!is_negative) {
-            if (result > std::numeric_limits<T>::max()) { // проверка что влезаем в тип T https://en.cppreference.com/w/cpp/types/numeric_limits
-                throw OverflowException(result);
-            }
-            return result;
-        }
-        else {
-            if (result > std::numeric_limits<T>::max()) {
-                throw OverflowException(result);
-            }
-            return result;
-        }
-    }
-
     num_type gcd(num_type a, denom_type b) const {
         a = a < 0 ? -a : a;
         // знак одинаковый
@@ -147,7 +110,7 @@ public:
             if (!isInteger(numStr)) {
                 throw InvalidArgumentException("Строка должна быть вида \"123/123\" или  \"123\". Передано: ", numStr);
             }
-            num = parseNumber<num_type>(numStr);
+            num = parseInteger<num_type>(numStr);
             denom = 1;
         } else {
             std::string numerator_str(numStr.begin(), numStr.begin() + slash_idx);
@@ -155,8 +118,8 @@ public:
             if (!isInteger(numerator_str) || !isInteger(denominator_str)) {
                 throw InvalidArgumentException("Строка должна быть вида \"123/123\" или  \"123\". Передано: ", numStr);
             }
-            num = parseNumber<num_type>(numerator_str);
-            denom = parseNumber<denom_type>(denominator_str);
+            num = parseInteger<num_type>(numerator_str);
+            denom = parseInteger<denom_type>(denominator_str);
             if (denom == 0) {
                 throw DivisionByZeroException(numerator_str, denominator_str);
             }
@@ -192,7 +155,6 @@ public:
             local_num = -local_num; // чтобы не сломалась арфиметика знаковых и беззнаковых
         }
         unsigned long long div = local_num / denom;
-
         if (!isNegative) {
             if (div > std::numeric_limits<int>::max())
             {
@@ -252,65 +214,65 @@ public:
         }
     }
 
-    template<typename rhs_num>
-    Rational_number operator+(const Rational_number<rhs_num>& other) const {
-        return Rational_number(num * static_cast<num_type>(other.getDenominator()) +
-                                 other.getNumerator() * static_cast<num_type>(denom),
-                                 denom*other.getDenominator()).make_canonical();
-    }
+    // template<typename rhs_num>
+    // Rational_number operator+(const Rational_number<rhs_num>& other) const {
+    //     return Rational_number(num * static_cast<num_type>(other.getDenominator()) +
+    //                              other.getNumerator() * static_cast<num_type>(denom),
+    //                              denom*other.getDenominator()).make_canonical();
+    // }
 
-    template<typename rhs_num>
-    Rational_number operator-(const Rational_number<rhs_num>& other) const {
-        return Rational_number(num * static_cast<num_type>(other.getDenominator()) -
-                                 other.getNumerator() * static_cast<num_type>(denom),
-                                 denom*other.getDenominator()).make_canonical();
-    }
+    // template<typename rhs_num>
+    // Rational_number operator-(const Rational_number<rhs_num>& other) const {
+    //     return Rational_number(num * static_cast<num_type>(other.getDenominator()) -
+    //                              other.getNumerator() * static_cast<num_type>(denom),
+    //                              denom*other.getDenominator()).make_canonical();
+    // }
 
     Rational_number operator-() const {
         return Rational_number(-num, denom);
     }
 
-    template<typename rhs_num>
-    Rational_number operator*(const Rational_number<rhs_num>& other) const {
-        return Rational_number(num*static_cast<num_type>(other.getNumerator()), denom*static_cast<denom_type>(other.getDenominator())).make_canonical();
-    }
+    // template<typename rhs_num>
+    // Rational_number operator*(const Rational_number<rhs_num>& other) const {
+    //     return Rational_number(num*static_cast<num_type>(other.getNumerator()), denom*static_cast<denom_type>(other.getDenominator())).make_canonical();
+    // }
 
-    template<typename rhs_num>
-    Rational_number operator/(const Rational_number<rhs_num>& other) const {
-        rhs_num other_num = other.getNumerator();
-        bool isNegative = false;
-        if (other_num < 0) {
-            isNegative = true;
-            other_num = -other_num;
-        }
+    // template<typename rhs_num>
+    // Rational_number operator/(const Rational_number<rhs_num>& other) const {
+    //     rhs_num other_num = other.getNumerator();
+    //     bool isNegative = false;
+    //     if (other_num < 0) {
+    //         isNegative = true;
+    //         other_num = -other_num;
+    //     }
 
-        return Rational_number((isNegative ? -num : num) * static_cast<num_type>(other.getDenominator()),
-                               denom * other_num).make_canonical();
-    }
+    //     return Rational_number((isNegative ? -num : num) * static_cast<num_type>(other.getDenominator()),
+    //                            denom * other_num).make_canonical();
+    // }
 
-    bool operator==(const Rational_number& other) const {
-        return this->num * static_cast<num_type>(other.denom) == other.num * static_cast<num_type>(denom);
-    }
+    // bool operator==(const Rational_number& other) const {
+    //     return this->num * static_cast<num_type>(other.denom) == other.num * static_cast<num_type>(denom);
+    // }
 
-    bool operator!=(const Rational_number& other) const {
-        return this->num * static_cast<num_type>(other.denom) != other.num * static_cast<num_type>(denom);
-    }
+    // bool operator!=(const Rational_number& other) const {
+    //     return this->num * static_cast<num_type>(other.denom) != other.num * static_cast<num_type>(denom);
+    // }
 
-    bool operator<(const Rational_number& other) const {
-        return this->num * static_cast<num_type>(other.denom) < other.num * static_cast<num_type>(denom);
-    }
+    // bool operator<(const Rational_number& other) const {
+    //     return this->num * static_cast<num_type>(other.denom) < other.num * static_cast<num_type>(denom);
+    // }
 
-    bool operator<=(const Rational_number& other) const {
-        return this->num * static_cast<num_type>(other.denom) <= other.num * static_cast<num_type>(denom);
-    }
+    // bool operator<=(const Rational_number& other) const {
+    //     return this->num * static_cast<num_type>(other.denom) <= other.num * static_cast<num_type>(denom);
+    // }
 
-    bool operator>(const Rational_number& other) const {
-        return this->num * static_cast<num_type>(other.denom) > other.num * static_cast<num_type>(denom);
-    }
+    // bool operator>(const Rational_number& other) const {
+    //     return this->num * static_cast<num_type>(other.denom) > other.num * static_cast<num_type>(denom);
+    // }
 
-    bool operator>=(const Rational_number& other) const {
-        return this->num * static_cast<num_type>(other.denom) >= other.num * static_cast<num_type>(denom);
-    }
+    // bool operator>=(const Rational_number& other) const {
+    //     return this->num * static_cast<num_type>(other.denom) >= other.num * static_cast<num_type>(denom);
+    // }
 
     Rational_number operator++(int) {
         Rational_number res = *this;
@@ -382,6 +344,26 @@ Rational_number<num_type> operator/(Rational_number<num_type> lhs, T rhs) {
     return (lhs / Rational_number(rhs)).make_canonical();
 }
 
+template<typename num_type, typename T>
+Rational_number<num_type> operator+(T lhs, Rational_number<num_type> rhs) { 
+    return (Rational_number(lhs) + rhs).make_canonical();
+}
+
+template<typename num_type, typename T>
+Rational_number<num_type> operator-(T lhs, Rational_number<num_type> rhs) { 
+    return (Rational_number(lhs) - rhs).make_canonical();
+}
+
+template<typename num_type, typename T>
+Rational_number<num_type> operator*(T lhs, Rational_number<num_type> rhs) { 
+    return (Rational_number(lhs) * rhs).make_canonical();
+}
+
+template<typename num_type, typename T>
+Rational_number<num_type> operator/(T lhs, Rational_number<num_type> rhs) { 
+    return (Rational_number(lhs) / rhs).make_canonical();
+}
+
 // template<typename num_type, typename T>
 // Rational_number<num_type> operator-(Rational_number<num_type> lhs, T rhs) { 
 //     return Rational_number<num_type>(lhs.getNumerator() - rhs * static_cast<T>(lhs.getDenominator()), lhs.getDenominator()).make_canonical();
@@ -393,9 +375,161 @@ Rational_number<num_type> operator/(Rational_number<num_type> lhs, T rhs) {
 // }
 
 
-// ++, --, -, += и т.д.
+// Логические операторы для работы с базовыми типами
+
+template<typename num_type, typename T>
+bool operator==(Rational_number<num_type> lhs, T rhs) { 
+    return lhs == Rational_number(rhs);
+}
+
+template<typename num_type, typename T>
+bool operator==(T lhs, Rational_number<num_type> rhs) { 
+    return Rational_number(lhs) == rhs;
+}
+
+template<typename num_type, typename T>
+bool operator!=(Rational_number<num_type> lhs, T rhs) { 
+    return lhs != Rational_number(rhs);
+}
+
+template<typename num_type, typename T>
+bool operator!=(T lhs, Rational_number<num_type> rhs) { 
+    return Rational_number(lhs) != rhs;
+}
+
+template<typename num_type, typename T>
+bool operator<(Rational_number<num_type> lhs, T rhs) { 
+    return lhs < Rational_number(rhs);
+}
+
+template<typename num_type, typename T>
+bool operator<(T lhs, Rational_number<num_type> rhs) { 
+    return Rational_number(lhs) < rhs;
+}
+
+template<typename num_type, typename T>
+bool operator<=(Rational_number<num_type> lhs, T rhs) { 
+    return lhs <= Rational_number(rhs);
+}
+
+template<typename num_type, typename T>
+bool operator<=(T lhs, Rational_number<num_type> rhs) { 
+    return Rational_number(lhs) <= rhs;
+}
+
+template<typename num_type, typename T>
+bool operator>(Rational_number<num_type> lhs, T rhs) { 
+    return lhs > Rational_number(rhs);
+}
+
+template<typename num_type, typename T>
+bool operator>(T lhs, Rational_number<num_type> rhs) { 
+    return Rational_number(lhs) > rhs;
+}
+
+template<typename num_type, typename T>
+bool operator>=(Rational_number<num_type> lhs, T rhs) { 
+    return lhs >= Rational_number(rhs);
+}
+
+template<typename num_type, typename T>
+bool operator>=(T lhs, Rational_number<num_type> rhs) { 
+    return Rational_number(lhs) >= rhs;
+}
 
 
+// Работа с другими рациональными числами
+
+template <typename lhs_type, typename rhs_type>
+Rational_number<lhs_type> operator+(const Rational_number<lhs_type>& lhs, const Rational_number<rhs_type>& rhs) {
+    return Rational_number<lhs_type>(lhs.getNumerator() * static_cast<lhs_type>(rhs.getDenominator()) +
+                                 rhs.getNumerator() * static_cast<lhs_type>(lhs.getDenominator()),
+                                 lhs.getDenominator()*rhs.getDenominator());
+}
+
+template <typename lhs_type, typename rhs_type>
+Rational_number<lhs_type> operator-(const Rational_number<lhs_type>& lhs, const Rational_number<rhs_type>& rhs) {
+    return Rational_number<lhs_type>(lhs.getNumerator() * static_cast<lhs_type>(rhs.getDenominator()) -
+                                 rhs.getNumerator() * static_cast<lhs_type>(lhs.getDenominator()),
+                                 lhs.getDenominator()*rhs.getDenominator());
+}
+
+template <typename lhs_type, typename rhs_type>
+Rational_number<lhs_type> operator*(const Rational_number<lhs_type>& lhs, const Rational_number<rhs_type>& rhs) {
+    return Rational_number<lhs_type>(lhs.getNumerator()*rhs.getNumerator(), lhs.getDenominator()*rhs.getDenominator());
+}
+
+template <typename lhs_type, typename rhs_type>
+Rational_number<lhs_type> operator/(const Rational_number<lhs_type>& lhs, const Rational_number<rhs_type>& rhs) {
+    rhs_type rhs_num = rhs.getNumerator();
+    rhs_type lhs_num = lhs.getNumerator();
+    bool isRhsNegative = false;
+    bool isLhsNegative = false;
+    if (rhs_num < 0) {
+        isRhsNegative = true;
+        rhs_num = -rhs_num;
+    }
+    if (lhs_num < 0) {
+        isLhsNegative = true;
+        lhs_num = -lhs_num;
+    }
+    if (isLhsNegative && isRhsNegative || !isLhsNegative && !isRhsNegative) {
+        return Rational_number<lhs_type> (lhs_num * rhs.getDenominator(), lhs.getDenominator() * rhs_num);
+    } else {
+        return Rational_number<lhs_type> (-lhs_num * rhs.getDenominator(), lhs.getDenominator() * rhs_num);
+    }
+}
+
+template <typename lhs_type, typename rhs_type>
+bool operator==(const Rational_number<lhs_type>& lhs, const Rational_number<rhs_type>& rhs) {
+    return lhs.getNumerator() * static_cast<lhs_type>(rhs.getDenominator()) == rhs.getNumerator() * static_cast<rhs_type>(lhs.getDenominator());
+}
+
+template <typename lhs_type, typename rhs_type>
+bool operator!=(const Rational_number<lhs_type>& lhs, const Rational_number<rhs_type>& rhs) {
+    return lhs.getNumerator() * static_cast<lhs_type>(rhs.getDenominator()) != rhs.getNumerator() * static_cast<rhs_type>(lhs.getDenominator());
+}
+
+template <typename lhs_type, typename rhs_type>
+bool operator<(const Rational_number<lhs_type>& lhs, const Rational_number<rhs_type>& rhs) {
+    return lhs.getNumerator() * static_cast<lhs_type>(rhs.getDenominator()) < rhs.getNumerator() * static_cast<rhs_type>(lhs.getDenominator());
+}
+
+template <typename lhs_type, typename rhs_type>
+bool operator<=(const Rational_number<lhs_type>& lhs, const Rational_number<rhs_type>& rhs) {
+    return lhs.getNumerator() * static_cast<lhs_type>(rhs.getDenominator()) <= rhs.getNumerator() * static_cast<rhs_type>(lhs.getDenominator());
+}
+
+template <typename lhs_type, typename rhs_type>
+bool operator>(const Rational_number<lhs_type>& lhs, const Rational_number<rhs_type>& rhs) {
+    return lhs.getNumerator() * static_cast<lhs_type>(rhs.getDenominator()) > rhs.getNumerator() * static_cast<rhs_type>(lhs.getDenominator());
+}
+
+template <typename lhs_type, typename rhs_type>
+bool operator>=(const Rational_number<lhs_type>& lhs, const Rational_number<rhs_type>& rhs) {
+    return lhs.getNumerator() * static_cast<lhs_type>(rhs.getDenominator()) >= rhs.getNumerator() * static_cast<rhs_type>(lhs.getDenominator());
+}
+
+
+// bool operator!=(const Rational_number& other) const {
+//     return this->num * static_cast<num_type>(other.denom) != other.num * static_cast<num_type>(denom);
+// }
+
+// bool operator<(const Rational_number& other) const {
+//     return this->num * static_cast<num_type>(other.denom) < other.num * static_cast<num_type>(denom);
+// }
+
+// bool operator<=(const Rational_number& other) const {
+//     return this->num * static_cast<num_type>(other.denom) <= other.num * static_cast<num_type>(denom);
+// }
+
+// bool operator>(const Rational_number& other) const {
+//     return this->num * static_cast<num_type>(other.denom) > other.num * static_cast<num_type>(denom);
+// }
+
+// bool operator>=(const Rational_number& other) const {
+//     return this->num * static_cast<num_type>(other.denom) >= other.num * static_cast<num_type>(denom);
+// }
 
 
 template<typename num_type>
