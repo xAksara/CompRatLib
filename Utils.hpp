@@ -4,6 +4,9 @@
 #include <limits>
 #include <cmath>
 #include <sstream>
+// #include "Rational_number.hpp"
+template <typename num_type>
+class Rational_number;
 
 bool isInteger(std::string str) {
     std::stringstream ss;
@@ -108,4 +111,14 @@ double parseDouble(std::string str) {
         }
     }
     return (result + drob_part) * (is_negative ? -1 : 1);
+}
+
+template<typename T>
+double sqrt(T val) {
+    return std::sqrt(val);
+}
+
+template<typename num_type>
+double sqrt(Rational_number<num_type> r) {
+    return std::sqrt(static_cast<double>(r));
 }

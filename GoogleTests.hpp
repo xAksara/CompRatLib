@@ -1,5 +1,6 @@
 #pragma once
 #include <gtest/gtest.h>
+#include <cmath>
 #include "Exceptions.hpp"
 #include "Rational_number.hpp"
 #include "Utils.hpp"
@@ -207,6 +208,39 @@ TEST(Complex_numbers, Arythmetic) {
     EXPECT_EQ(r * c, mul2);
     Complex_number div2(Rational_number(5, 6), Rational_number(-5, 6));
     EXPECT_EQ(r / c, div2);
+}
+
+TEST(Complex_numbers, LogicalOperators) {
+    Complex_number c1(1, 1);
+    Complex_number c2(-1, 1.5);
+    Complex_number c3(3);
+    EXPECT_EQ(c1, Complex_number(1, 1));
+    EXPECT_NE(c1, c2);
+    EXPECT_TRUE(c1 < c2);
+    EXPECT_TRUE(c1 <= c2);
+    EXPECT_TRUE(c2 > c1);
+    EXPECT_TRUE(c2 >= c1);
+
+    EXPECT_NE(c1, std::sqrt(2));
+    EXPECT_TRUE(c1 < 1.5);
+    EXPECT_TRUE(c1 <= 1.5);
+    EXPECT_TRUE(c1 > 1);
+    EXPECT_TRUE(c1 >= 1);
+
+    Rational_number r(6, 2);
+    EXPECT_EQ(c3, r);
+    EXPECT_TRUE(c3 != r + 1);
+    EXPECT_FALSE(c3 < r);
+    EXPECT_TRUE(c3 <= r);
+    EXPECT_FALSE(c3 > r);
+    EXPECT_TRUE(c3 >= r);
+
+    EXPECT_EQ(r, c3);
+    EXPECT_TRUE(r + 1 != c3);
+    EXPECT_FALSE(r > c3);
+    EXPECT_TRUE(r >= c3);
+    EXPECT_FALSE(r < c3);
+    EXPECT_TRUE(r <= c3);
 }
 
 int run_all_my_tests(int argc, char **argv) {

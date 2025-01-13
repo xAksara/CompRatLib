@@ -38,43 +38,200 @@ public:
     void setReal(type_real val) { real = val; }
     void setImage(type_imag val) { image = val; }
 
-    double modulus() {
-        return std::sqrt(real * real, image * image);
+    double modulus() const {
+        return sqrt(real * real + image * image);
     }
 
-    template<typename rhs_real, typename rhs_imag>
-    Complex_number operator+(const Complex_number<rhs_real, rhs_imag>& rhs) const {
-        return Complex_number(real + rhs.getReal(), image + rhs.getImage());
+    Complex_number& operator++() {
+        real += 1;
+        return *this;
     }
 
-    template<typename rhs_real, typename rhs_imag>
-    Complex_number operator-(const Complex_number<rhs_real, rhs_imag>& rhs) const {
-        return Complex_number(real - rhs.getReal(), image - rhs.getImage());
+    Complex_number operator++(int) {
+        Complex_number res = *this;
+        real += 1;
+        return *res;
     }
 
-    template<typename rhs_real, typename rhs_imag>
-    Complex_number operator*(const Complex_number<rhs_real, rhs_imag>& rhs) const {
-        return Complex_number(real * rhs.getReal() - image * rhs.getImage(), real * rhs.getImage() + image * rhs.getReal());
+    Complex_number& operator--() {
+        real -= 1;
+        return *this;
     }
 
-    template<typename rhs_real, typename rhs_imag>
-    Complex_number operator/(const Complex_number<rhs_real, rhs_imag>& rhs) const {
-        type_real denominator = rhs.getReal() * rhs.getReal() + rhs.getImage() * rhs.getImage();
-        if (denominator == 0) {
-            throw DivisionByZeroException(*this, rhs);
-        }
-        return Complex_number(
-            (real * rhs.getReal() + image * rhs.getImage()) / denominator,
-            (image * rhs.getReal() - real * rhs.getImage()) / denominator
-        );
+    Complex_number operator--(int) {
+        Complex_number res = *this;
+        real -= 1;
+        return *res;
     }
 
-    template<typename rhs_real, typename rhs_imag>
-    bool operator==(const Complex_number<rhs_real, rhs_imag>& rhs) const {
-        return real == rhs.getReal() && image == rhs.getImage();
+    Complex_number operator-() const {
+        return Complex_number(-real, -image);
     }
 };
 
+// Комплексныые + комплексные
+
+template<typename lhs_real, typename lhs_imag, typename rhs_real, typename rhs_imag>
+Complex_number<lhs_real, lhs_imag> operator+(const Complex_number<lhs_real, lhs_imag>& lhs, const Complex_number<rhs_real, rhs_imag>& rhs) {
+    return Complex_number<lhs_real, lhs_imag>(lhs.getReal() + rhs.getReal(), lhs.getImage() + rhs.getImage());
+}
+
+template<typename lhs_real, typename lhs_imag, typename rhs_real, typename rhs_imag>
+Complex_number<lhs_real, lhs_imag> operator-(const Complex_number<lhs_real, lhs_imag>& lhs, const Complex_number<rhs_real, rhs_imag>& rhs) {
+    return Complex_number<lhs_real, lhs_imag>(lhs.getReal() - rhs.getReal(), lhs.getImage() - rhs.getImage());
+}
+
+template<typename lhs_real, typename lhs_imag, typename rhs_real, typename rhs_imag>
+Complex_number<lhs_real, lhs_imag> operator*(const Complex_number<lhs_real, lhs_imag>& lhs, const Complex_number<rhs_real, rhs_imag>& rhs) {
+    return Complex_number<lhs_real, lhs_imag>(lhs.getReal() * rhs.getReal() - lhs.getImage() * rhs.getImage(), lhs.getReal() * rhs.getImage() + lhs.getImage() * rhs.getReal());
+}
+
+template<typename lhs_real, typename lhs_imag, typename rhs_real, typename rhs_imag>
+Complex_number<lhs_real, lhs_imag> operator/(const Complex_number<lhs_real, lhs_imag>& lhs, const Complex_number<rhs_real, rhs_imag>& rhs) {
+    // Если где-то беззнаковое, то пользователь сам виноват
+    auto denominator = rhs.getReal() * rhs.getReal() + rhs.getImage() * rhs.getImage();
+    if (denominator == 0) {
+        throw DivisionByZeroException(lhs, rhs);
+    }
+    return Complex_number<lhs_real, lhs_imag>(
+        (lhs.getReal() * rhs.getReal() + lhs.getImage() * rhs.getImage()) / denominator,
+        (lhs.getImage() * rhs.getReal() - lhs.getReal() * rhs.getImage()) / denominator
+    );
+}
+
+// Логические операторы для комплексных
+
+template<typename lhs_real, typename lhs_imag, typename rhs_real, typename rhs_imag>
+bool operator==(const Complex_number<lhs_real, lhs_imag>& lhs, const Complex_number<rhs_real, rhs_imag>& rhs) {
+    return lhs.getReal() == rhs.getReal() && lhs.getImage() == rhs.getImage();
+}
+
+template<typename lhs_real, typename lhs_imag, typename rhs_real, typename rhs_imag>
+bool operator!=(const Complex_number<lhs_real, lhs_imag>& lhs, const Complex_number<rhs_real, rhs_imag>& rhs) {
+    return !(lhs.getReal() == rhs.getReal() && lhs.getImage() == rhs.getImage());
+}
+
+template<typename lhs_real, typename lhs_imag, typename rhs_real, typename rhs_imag>
+bool operator<(const Complex_number<lhs_real, lhs_imag>& lhs, const Complex_number<rhs_real, rhs_imag>& rhs) {
+    return lhs.modulus() < rhs.modulus();
+}
+
+template<typename lhs_real, typename lhs_imag, typename rhs_real, typename rhs_imag>
+bool operator<=(const Complex_number<lhs_real, lhs_imag>& lhs, const Complex_number<rhs_real, rhs_imag>& rhs) {
+    return lhs.modulus() <= rhs.modulus();
+}
+
+template<typename lhs_real, typename lhs_imag, typename rhs_real, typename rhs_imag>
+bool operator>(const Complex_number<lhs_real, lhs_imag>& lhs, const Complex_number<rhs_real, rhs_imag>& rhs) {
+    return lhs.modulus() > rhs.modulus();
+}
+
+template<typename lhs_real, typename lhs_imag, typename rhs_real, typename rhs_imag>
+bool operator>=(const Complex_number<lhs_real, lhs_imag>& lhs, const Complex_number<rhs_real, rhs_imag>& rhs) {
+    return lhs.modulus() >= rhs.modulus();
+}
+
+
+
+template<typename lhs_real, typename lhs_imag, typename rhs_type>
+bool operator==(const Complex_number<lhs_real, lhs_imag>& lhs, const rhs_type& rhs) {
+    return lhs == Complex_number(rhs);
+}
+
+template<typename lhs_real, typename lhs_imag, typename rhs_type>
+bool operator!=(const Complex_number<lhs_real, lhs_imag>& lhs, const rhs_type& rhs) {
+    return lhs != Complex_number(rhs);
+}
+
+template<typename lhs_real, typename lhs_imag, typename rhs_type>
+bool operator<(const Complex_number<lhs_real, lhs_imag>& lhs, const rhs_type& rhs) {
+    return lhs.modulus() < rhs;
+}
+
+template<typename lhs_real, typename lhs_imag, typename rhs_type>
+bool operator<=(const Complex_number<lhs_real, lhs_imag>& lhs, const rhs_type& rhs) {
+    return lhs.modulus() <= rhs;
+}
+
+template<typename lhs_real, typename lhs_imag, typename rhs_type>
+bool operator>(const Complex_number<lhs_real, lhs_imag>& lhs, const rhs_type& rhs) {
+    return lhs.modulus() > rhs;
+}
+
+template<typename lhs_real, typename lhs_imag, typename rhs_type>
+bool operator>=(const Complex_number<lhs_real, lhs_imag>& lhs, const rhs_type& rhs) {
+    return lhs.modulus() >= rhs;
+}
+
+
+
+
+template<typename lhs_real, typename lhs_imag, typename rhs_type>
+bool operator==(const Complex_number<lhs_real, lhs_imag>& lhs, const Rational_number<rhs_type>& rhs) {
+    return lhs == Complex_number(rhs);
+}
+
+template<typename lhs_real, typename lhs_imag, typename rhs_type>
+bool operator!=(const Complex_number<lhs_real, lhs_imag>& lhs, const Rational_number<rhs_type>& rhs) {
+    return lhs != Complex_number(rhs);
+}
+
+template<typename lhs_real, typename lhs_imag, typename rhs_type>
+bool operator<(const Complex_number<lhs_real, lhs_imag>& lhs, const Rational_number<rhs_type>& rhs) {
+    return lhs.modulus() < Complex_number(rhs).modulus();
+}
+
+template<typename lhs_real, typename lhs_imag, typename rhs_type>
+bool operator<=(const Complex_number<lhs_real, lhs_imag>& lhs, const Rational_number<rhs_type>& rhs) {
+    return lhs.modulus() <= Complex_number(rhs).modulus();
+}
+
+template<typename lhs_real, typename lhs_imag, typename rhs_type>
+bool operator>(const Complex_number<lhs_real, lhs_imag>& lhs, const Rational_number<rhs_type>& rhs) {
+    return lhs.modulus() > Complex_number(rhs).modulus();
+}
+
+template<typename lhs_real, typename lhs_imag, typename rhs_type>
+bool operator>=(const Complex_number<lhs_real, lhs_imag>& lhs, const Rational_number<rhs_type>& rhs) {
+    return lhs.modulus() >= Complex_number(rhs).modulus();
+}
+
+
+
+
+template<typename lhs_type, typename rhs_real, typename rhs_imag>
+bool operator==(const Rational_number<lhs_type>& lhs, const Complex_number<rhs_real, rhs_imag>& rhs) {
+    return Complex_number(lhs) == rhs;
+}
+
+template<typename lhs_type, typename rhs_real, typename rhs_imag>
+bool operator!=(const Rational_number<lhs_type>& lhs, const Complex_number<rhs_real, rhs_imag>& rhs) {
+    return Complex_number(lhs) != rhs;
+}
+
+template<typename lhs_type, typename rhs_real, typename rhs_imag>
+bool operator<(const Rational_number<lhs_type>& lhs, const Complex_number<rhs_real, rhs_imag>& rhs) {
+    return Complex_number(lhs) < rhs;
+}
+
+template<typename lhs_type, typename rhs_real, typename rhs_imag>
+bool operator<=(const Rational_number<lhs_type>& lhs, const Complex_number<rhs_real, rhs_imag>& rhs) {
+    return Complex_number(lhs) <= rhs;
+}
+
+template<typename lhs_type, typename rhs_real, typename rhs_imag>
+bool operator>(const Rational_number<lhs_type>& lhs, const Complex_number<rhs_real, rhs_imag>& rhs) {
+    return Complex_number(lhs) > rhs;
+}
+
+template<typename lhs_type, typename rhs_real, typename rhs_imag>
+bool operator>=(const Rational_number<lhs_type>& lhs, const Complex_number<rhs_real, rhs_imag>& rhs) {
+    return Complex_number(lhs) >= rhs;
+}
+
+
+
+// КОмплексные + базовые
 
 template<typename lhs_real, typename lhs_imag, typename rhs_type>
 Complex_number<lhs_real, lhs_imag> operator+(const Complex_number<lhs_real, lhs_imag>& lhs, const rhs_type& rhs) {
@@ -136,8 +293,6 @@ Complex_number<lhs_real, lhs_imag> operator/(const Complex_number<lhs_real, lhs_
 }
 
 
-
-
 template<typename rhs_real, typename rhs_imag, typename lhs_type>
 Complex_number<rhs_real, rhs_imag> operator+(const Rational_number<lhs_type>& lhs, const Complex_number<rhs_real, rhs_imag>& rhs) {
     return Complex_number<rhs_real, rhs_imag>(lhs) + rhs;
@@ -156,6 +311,32 @@ Complex_number<rhs_real, rhs_imag> operator*(const Rational_number<lhs_type>& lh
 template<typename rhs_real, typename rhs_imag, typename lhs_type>
 Complex_number<rhs_real, rhs_imag> operator/(const Rational_number<lhs_type>& lhs, const Complex_number<rhs_real, rhs_imag>& rhs) {
     return Complex_number<rhs_real, rhs_imag>(lhs) / rhs;
+}
+
+// ++, += и прочий ужас
+
+template<typename lhs_real, typename lhs_imag, typename rhs_type>
+Complex_number<lhs_real, lhs_imag>& operator+=(Complex_number<lhs_real, lhs_imag>& lhs, const rhs_type& rhs) {
+    lhs = lhs + Complex_number<lhs_real, lhs_imag>(rhs);
+    return lhs;
+}
+
+template<typename lhs_real, typename lhs_imag, typename rhs_type>
+Complex_number<lhs_real, lhs_imag>& operator-=(Complex_number<lhs_real, lhs_imag>& lhs, const rhs_type& rhs) {
+    lhs = lhs - Complex_number<lhs_real, lhs_imag>(rhs);
+    return lhs;
+}
+
+template<typename lhs_real, typename lhs_imag, typename rhs_type>
+Complex_number<lhs_real, lhs_imag>& operator*=(Complex_number<lhs_real, lhs_imag>& lhs, const rhs_type& rhs) {
+    lhs = lhs * Complex_number<lhs_real, lhs_imag>(rhs);
+    return lhs;
+}
+
+template<typename lhs_real, typename lhs_imag, typename rhs_type>
+Complex_number<lhs_real, lhs_imag>& operator/=(Complex_number<lhs_real, lhs_imag>& lhs, const rhs_type& rhs) {
+    lhs = lhs / Complex_number<lhs_real, lhs_imag>(rhs);
+    return lhs;
 }
 
 

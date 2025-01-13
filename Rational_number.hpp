@@ -280,7 +280,7 @@ public:
         return res;
     }
 
-    Rational_number operator++() {
+    Rational_number& operator++() {
         this->num = this->num + static_cast<num_type>(this->denom);
         return *this;
     }
@@ -291,28 +291,8 @@ public:
         return res;
     }
 
-    Rational_number operator--() {
+    Rational_number& operator--() {
         this->num = this->num - static_cast<num_type>(this->denom);
-        return *this;
-    }
-
-    Rational_number operator+=(int val) {
-        num += val * static_cast<num_type>(denom);
-        return *this;
-    }
-
-    Rational_number operator-=(int val) {
-        num -= val * static_cast<num_type>(denom);
-        return *this;
-    }
-
-    Rational_number operator*=(int val) {
-        num *= val;
-        return *this;
-    }
-
-    Rational_number operator/=(int val) {
-        num /= val;
         return *this;
     }
 };
@@ -531,6 +511,38 @@ bool operator>=(const Rational_number<lhs_type>& lhs, const Rational_number<rhs_
 //     return this->num * static_cast<num_type>(other.denom) >= other.num * static_cast<num_type>(denom);
 // }
 
+
+
+
+// +=, -= и т.д.
+
+template<typename lhs_type, typename rhs_type>
+Rational_number<lhs_type>& operator+=(Rational_number<lhs_type>& lhs, const rhs_type& rhs) {
+    lhs.setNumerator(lhs.getNumerator() + rhs * static_cast<lhs_type>(lhs.getDenominator()));
+    return lhs;
+}
+
+template<typename lhs_type, typename rhs_type>
+Rational_number<lhs_type>& operator-=(Rational_number<lhs_type>& lhs, const rhs_type& rhs) {
+    lhs.setNumerator(lhs.getNumerator() - rhs * static_cast<lhs_type>(lhs.getDenominator()));
+    return lhs;
+}
+
+template<typename lhs_type, typename rhs_type>
+Rational_number<lhs_type>& operator*=(Rational_number<lhs_type>& lhs, const rhs_type& rhs) {
+    lhs.setNumerator(lhs.getNumerator() * rhs);
+    return lhs;
+}
+
+template<typename lhs_type, typename rhs_type>
+Rational_number<lhs_type>& operator/=(Rational_number<lhs_type>& lhs, const rhs_type& rhs) {
+    rhs_type local_rhs = (rhs < 0 ? -rhs : rhs);
+    lhs.setDenominator(lhs.getDenominator() * local_rhs);
+    if (rhs < 0) {
+        lhs.setNumerator(-lhs.getNumerator());
+    }
+    return lhs;
+}
 
 template<typename num_type>
 std::ostream& operator<<(std::ostream& os, const Rational_number<num_type>& r) {
