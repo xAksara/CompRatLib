@@ -147,7 +147,7 @@ public:
         return Rational_number(num / nod, denom / nod);
     }
 
-    operator int() const {
+    explicit operator int() const {
         num_type local_num = this->num;
         bool isNegative = false;
         if (local_num < 0) {
@@ -367,6 +367,16 @@ bool operator==(T lhs, Rational_number<num_type> rhs) {
     return Rational_number(lhs) == rhs;
 }
 
+template<typename num_type>
+bool operator==(Rational_number<num_type> lhs, double rhs) { 
+    return (double)lhs == rhs;
+}
+
+template<typename num_type>
+bool operator==(double lhs, Rational_number<num_type> rhs) { 
+    return lhs == (double)rhs;
+}
+
 template<typename num_type, typename T>
 bool operator!=(Rational_number<num_type> lhs, T rhs) { 
     return lhs != Rational_number(rhs);
@@ -375,6 +385,16 @@ bool operator!=(Rational_number<num_type> lhs, T rhs) {
 template<typename num_type, typename T>
 bool operator!=(T lhs, Rational_number<num_type> rhs) { 
     return Rational_number(lhs) != rhs;
+}
+
+template<typename num_type>
+bool operator!=(Rational_number<num_type> lhs, double rhs) { 
+    return (double)lhs != rhs;
+}
+
+template<typename num_type>
+bool operator!=(double lhs, Rational_number<num_type> rhs) { 
+    return lhs != (double)rhs;
 }
 
 template<typename num_type, typename T>
@@ -387,6 +407,16 @@ bool operator<(T lhs, Rational_number<num_type> rhs) {
     return Rational_number(lhs) < rhs;
 }
 
+template<typename num_type>
+bool operator<(Rational_number<num_type> lhs, double rhs) { 
+    return (double)lhs < rhs;
+}
+
+template<typename num_type>
+bool operator<(double lhs, Rational_number<num_type> rhs) { 
+    return lhs < (double)rhs;
+}
+
 template<typename num_type, typename T>
 bool operator<=(Rational_number<num_type> lhs, T rhs) { 
     return lhs <= Rational_number(rhs);
@@ -395,6 +425,16 @@ bool operator<=(Rational_number<num_type> lhs, T rhs) {
 template<typename num_type, typename T>
 bool operator<=(T lhs, Rational_number<num_type> rhs) { 
     return Rational_number(lhs) <= rhs;
+}
+
+template<typename num_type>
+bool operator<=(Rational_number<num_type> lhs, double rhs) { 
+    return (double)lhs <= rhs;
+}
+
+template<typename num_type>
+bool operator<=(double lhs, Rational_number<num_type> rhs) { 
+    return lhs <= (double)rhs;
 }
 
 template<typename num_type, typename T>
@@ -407,6 +447,16 @@ bool operator>(T lhs, Rational_number<num_type> rhs) {
     return Rational_number(lhs) > rhs;
 }
 
+template<typename num_type>
+bool operator>(Rational_number<num_type> lhs, double rhs) { 
+    return (double)lhs > rhs;
+}
+
+template<typename num_type>
+bool operator>(double lhs, Rational_number<num_type> rhs) { 
+    return lhs > (double)rhs;
+}
+
 template<typename num_type, typename T>
 bool operator>=(Rational_number<num_type> lhs, T rhs) { 
     return lhs >= Rational_number(rhs);
@@ -417,6 +467,15 @@ bool operator>=(T lhs, Rational_number<num_type> rhs) {
     return Rational_number(lhs) >= rhs;
 }
 
+template<typename num_type>
+bool operator>=(Rational_number<num_type> lhs, double rhs) { 
+    return (double)lhs >= rhs;
+}
+
+template<typename num_type>
+bool operator>=(double lhs, Rational_number<num_type> rhs) { 
+    return lhs >= (double)rhs;
+}
 
 // Работа с другими рациональными числами
 

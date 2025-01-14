@@ -5,7 +5,7 @@
 #include "Rational_number.hpp"
 #include "Utils.hpp"
 #include "Complex_number.hpp"
-
+#include "Vector.hpp"
 
 TEST(Utils, Utils) {
     EXPECT_TRUE(isInteger("5"));
@@ -101,6 +101,13 @@ TEST(Rational_numbers, LogicOperators) {
     EXPECT_TRUE(r2 != r1);
     EXPECT_FALSE(r1 == r2);
     EXPECT_EQ(r1, Rational_number(2));
+
+    EXPECT_TRUE (r1 < 2.7);
+    EXPECT_TRUE (r1 <= 2.7);
+    EXPECT_TRUE (r1 > 1.7);
+    EXPECT_TRUE (r1 >= 1.7);
+    EXPECT_TRUE(r1 != 2.1);
+    EXPECT_TRUE(r1 == 2.);
 }
 
 TEST(Rational_numbers, OtherOperators) {
@@ -241,6 +248,163 @@ TEST(Complex_numbers, LogicalOperators) {
     EXPECT_TRUE(r >= c3);
     EXPECT_FALSE(r < c3);
     EXPECT_TRUE(r <= c3);
+}
+
+TEST(Vector, Constructors) {
+    Vector v1(10, 0.1, 2);
+    EXPECT_EQ(v1(4), 2);
+    Vector v2(v1);
+    Vector v3(std::move(Vector(5, 1, 5)));
+    Vector v4(5);
+    EXPECT_EQ(v4.getSize(), 5);
+    EXPECT_EQ(v4.getEpsilon(), 0);
+    Vector v5(5, 0.1);
+    EXPECT_EQ(v5.getSize(), 5);
+    EXPECT_DOUBLE_EQ(v5.getEpsilon(), 0.1);
+}
+
+TEST(Vector, Operators) {
+    Vector v1(10, 0.1, 1);
+    Vector v2(10, 0.2, (long long)2);
+    Vector sum12(10, 0.2, 3);
+    EXPECT_TRUE(v1 != v2);
+    EXPECT_FALSE(v1 == v2);
+    EXPECT_EQ(v2+v1, sum12);
+    EXPECT_EQ(sum12-v1, v2);
+
+    Vector sum_scalar1(10, 0.1, 2);
+    Vector sub_scalar1(10, 0.2, -1);
+    Vector mul_scalar1(10, 0.2, 10);
+    Vector div_scalar1(10, 0.2, 1);
+
+    EXPECT_EQ(v1 + 1, sum_scalar1);
+    EXPECT_EQ(1 + v1, sum_scalar1);
+    
+    EXPECT_EQ(v2 - 3, sub_scalar1);
+    EXPECT_EQ(1 - v2, sub_scalar1);
+    
+    EXPECT_EQ(v2 * 5, mul_scalar1);
+    EXPECT_EQ(5 * v2, mul_scalar1);
+    
+    EXPECT_EQ(v2 / 2, div_scalar1);
+    EXPECT_EQ(2 / v2, div_scalar1);
+
+    
+    Vector v3(10, 0.2, 16.);
+    Vector sum_scalar2(10, 0.2, 17.);
+    Vector sub_scalar2(10, 0.2, -8.);
+    Vector mul_scalar2(10, 0.2, 32.);
+    Vector div_scalar2(10, 0.2, 2.);
+
+    EXPECT_EQ(v3 + 1, sum_scalar2);
+    EXPECT_EQ(1 + v3, sum_scalar2);
+    
+    EXPECT_EQ(v3 - 24, sub_scalar2);
+    EXPECT_EQ(8 - v3, sub_scalar2);
+    
+    EXPECT_EQ(v3 * 2, mul_scalar2);
+    EXPECT_EQ(2 * v3, mul_scalar2);
+    
+    EXPECT_EQ(v3 / 8, div_scalar2);
+    EXPECT_EQ(32 / v3, div_scalar2);
+
+    Vector v4(10, 0.2, Rational_number(5, 4));
+    Vector sum_scalar3(10, 0.2, Rational_number(6, 4));
+    Vector sub_scalar3(10, 0.2, Rational_number(3, 4));
+    Vector mul_scalar3(10, 0.2, Rational_number(10, 4));
+    Vector div_scalar3(10, 0.2, Rational_number(1, 4));
+
+    EXPECT_EQ(v4 + Rational_number(1, 4), sum_scalar3);
+    EXPECT_EQ(Rational_number(1, 4) + v4, sum_scalar3);
+    
+    EXPECT_EQ(v4 - Rational_number(2, 4), sub_scalar3);
+    EXPECT_EQ(Rational_number(8, 4) - v4, sub_scalar3);
+    
+    EXPECT_EQ(v4 * 2, mul_scalar3);
+    EXPECT_EQ(2 * v4, mul_scalar3);
+    
+    EXPECT_EQ(v4 / 5, div_scalar3);
+    EXPECT_EQ(Rational_number(5, 16) / v4, div_scalar3);
+
+
+    Vector v5(10, 0.2, 4);
+    Vector sum_scalar4(10, 0.2, Rational_number(17, 4));
+    Vector sub_scalar4(10, 0.2, Rational_number(7, 2));
+    Vector mul_scalar4(10, 0.2, Rational_number(8));
+    Vector div_scalar4(10, 0.2, Rational_number(1));
+
+    EXPECT_EQ(v5 + Rational_number(1, 4), sum_scalar4);
+    EXPECT_EQ(Rational_number(1, 4) + v5, sum_scalar4);
+
+    EXPECT_EQ(v5 - Rational_number(2, 4), sub_scalar4);
+    EXPECT_EQ(Rational_number(15, 2) - v5, sub_scalar4);
+    
+    EXPECT_EQ(v5 * Rational_number(2), mul_scalar4);
+    EXPECT_EQ(Rational_number(2) * v5, mul_scalar4);
+    
+    EXPECT_EQ(v5 / 4, div_scalar4);
+    EXPECT_EQ(Rational_number(4) / v5, div_scalar4);
+}
+
+TEST(Vector, Complex) {
+    // Работает только если типы комплексных чсел одинаковы, потому что иначе нужно было бы делать еще кучу 
+    // специализаций шаблонных операторов (по крайней мере эта реализация того требует). И операции со скаляром
+    // слева(для случаев когда вектор<комп<рац, ...>>, вектор<комп<..., рац>>, вектор<комп<рац, рац>>, а скаляры 
+    // - комплексные) отсутствуют по той же причине 
+    Vector v1(10, 0.1, Complex_number(Rational_number(6, 2), Rational_number(2)));
+    Vector sum_scalar1(10, 0.1, Complex_number(Rational_number(11, 2), Rational_number(3)));
+    Vector sub_scalar1(10, 0.1, Complex_number(Rational_number(1, 2), Rational_number(1)));
+    Vector mul_scalar1(10, 0.1, Complex_number(Rational_number(11, 2), Rational_number(8)));
+    Vector div_scalar1(10, 0.1, Complex_number(Rational_number(152, 116), Rational_number(32,116)));
+
+    Complex_number c(Rational_number(5, 2), Rational_number(1));
+    // std::cout << v1 + Complex_number(Rational_number(5, 2), Rational_number(5, 2)) << std::endl;
+    EXPECT_EQ(v1 + c, sum_scalar1);
+    EXPECT_EQ(v1 - c, sub_scalar1);
+    EXPECT_EQ(v1 * c, mul_scalar1);
+    EXPECT_EQ(v1 / c, div_scalar1);
+
+
+    Vector v4(10, 0.2, Complex_number(5, 4));
+    Vector sum_scalar3(10, 0.2, Complex_number(6, 8));
+    Vector sub_scalar3(10, 0.2, Complex_number(3, 0));
+    Vector mul_scalar3(10, 0.2, Complex_number(10, 8));
+    Vector div_scalar3(10, 0.2, Complex_number(1));
+
+    EXPECT_EQ(v4 + Complex_number(1, 4), sum_scalar3);
+    EXPECT_EQ(Complex_number(1, 4) + v4, sum_scalar3);
+    
+    EXPECT_EQ(v4 - Complex_number(2, 4), sub_scalar3);
+    EXPECT_EQ(Complex_number(8, 4) - v4, sub_scalar3);
+    
+    EXPECT_EQ(v4 * Complex_number(2), mul_scalar3);
+    EXPECT_EQ(Complex_number(2) * v4, mul_scalar3);
+    
+    EXPECT_EQ(v4 / 5, div_scalar3);
+    EXPECT_EQ(Complex_number(5, 4) / v4, div_scalar3);
+}
+
+TEST(Vector, BoolVector) {
+    Vector<bool> v1(5);
+    Vector<bool> v2(5, 0);
+    Vector<bool> v3(5, 1);
+
+    EXPECT_EQ(v1(3), 0);
+    EXPECT_EQ(v2(3), 0);
+    EXPECT_EQ(v3(3), 1);
+    v3.set(3, 0);
+    EXPECT_EQ(v3(3), 0);
+
+    EXPECT_THROW(v1(5), VectorIndexOutOfRangeException);
+
+    EXPECT_EQ(v2 * v3, v2);
+    EXPECT_EQ(v2 + v3, v3);
+
+    Vector<bool> v4(4);
+    EXPECT_THROW(v4 + v3, VectorSizeMissmatch);
+    EXPECT_THROW(v4 * v3, VectorSizeMissmatch);
+
+    std::cout << v4;
 }
 
 int run_all_my_tests(int argc, char **argv) {

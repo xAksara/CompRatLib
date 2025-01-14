@@ -12,6 +12,7 @@
 class ZeroDivision { };
 class InvalidArgument { };
 class Overflow { };
+class NegativeEpsilon { };
 
 template<typename T1, typename T2>
 class DivisionByZeroException : public ZeroDivision {
@@ -51,27 +52,59 @@ public:
 
 };
 
-// class Exception {
-// protected:
-//     std::string message; 
-// public:
-//     template<typename... Args>
-//     MyException(const std::string& error_message, Args... args) {
-//         std::ostringstream oss;
-//         oss << error_message;
-//         appendParams(oss, args...);
-//         message = oss.str();
-//     }
-    
-//     virtual std::string getMessage() const {
-//         return message;
-//     }
-// private:
-//     void appendParams(std::ostringstream&) {}
-    
-//     template<typename T, typename... Args>
-//     void appendParams(std::ostringstream& oss, T param, Args... args) {
-//         oss << " " << param;
-//         appendParams(oss, args...);
-//     }
-// };
+class NegativeEpsilonException {
+    std::string message;
+    double epsilon;
+public:
+    NegativeEpsilonException(double epsilon) : epsilon(epsilon) {
+        std::ostringstream oss;
+        oss << "Epsilon must be positive. Provided: " << epsilon << std::endl;
+        message = oss.str();
+    }
+};
+
+class VectorIndexOutOfRangeException {
+    std::string message;
+    size_t size1;
+    size_t max_size1;
+public:
+    VectorIndexOutOfRangeException(size_t size, size_t max_size) : size1(size), max_size1(max_size) {
+        std::ostringstream oss;
+        oss << "Wrong vector index: " << size1 << ". Max index is" << max_size1 << '.' << std::endl;
+        message = oss.str();
+    }
+    size_t getVectorSize() { return max_size1; }
+    size_t getVectorIndex() { return size1; }
+};
+
+
+class MatrixIndexOutOfRangeException {
+    std::string message;
+    size_t size1;
+    size_t max_size1;
+    size_t size2;
+    size_t max_size2;
+public:
+    MatrixIndexOutOfRangeException(size_t size1, size_t size2, size_t max_size1, size_t max_size2) : size1(size1), max_size1(max_size1), size2(size2), max_size2(max_size2) {
+        std::ostringstream oss;
+        oss << "Wrong matrix indeces: (" << size1 << ", " << size2 << "). Max indeces are (" << max_size1 << ", " << max_size2 << ")." << std::endl;
+        message = oss.str();
+    }
+    std::pair<size_t, size_t> getMatrixSize() { return std::make_pair(max_size1, max_size2); }
+    std::pair<size_t, size_t> getMatrixIndeces() { return std::make_pair(size1, size2); }
+};
+
+class VectorSizeMissmatch {
+    std::string message;
+    size_t size1;
+    size_t size2;
+public:
+    VectorSizeMissmatch(size_t size1, size_t size2) {
+        std::ostringstream oss;
+        oss << "Vector size missmatch. Left vector size: " << size1 << ". Right vector size: " << size2 << '.' << std::endl;
+        message = oss.str();
+    }
+
+    size_t getLeftSize() { return size1; }
+    size_t getRightSize() { return size2; }
+};

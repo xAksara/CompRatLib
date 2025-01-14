@@ -8,6 +8,9 @@
 template <typename num_type>
 class Rational_number;
 
+template <typename type_real, typename type_imag>
+class Complex_number;
+
 bool isInteger(std::string str) {
     std::stringstream ss;
     for (size_t idx = 0; idx < str.size(); ++idx) {
@@ -121,4 +124,22 @@ double sqrt(T val) {
 template<typename num_type>
 double sqrt(Rational_number<num_type> r) {
     return std::sqrt(static_cast<double>(r));
+}
+
+template<typename T>
+T abs(T val) {
+    return std::abs(val);
+}
+
+template<typename num_type>
+Rational_number<num_type> abs(const Rational_number<num_type>& r) {
+    if (r.getNumerator() < 0) {
+        return Rational_number<num_type>(-r.getNumerator(), r.getDenominator());
+    }
+    return r;
+}
+
+template<typename type_real, typename type_imag>
+double abs(const Complex_number<type_real, type_imag>& c) {
+    return c.modulus();
 }
