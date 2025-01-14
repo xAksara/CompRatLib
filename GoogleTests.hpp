@@ -1,11 +1,13 @@
 #pragma once
 #include <gtest/gtest.h>
 #include <cmath>
+#include <cstdint>
 #include "Exceptions.hpp"
 #include "Rational_number.hpp"
 #include "Utils.hpp"
 #include "Complex_number.hpp"
 #include "Vector.hpp"
+#include "Matrix.hpp"
 
 TEST(Utils, Utils) {
     EXPECT_TRUE(isInteger("5"));
@@ -250,7 +252,7 @@ TEST(Complex_numbers, LogicalOperators) {
     EXPECT_TRUE(r <= c3);
 }
 
-TEST(Vector, Constructors) {
+TEST(Vectors, Constructors) {
     Vector v1(10, 0.1, 2);
     EXPECT_EQ(v1(4), 2);
     Vector v2(v1);
@@ -263,7 +265,7 @@ TEST(Vector, Constructors) {
     EXPECT_DOUBLE_EQ(v5.getEpsilon(), 0.1);
 }
 
-TEST(Vector, Operators) {
+TEST(Vectors, Operators) {
     Vector v1(10, 0.1, 1);
     Vector v2(10, 0.2, (long long)2);
     Vector sum12(10, 0.2, 3);
@@ -346,7 +348,7 @@ TEST(Vector, Operators) {
     EXPECT_EQ(Rational_number(4) / v5, div_scalar4);
 }
 
-TEST(Vector, Complex) {
+TEST(Vectors, Complex) {
     // Работает только если типы комплексных чсел одинаковы, потому что иначе нужно было бы делать еще кучу 
     // специализаций шаблонных операторов (по крайней мере эта реализация того требует). И операции со скаляром
     // слева(для случаев когда вектор<комп<рац, ...>>, вектор<комп<..., рац>>, вектор<комп<рац, рац>>, а скаляры 
@@ -384,7 +386,7 @@ TEST(Vector, Complex) {
     EXPECT_EQ(Complex_number(5, 4) / v4, div_scalar3);
 }
 
-TEST(Vector, BoolVector) {
+TEST(Vectors, BoolVector) {
     Vector<bool> v1(5);
     Vector<bool> v2(5, 0);
     Vector<bool> v3(5, 1);
@@ -404,8 +406,183 @@ TEST(Vector, BoolVector) {
     EXPECT_THROW(v4 + v3, VectorSizeMissmatch);
     EXPECT_THROW(v4 * v3, VectorSizeMissmatch);
 
-    std::cout << v4;
+
 }
+
+TEST(Matrixs, Constructors) {
+    Matrix m1(10, 10, 0.1, 2);
+    EXPECT_EQ(m1(4, 4), 2);
+    Matrix m2(m1);
+    Matrix m3(std::move(Matrix(5, 1, 5)));
+    Matrix m4(5, 5);
+    EXPECT_EQ(m4.getRows(), 5);
+    EXPECT_EQ(m4.getColumns(), 5);
+    EXPECT_EQ(m4.getEpsilon(), 0);
+    Matrix m5(5, 6, 0.1);
+    EXPECT_EQ(m5.getRows(), 5);
+    EXPECT_EQ(m5.getColumns(), 6);
+    EXPECT_DOUBLE_EQ(m5.getEpsilon(), 0.1);
+}
+
+TEST(Matrixs, Operators) {
+    Matrix simple1(10, 3, 0.1);
+    Matrix simple2(10, 3, 0.2);
+    simple1.set(0, 0, 1);
+    simple1.set(1, 1, 2);
+    simple1.set(2, 2, 3);
+    simple2.set(1, 0, 0.15);
+    simple2.set(2, 1, 20);
+    simple2.set(3, 2, 30);
+    Matrix simple_sum(10, 3, 0.1);
+    simple_sum.set(0, 0, 1);
+    simple_sum.set(1, 1, 2);
+    simple_sum.set(2, 2, 3);
+    simple_sum.set(2, 1, 20);
+    simple_sum.set(3, 2, 30);
+    EXPECT_EQ(simple1 + simple2, simple_sum);
+
+
+    Matrix m1(10, 10, 0.1, 1);
+    Matrix m2(10, 10, 0.2, 2LL);
+    Matrix sum12(10, 10, 0.2, 3);
+    EXPECT_TRUE(m1 != m2);
+    EXPECT_FALSE(m1 == m2);
+    EXPECT_EQ(m2+m1, sum12);
+    EXPECT_EQ(sum12-m1, m2);
+
+    Matrix sum_scalar1(10, 10, 0.1, 2);
+    Matrix sub_scalar1(10, 10, 0.2, -1);
+    Matrix mul_scalar1(10, 10, 0.2, 10);
+    Matrix div_scalar1(10, 10, 0.2, 1);
+
+    EXPECT_EQ(m1 + 1, sum_scalar1);
+    EXPECT_EQ(1 + m1, sum_scalar1);
+    
+    EXPECT_EQ(m2 - 3, sub_scalar1);
+    EXPECT_EQ(1 - m2, sub_scalar1);
+    
+    EXPECT_EQ(m2 * 5, mul_scalar1);
+    EXPECT_EQ(5 * m2, mul_scalar1);
+    
+    EXPECT_EQ(m2 / 2, div_scalar1);
+    EXPECT_EQ(2 / m2, div_scalar1);
+
+    
+    Matrix m3(10, 10, 0.2, 16.);
+    Matrix sum_scalar2(10, 10, 0.2, 17.);
+    Matrix sub_scalar2(10, 10, 0.2, -8.);
+    Matrix mul_scalar2(10, 10, 0.2, 32.);
+    Matrix div_scalar2(10, 10, 0.2, 2.);
+
+    EXPECT_EQ(m3 + 1, sum_scalar2);
+    EXPECT_EQ(1 + m3, sum_scalar2);
+    
+    EXPECT_EQ(m3 - 24, sub_scalar2);
+    EXPECT_EQ(8 - m3, sub_scalar2);
+    
+    EXPECT_EQ(m3 * 2, mul_scalar2);
+    EXPECT_EQ(2 * m3, mul_scalar2);
+    
+    EXPECT_EQ(m3 / 8, div_scalar2);
+    EXPECT_EQ(32 / m3, div_scalar2);
+
+    Matrix m4(10, 10, 0.2, Rational_number(5, 4));
+    Matrix sum_scalar3(10, 10, 0.2, Rational_number(6, 4));
+    Matrix sub_scalar3(10, 10, 0.2, Rational_number(3, 4));
+    Matrix mul_scalar3(10, 10, 0.2, Rational_number(10, 4));
+    Matrix div_scalar3(10, 10, 0.2, Rational_number(1, 4));
+
+    EXPECT_EQ(m4 + Rational_number(1, 4), sum_scalar3);
+    EXPECT_EQ(Rational_number(1, 4) + m4, sum_scalar3);
+    
+    EXPECT_EQ(m4 - Rational_number(2, 4), sub_scalar3);
+    EXPECT_EQ(Rational_number(8, 4) - m4, sub_scalar3);
+    
+    EXPECT_EQ(m4 * 2, mul_scalar3);
+    EXPECT_EQ(2 * m4, mul_scalar3);
+    
+    EXPECT_EQ(m4 / 5, div_scalar3);
+    EXPECT_EQ(Rational_number(5, 16) / m4, div_scalar3);
+
+
+    Matrix m5(10, 10, 0.2, 4);
+    Matrix sum_scalar4(10, 10, 0.2, Rational_number(17, 4));
+    Matrix sub_scalar4(10, 10, 0.2, Rational_number(7, 2));
+    Matrix mul_scalar4(10, 10, 0.2, Rational_number(8));
+    Matrix div_scalar4(10, 10, 0.2, Rational_number(1));
+
+    EXPECT_EQ(m5 + Rational_number(1, 4), sum_scalar4);
+    EXPECT_EQ(Rational_number(1, 4) + m5, sum_scalar4);
+
+    EXPECT_EQ(m5 - Rational_number(2, 4), sub_scalar4);
+    EXPECT_EQ(Rational_number(15, 2) - m5, sub_scalar4);
+    
+    EXPECT_EQ(m5 * Rational_number(2), mul_scalar4);
+    EXPECT_EQ(Rational_number(2) * m5, mul_scalar4);
+    
+    EXPECT_EQ(m5 / 4, div_scalar4);
+    EXPECT_EQ(Rational_number(4) / m5, div_scalar4);
+}
+
+TEST(Matrixs, Complex) {
+    // Работает только если типы комплексных чсел одинаковы, потому что иначе нужно было бы делать еще кучу 
+    // специализаций шаблонных операторов (по крайней мере эта реализация того требует). И операции со скаляром
+    // слева(для случаев когда вектор<комп<рац, ...>>, вектор<комп<..., рац>>, вектор<комп<рац, рац>>, а скаляры 
+    // - комплексные) отсутствуют по той же причине 
+    Matrix m1(10, 10, 0.1, Complex_number(Rational_number(6, 2), Rational_number(2)));
+    Matrix sum_scalar1(10, 10, 0.1, Complex_number(Rational_number(11, 2), Rational_number(3)));
+    Matrix sub_scalar1(10, 10, 0.1, Complex_number(Rational_number(1, 2), Rational_number(1)));
+    Matrix mul_scalar1(10, 10, 0.1, Complex_number(Rational_number(11, 2), Rational_number(8)));
+    Matrix div_scalar1(10, 10, 0.1, Complex_number(Rational_number(152, 116), Rational_number(32,116)));
+
+    Complex_number c(Rational_number(5, 2), Rational_number(1));
+    // std::cout << m1 + Complex_number(Rational_number(5, 2), Rational_number(5, 2)) << std::endl;
+    EXPECT_EQ(m1 + c, sum_scalar1);
+    EXPECT_EQ(m1 - c, sub_scalar1);
+    EXPECT_EQ(m1 * c, mul_scalar1);
+    EXPECT_EQ(m1 / c, div_scalar1);
+
+
+    Matrix m4(10, 10, 0.2, Complex_number(5, 4));
+    Matrix sum_scalar3(10, 10, 0.2, Complex_number(6, 8));
+    Matrix sub_scalar3(10, 10, 0.2, Complex_number(3, 0));
+    Matrix mul_scalar3(10, 10, 0.2, Complex_number(10, 8));
+    Matrix div_scalar3(10, 10, 0.2, Complex_number(1));
+
+    EXPECT_EQ(m4 + Complex_number(1, 4), sum_scalar3);
+    EXPECT_EQ(Complex_number(1, 4) + m4, sum_scalar3);
+    
+    EXPECT_EQ(m4 - Complex_number(2, 4), sub_scalar3);
+    EXPECT_EQ(Complex_number(8, 4) - m4, sub_scalar3);
+    
+    EXPECT_EQ(m4 * Complex_number(2), mul_scalar3);
+    EXPECT_EQ(Complex_number(2) * m4, mul_scalar3);
+    
+    EXPECT_EQ(m4 / 5, div_scalar3);
+    EXPECT_EQ(Complex_number(5, 4) / m4, div_scalar3);
+}
+
+TEST(Matrixs, BoolMatrix) {
+    Matrix<bool> m1(5, 5);
+    Matrix<bool> m2(5, 5, 0);
+    Matrix<bool> m3(5, 5, 1);
+
+    EXPECT_EQ(m1(3, 2), 0);
+    EXPECT_EQ(m2(3, 2), 0);
+    EXPECT_EQ(m3(3,2 ), 1);
+    m3.set(3, 2, 0);
+    EXPECT_EQ(m3(3,2 ), 0);
+
+    EXPECT_THROW(m1(5, 4), MatrixIndexOutOfRangeException);
+
+    EXPECT_EQ(m2 * m3, m2);
+    EXPECT_EQ(m2 + m3, m3);
+
+    Matrix<bool> m4(5, 4);
+    EXPECT_THROW(m4 + m3, MatrixSizeMissmatch);
+    EXPECT_THROW(m4 * m3, MatrixSizeMissmatch);
+}
+
 
 int run_all_my_tests(int argc, char **argv) {
     testing::InitGoogleTest(&argc, argv);

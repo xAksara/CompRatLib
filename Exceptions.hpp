@@ -108,3 +108,22 @@ public:
     size_t getLeftSize() { return size1; }
     size_t getRightSize() { return size2; }
 };
+
+class MatrixSizeMissmatch {
+    std::string message;
+    size_t rows1;
+    size_t columns1;
+    size_t rows2;
+    size_t columns2;
+public:
+    MatrixSizeMissmatch(size_t rows1, size_t columns1, size_t rows2, size_t columns2) {
+        std::ostringstream oss;
+        oss << "Matrix size missmatch. Left matrix size: [" << rows1 << ", " << columns1 << "] . Right vector size: [" << rows1 << ", " << columns1 << "] ." << std::endl;
+        message = oss.str();
+    }
+
+    size_t getLeftRows() { return rows1; }
+    size_t getLeftColumns() { return columns1; }
+    size_t getRightRows() { return rows2; }
+    size_t getRightColumns() { return columns2; }
+};

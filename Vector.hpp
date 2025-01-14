@@ -3,6 +3,11 @@
 #include <unordered_map>
 #include <map>
 #include <iostream>
+#include <vector>
+#include <cstdint>
+#include "Rational_number.hpp"
+#include "Complex_number.hpp"
+#include "Utils.hpp"
 
 // Здесь пытался использовать наследование и специализацию шаблонов чтоб реализовать ограничение на типа контейнера без использования 
 // enable_if и template <typename T = double, typename container_T = std::map<unsigned int, element_T>>
@@ -133,7 +138,8 @@ public:
         if (idx >= size) {
             throw VectorIndexOutOfRangeException(idx, size);
         }
-        data[idx] = val;
+        if (abs(val) >= epsilon)
+            data[idx] = val;
     }
     container_T getData() const { return data; }
     size_t  getSize() const { return size; }
@@ -611,7 +617,8 @@ template<>
 class Vector<bool> {
 private:
     std::vector<uint64_t> data;
-    unsigned int size;
+    size_t size;
+    const static uint64_t one = 1; // выяснилось что размер UL может быть не обязательно 64, так что завел переменную чтобы гарантировано использовать 64итное число
 public:
     Vector(size_t size) : size(size), data(std::vector<uint64_t>((size + 63) / 64, 0)) {} // граничные случаи правильно
     Vector(size_t size, bool val) : size(size) {
@@ -625,9 +632,9 @@ public:
         size_t block = idx / 64;
         size_t bit_in_block = idx % 64;
         if (value) {
-            data[block] |= ((1UL << 63) >> bit_in_block); // 1<<63 = 10000...0; >> bit_in_block - выставили  нужнй бит
+            data[block] |= ((one << 63) >> bit_in_block); // 1<<63 = 10000...0; >> bit_in_block - выставили  нужнй бит
         } else {
-            data[block] &= ~((1UL << 63) >> bit_in_block); // получаем 111...0...1111 (нолик в нужном бите) и делаем &
+            data[block] &= ~((one << 63) >> bit_in_block); // получаем 111...0...1111 (нолик в нужном бите) и делаем &
         }
     }
 
@@ -637,7 +644,7 @@ public:
         }
         size_t block = idx / 64;
         size_t bit_in_block = idx % 64;
-        return (data[block] & ((1UL << 63) >> bit_in_block)) != 0;
+        return (data[block] & ((one << 63) >> bit_in_block)) != 0;
     }
 
     Vector<bool> operator*(const Vector& rhs) const {

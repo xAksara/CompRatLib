@@ -512,7 +512,7 @@ Rational_number<lhs_type> operator/(const Rational_number<lhs_type>& lhs, const 
         isLhsNegative = true;
         lhs_num = -lhs_num;
     }
-    if (isLhsNegative && isRhsNegative || !isLhsNegative && !isRhsNegative) {
+    if ((isLhsNegative && isRhsNegative) || (!isLhsNegative && !isRhsNegative)) {
         return Rational_number<lhs_type> (lhs_num * rhs.getDenominator(), lhs.getDenominator() * rhs_num);
     } else {
         return Rational_number<lhs_type> (-lhs_num * rhs.getDenominator(), lhs.getDenominator() * rhs_num);

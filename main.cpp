@@ -4,6 +4,7 @@
 #include "Exceptions.hpp"
 #include "GoogleTests.hpp"
 #include "Vector.hpp"
+#include "Matrix.hpp"
 
 int main(int argc, char **argv) {
     // Vector<int, std::map<int, int>> a;
