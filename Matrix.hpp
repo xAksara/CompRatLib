@@ -7,9 +7,11 @@
 #include <vector>
 #include <cctype>
 #include <cstdint>
+#include <unordered_set>
 #include "Rational_number.hpp"
 #include "Complex_number.hpp"
 #include "Utils.hpp"
+#include "Matrix_proxy.hpp"
 
 // Здесь пытался использовать наследование и специализацию шаблонов чтоб реализовать ограничение на типа контейнера без использования 
 // enable_if и template <typename T = double, typename container_T = std::map<unsigned int, element_T>>
@@ -80,7 +82,14 @@ private:
     size_t columns;
     double epsilon;
     static const T zero;
+    std::vector<Matrix_proxy<T, container_T>*> proxies;
+    std::unordered_set<Matrix_proxy<T, container_T>*> proxies_set;
 public:
+    void clean_pointer(Matrix_proxy<T, container_T>* p) {
+        std::cout << "DELETE PROXY FROM SET " << p << std::endl;
+        proxies_set.erase(p);
+    }
+
     Matrix(size_t rows, size_t columns) : rows(rows), columns(columns), epsilon(0) {}
     // explicit потому что сильно копипастил вектор и констуркторы вида Matrix(5, 0.1, 5) приводят дабл к сайз_т
     explicit Matrix(size_t rows, size_t columns, double epsilon) : rows(rows), columns(columns), epsilon(epsilon) { 
@@ -106,11 +115,19 @@ public:
         columns = rhs.columns;
         epsilon = rhs.epsilon;
     }
+
     Matrix(Matrix&& rhs) {
         data = std::move(rhs.data);
         rows = rhs.rows;
         columns = rhs.columns;
         epsilon = rhs.epsilon;
+    }
+
+    ~Matrix() {
+        for (auto& proxy : proxies_set) {
+            std::cout << "Destructor matrix" << this << std::endl;
+            proxy->clean_pointer();
+        }
     }
 
     Matrix& operator=(const Matrix& rhs) {
@@ -144,6 +161,28 @@ public:
         }
         return data[std::make_pair(i, j)];
     }
+
+    Matrix_proxy<T, container_T>* operator[](const Matrix_coords& coords) {
+        Matrix_proxy<T, container_T>* proxy = new Matrix_proxy<T, container_T>(*this, coords);
+        // proxies.push_back(proxy);
+        proxies_set.insert(proxy);
+        return proxy;
+    }
+
+    Matrix_proxy<T, container_T>* operator[](const Matrix_row_coord& coords) {
+        Matrix_proxy<T, container_T>* proxy = new Matrix_proxy<T, container_T>(*this, coords);
+        // proxies.push_back(proxy);
+        proxies_set.insert(proxy);
+        return proxy;
+    }
+
+    Matrix_proxy<T, container_T>* operator[](const Matrix_col_coord& coords) {
+        Matrix_proxy<T, container_T>* proxy = new Matrix_proxy<T, container_T>(*this, coords);
+        // proxies.push_back(proxy);
+        proxies_set.insert(proxy);
+        return proxy;
+    }
+
     void set(size_t i, size_t j, const T& val) {
         if (i >= rows || j >= columns) {
             throw MatrixIndexOutOfRangeException(i, j, rows, columns);

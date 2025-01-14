@@ -16,26 +16,28 @@ class NegativeEpsilon { };
 
 template<typename T1, typename T2>
 class DivisionByZeroException : public ZeroDivision {
+    std::string message;
     T1 numerator;
     T2 denominator;
 public:
-    DivisionByZeroException(const T1& num, const T2& denom) : numerator(num), denominator(denom) { }
+    DivisionByZeroException(const T1& num, const T2& denom) : numerator(num), denominator(denom), message("Division by zero.") { }
     T1 getNumerator() { return numerator; }
     T1 getDenominator() { return denominator; }
+    std::string getMessage() { return message; }
 };
 
 template<typename T>
 class InvalidArgumentException : public InvalidArgument {
-    T* argument;
+    T argument;
     std::string message;
 public:
-    InvalidArgumentException(std::string what, T& arg) {
+    InvalidArgumentException(std::string what, const T& arg) {
         std::ostringstream oss;
         oss << what << arg << std::endl;
         message = oss.str();
-        argument = &arg;
+        argument = arg;
     }
-    T& getArgument() { return argument; }
+    T getArgument() { return argument; }
     std::string getMessage() { return message; }
 };
 
@@ -61,6 +63,7 @@ public:
         oss << "Epsilon must be positive. Provided: " << epsilon << std::endl;
         message = oss.str();
     }
+    std::string getMessage() { return message; }
 };
 
 class VectorIndexOutOfRangeException {
@@ -75,6 +78,7 @@ public:
     }
     size_t getVectorSize() { return max_size1; }
     size_t getVectorIndex() { return size1; }
+    std::string getMessage() { return message; }
 };
 
 
@@ -92,6 +96,7 @@ public:
     }
     std::pair<size_t, size_t> getMatrixSize() { return std::make_pair(max_size1, max_size2); }
     std::pair<size_t, size_t> getMatrixIndeces() { return std::make_pair(size1, size2); }
+    std::string getMessage() { return message; }
 };
 
 class VectorSizeMissmatch {
@@ -107,6 +112,7 @@ public:
 
     size_t getLeftSize() { return size1; }
     size_t getRightSize() { return size2; }
+    std::string getMessage() { return message; }
 };
 
 class MatrixSizeMissmatch {
@@ -126,4 +132,14 @@ public:
     size_t getLeftColumns() { return columns1; }
     size_t getRightRows() { return rows2; }
     size_t getRightColumns() { return columns2; }
+    std::string getMessage() { return message; }
+};
+
+
+
+class EmptyContainerException {
+    std::string message;
+public:
+    EmptyContainerException() : message("Proxy object pointer is null.") {}
+    std::string getMessage() { return message; }
 };

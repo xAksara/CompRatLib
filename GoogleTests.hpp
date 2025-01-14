@@ -8,6 +8,8 @@
 #include "Complex_number.hpp"
 #include "Vector.hpp"
 #include "Matrix.hpp"
+#include "Matrix_coords.hpp"
+#include "Matrix_proxy.hpp"
 
 TEST(Utils, Utils) {
     EXPECT_TRUE(isInteger("5"));
@@ -583,6 +585,81 @@ TEST(Matrixs, BoolMatrix) {
     EXPECT_THROW(m4 * m3, MatrixSizeMissmatch);
 }
 
+TEST(Vector, VecMatMul) {
+    Vector v(3);
+    v(0) = 10;
+    v(1) = 20;
+    v(2) = 30;
+    Matrix m(3, 4);
+    m(0, 0) = 1;
+    m(0, 1) = 2;
+    m(0, 2) = 3;
+    m(0, 3) = 4;
+
+    m(1, 0) = 5;
+    m(1, 1) = 6;
+    m(1, 2) = 7;
+    m(1, 3) = 8;
+
+    m(2, 0) = 9;
+    m(2, 1) = 10;
+    m(2, 2) = 11;
+    m(2, 3) = 12;
+
+
+    Vector res_mul(4, 0);
+    res_mul(0) = 380;
+    res_mul(1) = 440;
+    res_mul(2) = 500;
+    res_mul(3) = 560;
+
+    EXPECT_EQ(v * m, res_mul);
+}
+
+TEST(Slices, MatrixSlices) {
+    Matrix m(3, 4);
+    m(0, 0) = 1;
+    m(0, 1) = 2;
+    m(0, 2) = 3;
+    m(0, 3) = 4;
+
+    m(1, 0) = 5;
+    m(1, 1) = 6;
+    m(1, 2) = 7;
+    m(1, 3) = 8;
+
+    m(2, 0) = 9;
+    m(2, 1) = 10;
+    m(2, 2) = 11;
+    m(2, 3) = 12;
+
+    Matrix_coords coord(1, 1, 2, 3);
+    auto proxy_p1 = m[coord]; // Используем auto потому что параметры шаблона матрицы были по умолчанию и не хочется их указывать
+    
+    EXPECT_EQ((*proxy_p1)(0, 0), m(1, 1));
+    (*proxy_p1).set(0, 0, 123);
+    EXPECT_NE((*proxy_p1)(0, 0), m(1, 1));
+    EXPECT_THROW((*proxy_p1).set(0, 123), InvalidArgument);
+    EXPECT_THROW((*proxy_p1)(0, 123), MatrixIndexOutOfRangeException);
+    EXPECT_THROW((*proxy_p1)(0), InvalidArgument);
+
+    Matrix_row_coord row_coord(1, 1, 2);
+    auto proxy_p2 = m[row_coord]; // Используем auto потому что параметры шаблона матрицы были по умолчанию и не хочется их указывать
+    std::cout << "m " << m(1, 1) << std::endl;
+    EXPECT_EQ((*proxy_p2)(0), m(1, 1));
+    (*proxy_p2).set(0, 123);
+    EXPECT_NE((*proxy_p2)(0), m(1, 1));
+    EXPECT_THROW((*proxy_p2).set(0, 0, 123), InvalidArgument);
+    EXPECT_THROW((*proxy_p2)(123), VectorIndexOutOfRangeException);
+    EXPECT_THROW((*proxy_p2)(0, 0), InvalidArgument);
+
+
+
+    delete proxy_p1; // освободим выделенный в m[] указатель
+    delete proxy_p2; // освободим выделенный в m[] указатель
+
+
+}
 
 int run_all_my_tests(int argc, char **argv) {
     testing::InitGoogleTest(&argc, argv);

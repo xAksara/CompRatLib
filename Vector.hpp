@@ -8,6 +8,7 @@
 #include "Rational_number.hpp"
 #include "Complex_number.hpp"
 #include "Utils.hpp"
+#include "Matrix.hpp"
 
 // Здесь пытался использовать наследование и специализацию шаблонов чтоб реализовать ограничение на типа контейнера без использования 
 // enable_if и template <typename T = double, typename container_T = std::map<unsigned int, element_T>>
@@ -605,9 +606,20 @@ Vector<Complex_number<Rational_number<rhs_real>, Rational_number<rhs_imag>>> ope
 
 
 
-
-
-
+// надо бы наделать специализаций, чтобы не приводить к lhs_T в случае комплексных и рациональных, а возвращать наиболее "широкий" тип
+template<typename lhs_T, typename lhs_container_T, typename rhs_T, typename rhs_container_T>
+Vector<lhs_T, lhs_container_T> operator *(const Vector<lhs_T, lhs_container_T>& v, const Matrix<rhs_T, rhs_container_T>& m) {
+    if (v.getSize() != m.getRows()) {
+        throw MatrixSizeMissmatch(1, v.getSize(), m.getRows(), m.getColumns());
+    }
+    Vector<lhs_T, lhs_container_T> result(m.getColumns(), v.getEpsilon());
+    for (const auto& [key, m_value] : m.getData()) {
+        size_t row = key.first; // key это пара <строка, столбец> (ключ в мапе)
+        size_t column = key.second; // Еще можно [row, column] = key
+        result.set(column, result(column) + v(row) * m_value);
+    }
+    return result;
+}
 
 
 
