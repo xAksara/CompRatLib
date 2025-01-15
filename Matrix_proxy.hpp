@@ -16,8 +16,6 @@ class Matrix_proxy {
     Matrix<T, container_T>* matrix_p;
     Matrix<T, container_T>* initial_matrix_p;
     bool is_copy = false;
-    bool is_row = false;
-    bool is_column = false;
     
 
 
@@ -39,9 +37,8 @@ class Matrix_proxy {
         if (is_copy) {
             std::cout << "aaaa333a" << std::endl;
             if (matrix_p != nullptr) {
-                std::cout << "delete " << matrix_p << std::endl;
+                std::cout << "DELETE " << matrix_p << std::endl;
                 delete matrix_p;
-                std::cout << "delete successful!" << std::endl;
             }
             std::cout << "Pointer: " << matrix_p << std::endl;
             matrix_p = nullptr;
@@ -55,6 +52,9 @@ class Matrix_proxy {
 
 
 public:
+    bool is_row = false;
+    bool is_column = false;
+
     Matrix_proxy(Matrix<T, container_T>& matrix, const Matrix_coords& coords)
         : matrix_p(&matrix), initial_matrix_p(&matrix)
     { 
@@ -96,8 +96,43 @@ public:
         }
         if (is_copy && matrix_p != nullptr) {
             std::cout << "1" << std::endl;
+            std::cout << "DELETE " << matrix_p << std::endl;
             delete matrix_p;
         }
+    }
+
+    double getEpsilon() const {
+        if (matrix_p == nullptr) {
+            throw EmptyContainerException();
+        }
+        return matrix_p->getEpsilon();
+    }
+
+    container_T getData() const {
+        if (matrix_p == nullptr) {
+            throw EmptyContainerException();
+        }
+        return matrix_p->getData();
+    }
+
+    size_t getSize() const {
+        if (matrix_p == nullptr) {
+            throw EmptyContainerException();
+        }
+        if (!is_row && !is_column) {
+            throw InvalidArgumentException("Для прокси матрицы используйте getRows() или getColumns(). Флаги строки и столбца равны: ", 0);
+        }
+        return (is_row ? proxy_columns : proxy_rows);
+    }
+
+    size_t getRows() const {
+        if (matrix_p == nullptr) {
+            throw EmptyContainerException();
+        }
+        if (is_row || is_column) {
+            throw InvalidArgumentException("Для строки или столбца используйте getSize(). is_row == ", is_row);
+        }
+        return (is_row ? c1 : r1);
     }
 
     const T& operator()(size_t i, size_t j) const {
@@ -185,9 +220,23 @@ public:
         ss << "<Proxy matrix rows: " << proxy_rows << ", columns: " << proxy_columns << ", epsilon: " << matrix_p->getEpsilon() << ", data:[";
         size_t counter = 0; // чтобы поймать  последний элемент. Хотя можно через итераторы, но так симпотичнее
         size_t data_size = matrix_p->getData().size();
-        for (const auto& [key, value] : matrix_p->getData()) {
-            if (key.first >= r1 && key.first <= r2 && key.second >= c1 && key.second <= c2) {
-                ss << "{(" << key.first - r1 << ", " << key.second - c1 << "), " << value << (++counter < data_size ? "}, " : "}");
+        if (is_row) {
+            for (const auto& [key, value] : matrix_p->getData()) {
+                if (key.second >= c1 && key.second <= c2) {
+                    ss << "{(" << key.first - r1 << ", " << key.second - c1 << "), " << value << (++counter < data_size ? "}, " : "}");
+                }
+            }
+        } else if (is_column) {
+            for (const auto& [key, value] : matrix_p->getData()) {
+                if (key.second >= r1 && key.second <= r2) {
+                    ss << "{(" << key.first - r1 << ", " << key.second - c1 << "), " << value << (++counter < data_size ? "}, " : "}");
+                }
+            }
+        } else {
+            for (const auto& [key, value] : matrix_p->getData()) {
+                if (key.first >= r1 && key.first <= r2 && key.second >= c1 && key.second <= c2) {
+                    ss << "{(" << key.first - r1 << ", " << key.second - c1 << "), " << value << (++counter < data_size ? "}, " : "}");
+                }
             }
         }
         ss << "]>";

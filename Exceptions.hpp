@@ -143,3 +143,14 @@ public:
     EmptyContainerException() : message("Proxy object pointer is null.") {}
     std::string getMessage() { return message; }
 };
+
+
+template<typename T>
+class ProxyToVectorException {
+    std::string message;
+    T proxy;
+public:
+    ProxyToVectorException(std::string message, T proxy) : message(message), proxy(proxy) {}
+    std::string getMessage() { return message; }
+    T getProxy() { return proxy; }
+};

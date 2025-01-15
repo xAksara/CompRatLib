@@ -9,6 +9,7 @@
 #include "Complex_number.hpp"
 #include "Utils.hpp"
 #include "Matrix.hpp"
+#include "Matrix_proxy.hpp"
 
 // Здесь пытался использовать наследование и специализацию шаблонов чтоб реализовать ограничение на типа контейнера без использования 
 // enable_if и template <typename T = double, typename container_T = std::map<unsigned int, element_T>>
@@ -105,6 +106,20 @@ public:
         size = rhs.size;
         epsilon = rhs.epsilon;
     }
+    template<typename proxy_container_T>
+    Vector(const Matrix_proxy<T, proxy_container_T>& rhs) { 
+        if (!rhs.is_row) {
+            throw ProxyToVectorException("Прокси обхект должен быть прокси-строкой.", rhs);
+        }
+        size = rhs.getSize();
+        std::cout << "SIZE" << size << std::endl;
+        epsilon = rhs.getEpsilon();
+        for (size_t idx = 0; idx < size; ++idx) {
+            if (rhs(idx) < epsilon || epsilon == 0) {
+                data[idx] = rhs(idx);
+            }
+        }
+    }
 
     Vector& operator=(const Vector& rhs) {
         if (this != &rhs) {
@@ -122,6 +137,22 @@ public:
         }
         return *this;
     }
+    template<typename proxy_container_T>
+    Vector& operator=(const Matrix_proxy<T, proxy_container_T>& rhs) { 
+        if (!rhs.is_row) {
+            throw ProxyToVectorException("Прокси обхект должен быть прокси-строкой.", rhs);
+        }
+        size = rhs.getSize();
+        epsilon = rhs.getEpsilon();
+        for (size_t idx = 0; idx < size; ++idx) {
+            if (rhs(idx) < epsilon) {
+                data[idx] = rhs(idx);
+                std::cout << rhs(idx);
+            }
+        }
+        return *this;
+    }
+    
     const T& operator()(size_t idx) const {
         if (idx >= size) {
             throw VectorIndexOutOfRangeException(idx, size);
@@ -715,6 +746,7 @@ std::ostream& operator<<(std::ostream& os, const Vector<T, container_T>& v) {
     return os;
 }
 
+// конст статик нельзя просто сделать = 0 в классе
 template <typename T, typename container_T>
 const T Vector<T, container_T>::zero = 0;
 

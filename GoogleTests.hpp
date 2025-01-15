@@ -219,6 +219,9 @@ TEST(Complex_numbers, Arythmetic) {
     EXPECT_EQ(r * c, mul2);
     Complex_number div2(Rational_number(5, 6), Rational_number(-5, 6));
     EXPECT_EQ(r / c, div2);
+
+    Complex_number sum22(1.0, 1.0);
+    EXPECT_EQ(sum22 + Rational_number(1, 2), Complex_number(1.5, 1));
 }
 
 TEST(Complex_numbers, LogicalOperators) {
@@ -612,11 +615,12 @@ TEST(Vector, VecMatMul) {
     res_mul(1) = 440;
     res_mul(2) = 500;
     res_mul(3) = 560;
-
     EXPECT_EQ(v * m, res_mul);
 }
 
-TEST(Slices, MatrixSlices) {
+
+// Простые ситуации с прокси. прокси убивается раньше, чем матрица
+TEST(Slices, SimpleMatrixSlices) {
     Matrix m(3, 4);
     m(0, 0) = 1;
     m(0, 1) = 2;
@@ -633,6 +637,7 @@ TEST(Slices, MatrixSlices) {
     m(2, 2) = 11;
     m(2, 3) = 12;
 
+
     Matrix_coords coord(1, 1, 2, 3);
     auto proxy_p1 = m[coord]; // Используем auto потому что параметры шаблона матрицы были по умолчанию и не хочется их указывать
     
@@ -644,22 +649,183 @@ TEST(Slices, MatrixSlices) {
     EXPECT_THROW((*proxy_p1)(0), InvalidArgument);
 
     Matrix_row_coord row_coord(1, 1, 2);
-    auto proxy_p2 = m[row_coord]; // Используем auto потому что параметры шаблона матрицы были по умолчанию и не хочется их указывать
+    auto proxy_row = m[row_coord]; // Используем auto потому что параметры шаблона матрицы были по умолчанию и не хочется их указывать
     std::cout << "m " << m(1, 1) << std::endl;
-    EXPECT_EQ((*proxy_p2)(0), m(1, 1));
-    (*proxy_p2).set(0, 123);
-    EXPECT_NE((*proxy_p2)(0), m(1, 1));
-    EXPECT_THROW((*proxy_p2).set(0, 0, 123), InvalidArgument);
-    EXPECT_THROW((*proxy_p2)(123), VectorIndexOutOfRangeException);
-    EXPECT_THROW((*proxy_p2)(0, 0), InvalidArgument);
+    EXPECT_EQ((*proxy_row)(0), m(1, 1));
+    (*proxy_row).set(0, 123);
+    EXPECT_NE((*proxy_row)(0), m(1, 1));
+    EXPECT_THROW((*proxy_row).set(0, 0, 123), InvalidArgument);
+    EXPECT_THROW((*proxy_row)(123), VectorIndexOutOfRangeException);
+    EXPECT_THROW((*proxy_row)(0, 0), InvalidArgument);
+
+
+    Matrix_col_coord col_coord(1, 1, 2);
+    auto proxy_col = m[row_coord]; // Используем auto потому что параметры шаблона матрицы были по умолчанию и не хочется их указывать
+    std::cout << "m " << m(1, 1) << std::endl;
+    EXPECT_EQ((*proxy_col)(0), m(1, 1));
+    (*proxy_col).set(0, 123);
+    EXPECT_NE((*proxy_col)(0), m(1, 1));
+    EXPECT_THROW((*proxy_col).set(0, 0, 123), InvalidArgument);
+    EXPECT_THROW((*proxy_col)(123), VectorIndexOutOfRangeException);
+    EXPECT_THROW((*proxy_col)(0, 0), InvalidArgument);
 
 
 
     delete proxy_p1; // освободим выделенный в m[] указатель
-    delete proxy_p2; // освободим выделенный в m[] указатель
+    delete proxy_row; // освободим выделенный в m[] указатель
+    delete proxy_col; // освободим выделенный в m[] указатель
+}
+
+TEST(Slices, KillMatrix) {
+    Matrix m(3, 4);
+    m(0, 0) = 1;
+    m(0, 1) = 2;
+    m(0, 2) = 3;
+    m(0, 3) = 4;
+
+    m(1, 0) = 5;
+    m(1, 1) = 6;
+    m(1, 2) = 7;
+    m(1, 3) = 8;
+
+    m(2, 0) = 9;
+    m(2, 1) = 10;
+    m(2, 2) = 11;
+    m(2, 3) = 12;
+
+    Matrix<>* m1 = new Matrix(m); 
+    // Matrix<>* m2 = new Matrix(m); 
+
+    Matrix_coords coord(1, 1, 2, 3);
+    auto proxy_matrix = (*m1)[coord]; // Используем auto потому что параметры шаблона матрицы были по умолчанию и не хочется их указывать
+    auto proxy_matrix_local = (*m1)[coord]; // для этого прокси создадим локальную копию
+    proxy_matrix_local->set(0, 0, 50);
+
+    Matrix_row_coord row_coord(1, 1, 2);
+    auto proxy_row = (*m1)[row_coord]; // Используем auto потому что параметры шаблона матрицы были по умолчанию и не хочется их указывать
+    auto proxy_row_local = (*m1)[row_coord]; // для этого прокси создадим локальную копию
+    proxy_row_local->set(0, 100);
+
+    Matrix_col_coord col_coord(1, 1, 2);
+    auto proxy_col = (*m1)[row_coord]; // Используем auto потому что параметры шаблона матрицы были по умолчанию и не хочется их указывать
+    auto proxy_col_local = (*m1)[row_coord]; // для этого прокси создадим локальную копию
+    proxy_col_local->set(0, 150);
+
+
+    delete m1;
+    // delete m2;
+
+    delete proxy_matrix; // освободим выделенный в m[] указатель
+    delete proxy_row; // освободим выделенный в m[] указатель
+    delete proxy_col; // освободим выделенный в m[] указатель
+    delete proxy_matrix_local; // освободим выделенный в m[] указатель
+    delete proxy_row_local; // освободим выделенный в m[] указательclea
+    delete proxy_col_local; // освободим выделенный в m[] указатель
+}
+
+TEST(Slices, VecMulRowSlice) { 
+    Vector v(10);
+    v(0) = 1;
+    v(1) = 2;
+    v(2) = 3;
+    v(3) = 4;
+    v(4) = 5;
+    v(5) = 6;
+    v(6) = 7;
+    v(7) = 8;
+    v(8) = 9;
+    v(9) = 10;
+
+    Matrix m(10, 10);
+    m(3,0) = 1;
+    m(3,1) = 2;
+    m(3,2) = 3;
+    m(3,3) = 4;
+    m(3,4) = 5;
+    m(3,5) = 6;
+    m(3,6) = 7;
+    m(3,7) = 8;
+    m(3,8) = 9;
+    m(3,9) = 10;
+
+    auto proxy_row = m[Matrix_row_coord(3, -1, -1)];
+    Vector v_copy = *proxy_row;
+    Vector copy_result(10, 0);
+    copy_result(0) = 1;
+    copy_result(1) = 2;
+    copy_result(2) = 3;
+    copy_result(3) = 4;
+    copy_result(4) = 5;
+    copy_result(5) = 6;
+    copy_result(6) = 7;
+    copy_result(7) = 8;
+    copy_result(8) = 9;
+    copy_result(9) = 10;
+
+    EXPECT_EQ(v_copy, copy_result);
+
+    delete proxy_row;
+
+    // std::cout << v *
 
 
 }
+
+// TEST(Slices, KillMatrixAndVecMulForMe) {
+//     Matrix m(3, 4);
+//     m(0, 0) = 1;
+//     m(0, 1) = 2;
+//     m(0, 2) = 3;
+//     m(0, 3) = 4;
+
+//     m(1, 0) = 5;
+//     m(1, 1) = 6;
+//     m(1, 2) = 7;
+//     m(1, 3) = 8;
+
+//     m(2, 0) = 9;
+//     m(2, 1) = 10;
+//     m(2, 2) = 11;
+//     m(2, 3) = 12;
+
+//     Matrix<>* m1 = new Matrix(m); 
+//     Matrix<>* m2 = new Matrix(m); 
+
+//     std::cout << "START SPAWNING PROXY" << std::endl;
+//     Matrix_coords coord(1, 1, 2, 3);
+//     auto proxy_matrix = m[coord]; // Используем auto потому что параметры шаблона матрицы были по умолчанию и не хочется их указывать
+//     auto proxy_matrix_local = m[coord]; // для этого прокси создадим локальную копию
+//     proxy_matrix_local->set(0, 0, 50);
+
+//     Matrix_row_coord row_coord(1, 1, 2);
+//     auto proxy_row = m[row_coord]; // Используем auto потому что параметры шаблона матрицы были по умолчанию и не хочется их указывать
+//     auto proxy_row_local = m[row_coord]; // для этого прокси создадим локальную копию
+//     proxy_row_local->set(0, 100);
+
+//     Matrix_col_coord col_coord(1, 1, 2);
+//     auto proxy_col = m[row_coord]; // Используем auto потому что параметры шаблона матрицы были по умолчанию и не хочется их указывать
+//     auto proxy_col_local = m[row_coord]; // для этого прокси создадим локальную копию
+//     proxy_col_local->set(0, 150);
+
+//     std::cout << "STOP SPAWNING PROXY" << std::endl;
+
+
+//     delete m1;
+//     delete m2;
+//     std::cout << "DELETE PROXY " << proxy_matrix;
+//     delete proxy_matrix; // освободим выделенный в m[] указатель
+//     std::cout << "DELETE PROXY " << proxy_matrix;
+//     delete proxy_row; // освободим выделенный в m[] указатель
+//     std::cout << "DELETE PROXY " << proxy_matrix;
+//     delete proxy_col; // освободим выделенный в m[] указатель
+//     std::cout << "DELETE PROXY " << proxy_matrix;
+//     delete proxy_matrix_local; // освободим выделенный в m[] указатель
+//     std::cout << "DELETE PROXY " << proxy_matrix;
+//     delete proxy_row_local; // освободим выделенный в m[] указательclea
+//     std::cout << "DELETE PROXY " << proxy_matrix;
+//     delete proxy_col_local; // освободим выделенный в m[] указатель
+// }
+
 
 int run_all_my_tests(int argc, char **argv) {
     testing::InitGoogleTest(&argc, argv);

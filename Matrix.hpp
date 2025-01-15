@@ -164,6 +164,7 @@ public:
 
     Matrix_proxy<T, container_T>* operator[](const Matrix_coords& coords) {
         Matrix_proxy<T, container_T>* proxy = new Matrix_proxy<T, container_T>(*this, coords);
+        std::cout << "NEW PROXY" << proxy << std::endl;
         // proxies.push_back(proxy);
         proxies_set.insert(proxy);
         return proxy;
@@ -172,6 +173,7 @@ public:
     Matrix_proxy<T, container_T>* operator[](const Matrix_row_coord& coords) {
         Matrix_proxy<T, container_T>* proxy = new Matrix_proxy<T, container_T>(*this, coords);
         // proxies.push_back(proxy);
+        std::cout << "NEW PROXY" << proxy << std::endl;
         proxies_set.insert(proxy);
         return proxy;
     }
@@ -179,6 +181,7 @@ public:
     Matrix_proxy<T, container_T>* operator[](const Matrix_col_coord& coords) {
         Matrix_proxy<T, container_T>* proxy = new Matrix_proxy<T, container_T>(*this, coords);
         // proxies.push_back(proxy);
+        std::cout << "NEW PROXY" << proxy << std::endl;
         proxies_set.insert(proxy);
         return proxy;
     }
