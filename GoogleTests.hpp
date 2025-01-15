@@ -2,6 +2,7 @@
 #include <gtest/gtest.h>
 #include <cmath>
 #include <cstdint>
+#include <stdexcept>
 #include "Exceptions.hpp"
 #include "Rational_number.hpp"
 #include "Utils.hpp"
@@ -826,6 +827,101 @@ TEST(Slices, VecMulRowSlice) {
 //     delete proxy_col_local; // освободим выделенный в m[] указатель
 // }
 
+TEST(Parsing, Vector_parse) {
+    Vector<Complex_number<double, double>> vcff("parsing/VCFF.txt");
+    Vector<Complex_number<double, double>> rvcff(50000);
+    rvcff(0) = Complex_number<double>(100);
+    rvcff(5999) = Complex_number<double>(23, 5.1);
+    rvcff(6) = Complex_number<double>(5.5, 3.5);
+    rvcff(21) = Complex_number<double>(44, 1.1);
+    EXPECT_EQ(vcff, rvcff);
+
+    Vector<Complex_number<int, int>> vcii("parsing/VCII.txt");
+    Vector<Complex_number<int, int>> rvcii(50000);
+    rvcii(0) = Complex_number<int>(100);
+    rvcii(5999) = Complex_number<int>(23, 5);
+    rvcii(6) = Complex_number<int>(5, 3);
+    rvcii(21) = Complex_number<int>(44, 1);
+    EXPECT_EQ(vcii, rvcii);
+
+    Vector<Complex_number<int, double>> vcif("parsing/VCIF.txt");
+    Vector<Complex_number<int, double>> rvcif(50000);
+    rvcif(0) = Complex_number<int, double>(100);
+    rvcif(5999) = Complex_number<int, double>(23, 5.1);
+    rvcif(6) = Complex_number<int, double>(5, 3.5);
+    rvcif(21) = Complex_number<int, double>(44, 1.1);
+    EXPECT_EQ(vcif, rvcif);
+
+    Vector<Complex_number<double, int>> vcfi("parsing/VCFI.txt");
+    Vector<Complex_number<double, int>> rvcfi(50000);
+    rvcfi(0) = Complex_number<double, int>(100);
+    rvcfi(5999) = Complex_number<double, int>(23, 5);
+    rvcfi(6) = Complex_number<double, int>(5.5, 3);
+    rvcfi(21) = Complex_number<double, int>(44, 1);
+    EXPECT_EQ(vcfi, rvcfi);
+
+
+    Vector<Rational_number<int>> vr("parsing/VR.txt");
+    Vector<Rational_number<int>> rvr(50000);
+    rvr(0) = Rational_number<int>(100);
+    rvr(5999) = Rational_number<int>(23, 5);
+    rvr(6) = Rational_number<int>(5, 3);
+    rvr(21) = Rational_number<int>(44, 1);
+    EXPECT_EQ(vr, rvr);
+
+    Vector<bool> vb("parsing/VB.txt");
+    Vector<bool> rvb(50000);
+    rvb.set(0, 1);
+    rvb.set(5999, 1);
+    rvb.set(6, 1);
+    rvb.set(21, 1);
+    EXPECT_EQ(vb, rvb);
+}
+
+// TEST(Parsing, Matrix_parse) {
+//     Matrix<Complex_number<double, double>> mcff("parsing/MCFF.txt");
+//     Matrix<Complex_number<double, double>> rmcff(50000, 500);
+//     rmcff(0, 0) = Complex_number<double>(100);
+//     rmcff(5999, 1) = Complex_number<double>(23, 5.1);
+//     rmcff(6, 0) = Complex_number<double>(5.5, 3.5);
+//     rmcff(21, 1) = Complex_number<double>(44, 1.1);
+//     EXPECT_EQ(mcff, rmcff);
+//     Matrix<Complex_number<int, int>> mcii("parsing/MCII.txt");
+//     Matrix<Complex_number<int, int>> rmcii(50000, 500);
+//     rmcii(0, 0) = Complex_number<int>(100);
+//     rmcii(5999, 1) = Complex_number<int>(23, 5);
+//     rmcii(6, 0) = Complex_number<int>(5, 3);
+//     rmcii(21, 1) = Complex_number<int>(44, 1);
+//     EXPECT_EQ(mcii, rmcii);
+//     Matrix<Complex_number<int, double>> mcif("parsing/MCIF.txt");
+//     Matrix<Complex_number<int, double>> rmcif(50000, 500);
+//     rmcif(0, 0) = Complex_number<int, double>(100);
+//     rmcif(5999, 1) = Complex_number<int, double>(23, 5.1);
+//     rmcif(6, 0) = Complex_number<int, double>(5, 3.5);
+//     rmcif(21, 1) = Complex_number<int, double>(44, 1.1);
+//     EXPECT_EQ(mcif, rmcif);
+//     Matrix<Complex_number<double, int>> mcfi("parsing/MCFI.txt");
+//     Matrix<Complex_number<double, int>> rmcfi(50000, 500);
+//     rmcfi(0, 0) = Complex_number<double, int>(100);
+//     rmcfi(5999, 1) = Complex_number<double, int>(23, 5);
+//     rmcfi(6, 0) = Complex_number<double, int>(5.5, 3);
+//     rmcfi(21, 1) = Complex_number<double, int>(44, 1);
+//     EXPECT_EQ(mcfi, rmcfi);
+//     Matrix<Rational_number<int>> mr("parsing/MR.txt");
+//     Matrix<Rational_number<int>> rmr(50000, 5000);
+//     rmr(0, 0) = Rational_number<int>(100);
+//     rmr(5999, 1) = Rational_number<int>(23, 5);
+//     rmr(6, 0) = Rational_number<int>(5, 3);
+//     rmr(21, 1) = Rational_number<int>(44, 1);
+//     EXPECT_EQ(mr, rmr);
+//     Matrix<bool> mb("parsing/MB.txt");
+//     Matrix<bool> rmb(50000, 500);
+//     rmb.set(0, 0, 1);
+//     rmb.set(5999, 1, 1);
+//     rmb.set(6, 0, 1);
+//     rmb.set(21, 1, 1);
+//     EXPECT_EQ(mb, rmb);
+// }
 
 int run_all_my_tests(int argc, char **argv) {
     testing::InitGoogleTest(&argc, argv);

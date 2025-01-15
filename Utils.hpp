@@ -4,6 +4,8 @@
 #include <limits>
 #include <cmath>
 #include <sstream>
+#include <fstream> // для гетлайна
+
 // #include "Rational_number.hpp"
 template <typename num_type>
 class Rational_number;
@@ -142,4 +144,43 @@ Rational_number<num_type> abs(const Rational_number<num_type>& r) {
 template<typename type_real, typename type_imag>
 double abs(const Complex_number<type_real, type_imag>& c) {
     return c.modulus();
+}
+
+// std::stringstream delete_comments(std::ifstream file) {
+//     std::stringstream stream_without_comments;
+//     std::string line;
+//     while (std::getline(file, line)) {
+//         size_t sharp = line.find('#');
+//         if (sharp != std::string::npos) {
+//             if (sharp != 0) {
+//                 stream_without_comments << line.substr(0, sharp) << std::endl;
+//             }
+//         } else {
+//             stream_without_comments << line << std::endl;
+//         }
+//     }
+//     std::cout << "deleted comments from file" << std::endl;
+//     return stream_without_comments;
+// }
+
+std::string delete_comments(const std::string file_content) {
+    std::stringstream stream_without_comments;
+    std::stringstream input(file_content);
+    std::string line;
+
+    while (std::getline(input, line)) {
+        size_t sharp = line.find('#');
+        if (sharp != std::string::npos) {
+            if (sharp != 0) {
+                stream_without_comments << line.substr(0, sharp) << std::endl;
+            }
+        } else {
+            stream_without_comments << line << std::endl;
+        }
+    }
+
+    std::cout << "deleted comments from file" << std::endl;
+    std::string result = stream_without_comments.str();
+    std::cout << result;
+    return result;
 }

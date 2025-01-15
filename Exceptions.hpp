@@ -154,3 +154,10 @@ public:
     std::string getMessage() { return message; }
     T getProxy() { return proxy; }
 };
+
+class WrongFileException {
+    std::string message;
+public:
+    WrongFileException(std::string message) : message(message) {}
+    std::string getMessage() { return message; }
+};

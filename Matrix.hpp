@@ -109,6 +109,96 @@ public:
             }
         }
     }
+    Matrix(std::string filename) {
+        epsilon = 0;
+        std::ifstream file(filename);
+        std::stringstream ss;
+        ss << file.rdbuf(); // Пытаюсь отловить баг. http://it.kgsu.ru/C_STL/c_stl500.html
+        file.close();
+        std::string file_content = ss.str(); // переносим содержимое в строку
+        ss.str(""); // чистим
+        std::cout << "ZASTRYAL TYT" << std::endl;
+        std::string temp_str = delete_comments(file_content);
+        std::cout << "POCHEMY NE VIVODITSA" << std::endl;
+        ss << temp_str;
+        std::cout << "POCHEMY VIVODITSA" << std::endl;
+
+        std::string file_data_type;
+        ss >> file_data_type;
+        std::cout << "POCHEMY VIVODITSA2222222" << file_data_type <<  std::endl;
+        if (file_data_type != "matrix") {
+            throw WrongFileException("Файл должен хранить матрицу. Имя файла: " + filename);
+        }
+        std::cout << "FILE DATA TYPE CLEAR" << std::endl;
+
+        std::string element_type;
+        ss >> element_type;
+        if (element_type == "complex") {
+            std::string type_real, type_image;
+            ss >> type_real >> type_image;
+            Complex_number<int, int> c_int_int;
+            Complex_number<int, double> c_int_float;
+            Complex_number<double, int> c_float_int;
+            Complex_number<double, double> c_float_float;
+            T for_comparison;
+            std::cout << "FILE DATA TYPE CLEAR" << std::endl;
+        
+            if (type_real == "integer" && type_image == "integer") {
+                if (typeid(for_comparison).name() != typeid(c_int_int).name()) {
+                    throw WrongFileException("Файл должен содержать complex integer integer. Имя файла: " + filename);
+                }
+            } else if (type_real == "integer" && type_image == "float") {
+                if (typeid(for_comparison).name() != typeid(c_int_float).name()) {
+                    throw WrongFileException("Файл должен содержать complex integer float. Имя файла: " + filename);
+                }
+            } else if (type_real == "float" && type_image == "integer") {
+                if (typeid(for_comparison).name() != typeid(c_float_int).name()) {
+                    throw WrongFileException("Файл должен содержать complex float integer. Имя файла: " + filename);
+                }
+            } else if (type_real == "float" && type_image == "float") {
+                if (typeid(for_comparison) != typeid(c_float_float)) {
+                    throw WrongFileException("Файл должен содержать complex float float. Имя файла: " + filename);
+                }
+            } else {
+                throw WrongFileException("Не валидные типы параметров комплексного числа. Имя файла: " + filename);
+            }
+            ss >> rows >> columns;
+            size_t row, column;
+            std::cout << "FILE DATA TYPE CLEAR" << std::endl;
+
+            while (true) {
+            std::cout << "FILE DATA TYPE CLEAR3" << std::endl;
+                ss >> row >> column;
+                if (ss.fail() || ss.eof()) {
+                    break;
+                }
+                std::string value;
+                ss >> value;
+                value = std::string(value.begin() + 1, value.begin() + (value.size() - 1)); // delete ()
+                T element(value.c_str());
+                data[{row - 1, column - 1}] = element;
+            }
+            std::cout << "FILE DATA TYPE CLEAR4" << std::endl;
+        } else if (element_type == "rational") {
+            ss >> rows >> columns;
+            size_t row, column;
+            while (true) {
+                ss >> row >> column;
+                if (ss.fail() || ss.eof()) {
+                    break;
+                }
+                std::string value;
+                ss >> value;
+                value = std::string(value.begin() + 1, value.begin() + (value.size() - 1));
+                T element(value.c_str());
+                data[{row - 1, column - 1}] = element;
+            }
+        } else {
+            throw WrongFileException("Не верный формат файла. Файл: " + filename);
+        }
+        std::cout << "READED" << std::endl;
+    }
+
     Matrix(Matrix& rhs) {
         data = rhs.data;
         rows = rhs.rows;
@@ -747,6 +837,40 @@ public:
     Matrix(size_t rows, size_t columns) : rows(rows), columns(columns), data(std::vector<uint64_t>((rows * columns + 63) / 64, 0)) {} // граничные случаи правильно
     Matrix(size_t rows, size_t columns, bool val) : rows(rows), columns(columns) {
         data = std::vector<uint64_t>((rows*columns + 63) / 64, (val ? 0xffffffffffffffff : 0)); // ff - 1байт
+    }
+    Matrix(std::string filename) {
+        std::ifstream file(filename);
+        std::stringstream ss;
+        ss << file.rdbuf();
+        file.close();
+        std::string file_content = ss.str();
+        ss.str("");
+        ss << delete_comments(file_content);
+        std::string file_data_type;
+        ss >> file_data_type;
+        if (file_data_type != "matrix") {
+            throw WrongFileException("Файл должен хранить матрицу. Имя файла: " + filename);
+        }
+        std::string element_type;
+        ss >> element_type;
+        if (element_type == "bit") {
+            ss >> rows >> columns;
+            data = std::vector<uint64_t>((rows * columns + 63) / 64, 0);
+            size_t row, column;
+            while (true) {
+                ss >> row >> column;
+                if (ss.fail() || ss.eof()) {
+                    break;
+                }
+                std::string value;
+                ss >> value;
+                value = std::string(value.begin() + 1, value.begin() + (value.size() - 1));
+                if (value != "0") {
+                    set(row - 1, column -  1, 1);
+                }
+            }
+            
+        }
     }
 
     void set(size_t i, size_t j, bool value) {
