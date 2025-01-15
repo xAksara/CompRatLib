@@ -305,11 +305,18 @@ bool operator==(const Matrix<lhs_T, lhs_container_T>& lhs, const Matrix<rhs_T, r
     if (lhs.getRows() != rhs.getRows() || lhs.getColumns() != rhs.getColumns() || lhs.getEpsilon() != rhs.getEpsilon()) return false;
     lhs_container_T lhs_data = lhs.getData();
     rhs_container_T rhs_data = rhs.getData();
-    for (size_t i = 0; i <  lhs.getRows(); ++i) {
-        for (size_t j = 0; j < lhs.getColumns(); ++j) {
-            if (lhs_data[std::make_pair(i, j)] != rhs_data[std::make_pair(i, j)]) return false;
-        }
+    // for (size_t i = 0; i <  lhs.getRows(); ++i) {
+    //     for (size_t j = 0; j < lhs.getColumns(); ++j) {
+    //         if (lhs_data[std::make_pair(i, j)] != rhs_data[std::make_pair(i, j)]) return false;
+    //     }
+    // }
+    for (const auto& [key, value] : lhs_data) {
+        if (value != rhs_data[key]) return false;
     }
+    for (const auto& [key, value] : rhs_data) {
+        if (value != lhs_data[key]) return false;
+    }
+
     return true;
 }
 

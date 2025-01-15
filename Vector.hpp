@@ -279,9 +279,16 @@ bool operator==(const Vector<lhs_T, lhs_container_T>& lhs, const Vector<rhs_T, r
     if (lhs.getSize() != rhs.getSize() || lhs.getEpsilon() != rhs.getEpsilon()) return false;
     lhs_container_T lhs_data = lhs.getData();
     rhs_container_T rhs_data = rhs.getData();
-    for (size_t idx = 0; idx < lhs.getSize(); ++idx) {
-        if (lhs_data[idx] != rhs_data[idx]) return false;
+    // for (size_t idx = 0; idx < lhs.getSize(); ++idx) {
+    //     if (lhs_data[idx] != rhs_data[idx]) return false;
+    // }
+    for (const auto& [key, value] : lhs_data) {
+        if (value != rhs_data[key]) return false;
     }
+    for (const auto& [key, value] : lhs_data) {
+        if (value != rhs_data[key]) return false;
+    }
+
     return true;
 }
 
