@@ -28,4 +28,8 @@ thumbs.db
 .git                                                                                              
 .vscode                                                                                           
                                                                                              
-
+file1.txt
+file2.txt
+qat.doxygen
+*.out
+gen_for_mul_test.py

@@ -1,0 +1,247 @@
+\doxysection{Matrix\+\_\+proxy.\+hpp}
+\hypertarget{Matrix__proxy_8hpp_source}{}\label{Matrix__proxy_8hpp_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ <sstream>}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}Matrix.hpp"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}Matrix\_coords.hpp"{}}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T,\ \textcolor{keyword}{typename}\ Container>}
+\DoxyCodeLine{00009\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classMatrix}{Matrix}};}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00017\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T,\ \textcolor{keyword}{typename}\ container\_T>}
+\DoxyCodeLine{00018\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classMatrix__proxy}{Matrix\_proxy}}\ \{}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classMatrix}{Matrix}}<\mbox{\hyperlink{classComplex__number}{T}},\ \mbox{\hyperlink{classComplex__number}{container\_T}}>;\ \textcolor{comment}{//\ для\ клин\ поинтер}}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ r1,\ r2,\ c1,\ c2;}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ proxy\_rows,\ proxy\_columns;}
+\DoxyCodeLine{00022\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Matrix<T,\ container\_T>}}*\ matrix\_p;}
+\DoxyCodeLine{00023\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Matrix<T,\ container\_T>}}*\ initial\_matrix\_p;}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{bool}\ is\_copy\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00025\ \ \ \ \ }
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordtype}{void}\ make\_local\_copy()\ \{}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ is\_copy\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ matrix\_p-\/>clean\_pointer(this);}}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Matrix<T,\ container\_T>}}*\ \mbox{\hyperlink{classComplex__number}{result\_p}}\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classComplex__number}{Matrix<T,\ container\_T>}}(matrix\_p-\/>getRows(),\ matrix\_p-\/>getColumns(),\ matrix\_p-\/>getEpsilon());}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::cout}}\ <<\ \textcolor{stringliteral}{"{}NEW\ "{}}\ <<\ \mbox{\hyperlink{classComplex__number}{result\_p}}\ <<\ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::endl}};}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ [\mbox{\hyperlink{classComplex__number}{key}},\ \mbox{\hyperlink{classComplex__number}{value}}]\ :\ (*matrix\_p).getData())\ \{\ \textcolor{comment}{//\ key\ -\/\ пара\ (строка,\ столбец)}}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classComplex__number}{key}}.first\ >=\ r1\ \&\&\ \mbox{\hyperlink{classComplex__number}{key}}.first\ <=\ r2\ \&\&\ \mbox{\hyperlink{classComplex__number}{key}}.second\ >=\ c1\ \&\&\ \mbox{\hyperlink{classComplex__number}{key}}.second\ <=\ c2)\ \{}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classComplex__number}{result\_p}}-\/>set(\mbox{\hyperlink{classComplex__number}{key}}.first,\ \mbox{\hyperlink{classComplex__number}{key}}.second,\ \mbox{\hyperlink{classComplex__number}{value}});}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ matrix\_p\ =\ \mbox{\hyperlink{classComplex__number}{result\_p}};}
+\DoxyCodeLine{00042\ \ \ \ \ \}}
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keywordtype}{void}\ clean\_pointer()\ \{}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ initial\_matrix\_p\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (is\_copy)\ \{}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (matrix\_p\ !=\ \textcolor{keyword}{nullptr})\ \{}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::cout}}\ <<\ \textcolor{stringliteral}{"{}DELETE\ "{}}\ <<\ matrix\_p\ <<\ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::endl}};}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ matrix\_p;}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::cout}}\ <<\ \textcolor{stringliteral}{"{}Pointer:\ "{}}\ <<\ matrix\_p\ <<\ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::endl}};}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \ \ \ \ matrix\_p\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \ \ \ \ is\_copy\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \ \ \ \ matrix\_p\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00060\ \ \ \ \ \}}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keywordtype}{bool}\ is\_row\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{keywordtype}{bool}\ is\_column\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00072\ \ \ \ \ \mbox{\hyperlink{classMatrix__proxy_a258c3b0178aee7877f904b264383ed8f}{Matrix\_proxy}}(\mbox{\hyperlink{classComplex__number}{Matrix<T,\ container\_T>}}\&\ \mbox{\hyperlink{classComplex__number}{matrix}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classMatrix__coords}{Matrix\_coords}}\&\ \mbox{\hyperlink{classComplex__number}{coords}})}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ :\ matrix\_p(\&\mbox{\hyperlink{classComplex__number}{matrix}}),\ initial\_matrix\_p(\&\mbox{\hyperlink{classComplex__number}{matrix}})}
+\DoxyCodeLine{00074\ \ \ \ \ \{\ }
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ r1\ =\ (\mbox{\hyperlink{classComplex__number}{coords}}.r1\ ==\ -\/1\ ?\ 0\ :\ \mbox{\hyperlink{classComplex__number}{coords}}.r1);}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ r2\ =\ (\mbox{\hyperlink{classComplex__number}{coords}}.r2\ ==\ -\/1\ ?\ \mbox{\hyperlink{classComplex__number}{matrix}}.getRows()\ -\/\ 1\ :\ \mbox{\hyperlink{classComplex__number}{coords}}.r2);}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ c1\ =\ (\mbox{\hyperlink{classComplex__number}{coords}}.c1\ ==\ -\/1\ ?\ 0\ :\ \mbox{\hyperlink{classComplex__number}{coords}}.c1);}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ c2\ =\ (\mbox{\hyperlink{classComplex__number}{coords}}.c2\ ==\ -\/1\ ?\ \mbox{\hyperlink{classComplex__number}{matrix}}.getColumns()\ -\/\ 1\ :\ \mbox{\hyperlink{classComplex__number}{coords}}.c2);}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ proxy\_rows\ =\ r2\ -\/\ r1\ +\ 1;}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ proxy\_columns\ =\ c2\ -\/\ c1\ +\ 1;}
+\DoxyCodeLine{00081\ \ \ \ \ \}}
+\DoxyCodeLine{00088\ \ \ \ \ \mbox{\hyperlink{classMatrix__proxy_ab5ed5b640a9cc37794495f011cfd3c28}{Matrix\_proxy}}(\mbox{\hyperlink{classComplex__number}{Matrix<T,\ container\_T>}}\&\ \mbox{\hyperlink{classComplex__number}{matrix}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classMatrix__row__coord}{Matrix\_row\_coord}}\&\ \mbox{\hyperlink{classComplex__number}{coords}})}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ :\ matrix\_p(\&\mbox{\hyperlink{classComplex__number}{matrix}}),\ is\_row(\mbox{\hyperlink{classComplex__number}{true}}),\ initial\_matrix\_p(\&\mbox{\hyperlink{classComplex__number}{matrix}})}
+\DoxyCodeLine{00090\ \ \ \ \ \{\ }
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ r1\ =\ \mbox{\hyperlink{classComplex__number}{coords}}.r;}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ r2\ =\ 0;}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ c1\ =\ (\mbox{\hyperlink{classComplex__number}{coords}}.c1\ ==\ -\/1\ ?\ 0\ :\ \mbox{\hyperlink{classComplex__number}{coords}}.c1);}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ c2\ =\ (\mbox{\hyperlink{classComplex__number}{coords}}.c2\ ==\ -\/1\ ?\ \mbox{\hyperlink{classComplex__number}{matrix}}.getColumns()\ -\/\ 1\ :\ \mbox{\hyperlink{classComplex__number}{coords}}.c2);}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ proxy\_rows\ =\ 1;}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ proxy\_columns\ =\ c2\ -\/\ c1\ +\ 1;}
+\DoxyCodeLine{00097\ \ \ \ \ \}}
+\DoxyCodeLine{00104\ \ \ \ \ \mbox{\hyperlink{classMatrix__proxy_ab367fcf65172627881a913d51d7019ce}{Matrix\_proxy}}(\mbox{\hyperlink{classComplex__number}{Matrix<T,\ container\_T>}}\&\ \mbox{\hyperlink{classComplex__number}{matrix}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classMatrix__col__coord}{Matrix\_col\_coord}}\&\ \mbox{\hyperlink{classComplex__number}{coords}})}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ :\ matrix\_p(\&\mbox{\hyperlink{classComplex__number}{matrix}}),\ is\_column(\mbox{\hyperlink{classComplex__number}{true}}),\ initial\_matrix\_p(\&\mbox{\hyperlink{classComplex__number}{matrix}})}
+\DoxyCodeLine{00106\ \ \ \ \ \{\ }
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ r1\ =\ (\mbox{\hyperlink{classComplex__number}{coords}}.r1\ ==\ -\/1\ ?\ 0\ :\ \mbox{\hyperlink{classComplex__number}{coords}}.r1);}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ r2\ =\ (\mbox{\hyperlink{classComplex__number}{coords}}.r2\ ==\ -\/1\ ?\ \mbox{\hyperlink{classComplex__number}{matrix}}.getRows()\ -\/\ 1\ :\ \mbox{\hyperlink{classComplex__number}{coords}}.r2);}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ c1\ =\ \mbox{\hyperlink{classComplex__number}{coords}}.c;}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ c2\ =\ 0;}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ proxy\_rows\ =\ r2\ -\/\ r1\ +\ 1;}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ proxy\_columns\ =\ 1;}
+\DoxyCodeLine{00113\ \ \ \ \ \}}
+\DoxyCodeLine{00114\ }
+\DoxyCodeLine{00115\ }
+\DoxyCodeLine{00116\ \ \ \ \ \mbox{\hyperlink{classMatrix__proxy}{\string~Matrix\_proxy}}()\ \{}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::cout}}\ <<\ \textcolor{stringliteral}{"{}DESTRUCTOR\ PROXY"{}}\ <<\ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::endl}};}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (initial\_matrix\_p\ !=\ \textcolor{keyword}{nullptr})\ \{}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \ \ \ \ initial\_matrix\_p-\/>clean\_pointer(\textcolor{keyword}{this});}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (is\_copy\ \&\&\ matrix\_p\ !=\ \textcolor{keyword}{nullptr})\ \{}
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::cout}}\ <<\ \textcolor{stringliteral}{"{}DELETE\ "{}}\ <<\ matrix\_p\ <<\ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::endl}};}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ matrix\_p;}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00125\ \ \ \ \ \}}
+\DoxyCodeLine{00126\ }
+\DoxyCodeLine{00127\ \ \ \ \ \textcolor{keywordtype}{double}\ getEpsilon()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (matrix\_p\ ==\ \textcolor{keyword}{nullptr})\ \{}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \mbox{\hyperlink{classEmptyContainerException}{EmptyContainerException}}();}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ matrix\_p-\/>getEpsilon();}
+\DoxyCodeLine{00132\ \ \ \ \ \}}
+\DoxyCodeLine{00133\ }
+\DoxyCodeLine{00134\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{container\_T}}\ getData()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (matrix\_p\ ==\ \textcolor{keyword}{nullptr})\ \{}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \mbox{\hyperlink{classEmptyContainerException}{EmptyContainerException}}();}
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ matrix\_p-\/>getData();}
+\DoxyCodeLine{00139\ \ \ \ \ \}}
+\DoxyCodeLine{00140\ }
+\DoxyCodeLine{00141\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ getSize()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (matrix\_p\ ==\ \textcolor{keyword}{nullptr})\ \{}
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \mbox{\hyperlink{classEmptyContainerException}{EmptyContainerException}}();}
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!is\_row\ \&\&\ !is\_column)\ \{}
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \mbox{\hyperlink{classInvalidArgumentException}{InvalidArgumentException}}(\textcolor{stringliteral}{"{}Для\ прокси\ матрицы\ используйте\ getRows()\ или\ getColumns().\ Флаги\ строки\ и\ столбца\ равны:\ "{}},\ 0);}
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (is\_row\ ?\ proxy\_columns\ :\ proxy\_rows);}
+\DoxyCodeLine{00149\ \ \ \ \ \}}
+\DoxyCodeLine{00150\ }
+\DoxyCodeLine{00151\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ getRows()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (matrix\_p\ ==\ \textcolor{keyword}{nullptr})\ \{}
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \mbox{\hyperlink{classEmptyContainerException}{EmptyContainerException}}();}
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (is\_row\ ||\ is\_column)\ \{}
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \mbox{\hyperlink{classInvalidArgumentException}{InvalidArgumentException}}(\textcolor{stringliteral}{"{}Для\ строки\ или\ столбца\ используйте\ getSize().\ is\_row\ ==\ "{}},\ is\_row);}
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (is\_row\ ?\ c1\ :\ r1);}
+\DoxyCodeLine{00159\ \ \ \ \ \}}
+\DoxyCodeLine{00160\ }
+\DoxyCodeLine{00161\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{T}}\&\ operator()(\textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{classComplex__number}{i}},\ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{classComplex__number}{j}})\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (matrix\_p\ ==\ \textcolor{keyword}{nullptr})\ \{}
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \mbox{\hyperlink{classEmptyContainerException}{EmptyContainerException}}();}
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (is\_row\ ||\ is\_column)\ \{}
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \mbox{\hyperlink{classInvalidArgumentException}{InvalidArgumentException}}(\textcolor{stringliteral}{"{}Прокси-\/строка\ или\ столбец\ должны\ принимать\ номер\ строки\ или\ столбца.\ Передан\ лишний\ аргумент:\ "{}},\ \mbox{\hyperlink{classComplex__number}{j}});}
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classComplex__number}{i}}\ >=\ proxy\_rows\ ||\ \mbox{\hyperlink{classComplex__number}{j}}\ >=\ proxy\_columns)\ \{}
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \mbox{\hyperlink{classMatrixIndexOutOfRangeException}{MatrixIndexOutOfRangeException}}(\mbox{\hyperlink{classComplex__number}{i}},\ \mbox{\hyperlink{classComplex__number}{j}},\ proxy\_rows,\ proxy\_columns);}
+\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{classComplex__number}{global\_row}}\ =\ r1\ +\ \mbox{\hyperlink{classComplex__number}{i}};}
+\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{classComplex__number}{global\_column}}\ =\ c1\ +\ \mbox{\hyperlink{classComplex__number}{j}};}
+\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (*matrix\_p)(\mbox{\hyperlink{classComplex__number}{global\_row}},\ \mbox{\hyperlink{classComplex__number}{global\_column}});}
+\DoxyCodeLine{00174\ \ \ \ \ \}}
+\DoxyCodeLine{00175\ }
+\DoxyCodeLine{00176\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{T}}\&\ operator()(\textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{classComplex__number}{idx}})\textcolor{keyword}{\ const\ }\{\ \textcolor{comment}{//\ для\ прокси\ строки\ или\ столбца}}
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (matrix\_p\ ==\ \textcolor{keyword}{nullptr})\ \{}
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \mbox{\hyperlink{classEmptyContainerException}{EmptyContainerException}}();}
+\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (is\_row)\ \{}
+\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classComplex__number}{idx}}\ >=\ proxy\_columns)\ \{}
+\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \mbox{\hyperlink{classVectorIndexOutOfRangeException}{VectorIndexOutOfRangeException}}(\mbox{\hyperlink{classComplex__number}{idx}},\ proxy\_columns);}
+\DoxyCodeLine{00183\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{classComplex__number}{global\_row}}\ =\ r1;}
+\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{classComplex__number}{global\_column}}\ =\ c1\ +\ \mbox{\hyperlink{classComplex__number}{idx}};}
+\DoxyCodeLine{00186\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (*matrix\_p)(\mbox{\hyperlink{classComplex__number}{global\_row}},\ \mbox{\hyperlink{classComplex__number}{global\_column}});}
+\DoxyCodeLine{00187\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (is\_column)\ \{\ \textcolor{comment}{//\ если\ столбец}}
+\DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classComplex__number}{idx}}\ >=\ proxy\_rows)\ \{}
+\DoxyCodeLine{00189\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \mbox{\hyperlink{classVectorIndexOutOfRangeException}{VectorIndexOutOfRangeException}}(\mbox{\hyperlink{classComplex__number}{idx}},\ proxy\_rows);}
+\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00191\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{classComplex__number}{global\_row}}\ =\ r1\ +\ \mbox{\hyperlink{classComplex__number}{idx}};}
+\DoxyCodeLine{00192\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{classComplex__number}{global\_column}}\ =\ c1;}
+\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (*matrix\_p)(\mbox{\hyperlink{classComplex__number}{global\_row}},\ \mbox{\hyperlink{classComplex__number}{global\_column}});}
+\DoxyCodeLine{00194\ \ \ \ \ \ \ \ \ \}\ }
+\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \mbox{\hyperlink{classInvalidArgumentException}{InvalidArgumentException}}(\textcolor{stringliteral}{"{}Прокси-\/матрица\ должна\ принимать\ номер\ строки\ и\ столбца.\ Передано:\ "{}},\ \mbox{\hyperlink{classComplex__number}{idx}});}
+\DoxyCodeLine{00196\ \ \ \ \ \}}
+\DoxyCodeLine{00197\ }
+\DoxyCodeLine{00198\ \ \ \ \ \textcolor{keywordtype}{void}\ set(\textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{classComplex__number}{i}},\ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{classComplex__number}{j}},\ \mbox{\hyperlink{classComplex__number}{T}}\ \mbox{\hyperlink{classComplex__number}{value}})\ \{}
+\DoxyCodeLine{00199\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (matrix\_p\ ==\ \textcolor{keyword}{nullptr})\ \{}
+\DoxyCodeLine{00200\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \mbox{\hyperlink{classEmptyContainerException}{EmptyContainerException}}();}
+\DoxyCodeLine{00201\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00202\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (is\_row\ ||\ is\_column)\ \{}
+\DoxyCodeLine{00203\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \mbox{\hyperlink{classInvalidArgumentException}{InvalidArgumentException}}(\textcolor{stringliteral}{"{}Прокси-\/строка\ или\ столбец\ должны\ принимать\ номер\ строки\ либо\ столбца\ и\ значение.\ Передан\ лишний\ аргумент:\ "{}},\ \mbox{\hyperlink{classComplex__number}{j}});}
+\DoxyCodeLine{00204\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00205\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classComplex__number}{value\ <\ matrix\_p-\/>}}getEpsilon())\ \{}
+\DoxyCodeLine{00206\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00207\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00208\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!is\_copy)\ \{}
+\DoxyCodeLine{00209\ \ \ \ \ \ \ \ \ \ \ \ \ make\_local\_copy();}
+\DoxyCodeLine{00210\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00211\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{classComplex__number}{global\_row}}\ =\ r1\ +\ \mbox{\hyperlink{classComplex__number}{i}};}
+\DoxyCodeLine{00212\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{classComplex__number}{global\_column}}\ =\ c1\ +\ \mbox{\hyperlink{classComplex__number}{j}};}
+\DoxyCodeLine{00213\ \ \ \ \ \ \ \ \ (*matrix\_p).set(\mbox{\hyperlink{classComplex__number}{global\_row}},\ \mbox{\hyperlink{classComplex__number}{global\_column}},\ \mbox{\hyperlink{classComplex__number}{value}});}
+\DoxyCodeLine{00214\ \ \ \ \ \}}
+\DoxyCodeLine{00215\ }
+\DoxyCodeLine{00216\ \ \ \ \ \textcolor{keywordtype}{void}\ set(\textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{classComplex__number}{idx}},\ \mbox{\hyperlink{classComplex__number}{T}}\ \mbox{\hyperlink{classComplex__number}{value}})\ \{}
+\DoxyCodeLine{00217\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (matrix\_p\ ==\ \textcolor{keyword}{nullptr})\ \{}
+\DoxyCodeLine{00218\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \mbox{\hyperlink{classEmptyContainerException}{EmptyContainerException}}();}
+\DoxyCodeLine{00219\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00220\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!is\_row\ \&\&\ !is\_column)\ \{}
+\DoxyCodeLine{00221\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \mbox{\hyperlink{classInvalidArgumentException}{InvalidArgumentException}}(\textcolor{stringliteral}{"{}Прокси-\/матрица\ помимо\ значения\ должна\ принимать\ номер\ строки\ и\ столбца.\ Передано:\ "{}},\ \mbox{\hyperlink{classComplex__number}{idx}});}
+\DoxyCodeLine{00222\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00223\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classComplex__number}{value\ <\ matrix\_p-\/>}}getEpsilon())\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00224\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!is\_copy)\ \{}
+\DoxyCodeLine{00225\ \ \ \ \ \ \ \ \ \ \ \ \ make\_local\_copy();}
+\DoxyCodeLine{00226\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00227\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (is\_row)\ \{}
+\DoxyCodeLine{00228\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{classComplex__number}{global\_row}}\ =\ r1;}
+\DoxyCodeLine{00229\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{classComplex__number}{global\_column}}\ =\ c1\ +\ \mbox{\hyperlink{classComplex__number}{idx}};}
+\DoxyCodeLine{00230\ \ \ \ \ \ \ \ \ \ \ \ \ (*matrix\_p).set(\mbox{\hyperlink{classComplex__number}{global\_row}},\ \mbox{\hyperlink{classComplex__number}{global\_column}},\ \mbox{\hyperlink{classComplex__number}{value}});}
+\DoxyCodeLine{00231\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00232\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{classComplex__number}{global\_row}}\ =\ r1;}
+\DoxyCodeLine{00233\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{classComplex__number}{global\_column}}\ =\ c1\ +\ \mbox{\hyperlink{classComplex__number}{idx}};}
+\DoxyCodeLine{00234\ \ \ \ \ \ \ \ \ \ \ \ \ (*matrix\_p).set(\mbox{\hyperlink{classComplex__number}{global\_row}},\ \mbox{\hyperlink{classComplex__number}{global\_column}},\ \mbox{\hyperlink{classComplex__number}{value}});}
+\DoxyCodeLine{00235\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00236\ \ \ \ \ \}}
+\DoxyCodeLine{00237\ }
+\DoxyCodeLine{00238\ \ \ \ \ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::string}}\ to\_string()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00239\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (matrix\_p\ ==\ \textcolor{keyword}{nullptr})\ \{}
+\DoxyCodeLine{00240\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \mbox{\hyperlink{classEmptyContainerException}{EmptyContainerException}}();}
+\DoxyCodeLine{00241\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00242\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::stringstream}}\ \mbox{\hyperlink{classComplex__number}{ss}};}
+\DoxyCodeLine{00243\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classComplex__number}{ss}}\ <<\ \textcolor{stringliteral}{"{}<Proxy\ matrix\ rows:\ "{}}\ <<\ proxy\_rows\ <<\ \textcolor{stringliteral}{"{},\ columns:\ "{}}\ <<\ proxy\_columns\ <<\ \textcolor{stringliteral}{"{},\ epsilon:\ "{}}\ <<\ matrix\_p-\/>getEpsilon()\ <<\ \textcolor{stringliteral}{"{},\ data:["{}};}
+\DoxyCodeLine{00244\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{classComplex__number}{counter}}\ =\ 0;\ \textcolor{comment}{//\ чтобы\ поймать\ \ последний\ элемент.\ Хотя\ можно\ через\ итераторы,\ но\ так\ симпотичнее}}
+\DoxyCodeLine{00245\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{classComplex__number}{data\_size}}\ =\ matrix\_p-\/>getData().size();}
+\DoxyCodeLine{00246\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (is\_row)\ \{}
+\DoxyCodeLine{00247\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ [\mbox{\hyperlink{classComplex__number}{key}},\ \mbox{\hyperlink{classComplex__number}{value}}]\ :\ matrix\_p-\/>getData())\ \{}
+\DoxyCodeLine{00248\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classComplex__number}{key}}.second\ >=\ c1\ \&\&\ \mbox{\hyperlink{classComplex__number}{key}}.second\ <=\ c2)\ \{}
+\DoxyCodeLine{00249\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classComplex__number}{ss}}\ <<\ \textcolor{stringliteral}{"{}\{("{}}\ <<\ \mbox{\hyperlink{classComplex__number}{key}}.first\ -\/\ r1\ <<\ \textcolor{stringliteral}{"{},\ "{}}\ <<\ \mbox{\hyperlink{classComplex__number}{key}}.second\ -\/\ c1\ <<\ \textcolor{stringliteral}{"{}),\ "{}}\ <<\ \mbox{\hyperlink{classComplex__number}{value}}\ <<\ (++\mbox{\hyperlink{classComplex__number}{counter}}\ <\ \mbox{\hyperlink{classComplex__number}{data\_size}}\ ?\ \textcolor{stringliteral}{"{}\},\ "{}}\ :\ \textcolor{stringliteral}{"{}\}"{}});}
+\DoxyCodeLine{00250\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00251\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00252\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (is\_column)\ \{}
+\DoxyCodeLine{00253\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ [\mbox{\hyperlink{classComplex__number}{key}},\ \mbox{\hyperlink{classComplex__number}{value}}]\ :\ matrix\_p-\/>getData())\ \{}
+\DoxyCodeLine{00254\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classComplex__number}{key}}.second\ >=\ r1\ \&\&\ \mbox{\hyperlink{classComplex__number}{key}}.second\ <=\ r2)\ \{}
+\DoxyCodeLine{00255\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classComplex__number}{ss}}\ <<\ \textcolor{stringliteral}{"{}\{("{}}\ <<\ \mbox{\hyperlink{classComplex__number}{key}}.first\ -\/\ r1\ <<\ \textcolor{stringliteral}{"{},\ "{}}\ <<\ \mbox{\hyperlink{classComplex__number}{key}}.second\ -\/\ c1\ <<\ \textcolor{stringliteral}{"{}),\ "{}}\ <<\ \mbox{\hyperlink{classComplex__number}{value}}\ <<\ (++\mbox{\hyperlink{classComplex__number}{counter}}\ <\ \mbox{\hyperlink{classComplex__number}{data\_size}}\ ?\ \textcolor{stringliteral}{"{}\},\ "{}}\ :\ \textcolor{stringliteral}{"{}\}"{}});}
+\DoxyCodeLine{00256\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00257\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00258\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00259\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ [\mbox{\hyperlink{classComplex__number}{key}},\ \mbox{\hyperlink{classComplex__number}{value}}]\ :\ matrix\_p-\/>getData())\ \{}
+\DoxyCodeLine{00260\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classComplex__number}{key}}.first\ >=\ r1\ \&\&\ \mbox{\hyperlink{classComplex__number}{key}}.first\ <=\ r2\ \&\&\ \mbox{\hyperlink{classComplex__number}{key}}.second\ >=\ c1\ \&\&\ \mbox{\hyperlink{classComplex__number}{key}}.second\ <=\ c2)\ \{}
+\DoxyCodeLine{00261\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classComplex__number}{ss}}\ <<\ \textcolor{stringliteral}{"{}\{("{}}\ <<\ \mbox{\hyperlink{classComplex__number}{key}}.first\ -\/\ r1\ <<\ \textcolor{stringliteral}{"{},\ "{}}\ <<\ \mbox{\hyperlink{classComplex__number}{key}}.second\ -\/\ c1\ <<\ \textcolor{stringliteral}{"{}),\ "{}}\ <<\ \mbox{\hyperlink{classComplex__number}{value}}\ <<\ (++\mbox{\hyperlink{classComplex__number}{counter}}\ <\ \mbox{\hyperlink{classComplex__number}{data\_size}}\ ?\ \textcolor{stringliteral}{"{}\},\ "{}}\ :\ \textcolor{stringliteral}{"{}\}"{}});}
+\DoxyCodeLine{00262\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00263\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00264\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00265\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classComplex__number}{ss}}\ <<\ \textcolor{stringliteral}{"{}]>"{}};}
+\DoxyCodeLine{00266\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex__number}{ss}}.str();}
+\DoxyCodeLine{00267\ \ \ \ \ \}}
+\DoxyCodeLine{00268\ \};}
+\DoxyCodeLine{00269\ }
+\DoxyCodeLine{00270\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T,\ \textcolor{keyword}{typename}\ container\_T>}
+\DoxyCodeLine{00271\ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::ostream}}\&\ \mbox{\hyperlink{classComplex__number}{operator<<}}(\mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::ostream}}\&\ \mbox{\hyperlink{classComplex__number}{os}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Matrix\_proxy<T,\ container\_T>}}\&\ \mbox{\hyperlink{classComplex__number}{m}})\ \{}
+\DoxyCodeLine{00272\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{os}}\ <<\ \mbox{\hyperlink{classComplex__number}{m}}.to\_string();}
+\DoxyCodeLine{00273\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex__number}{os}};}
+\DoxyCodeLine{00274\ \}}
+
+\end{DoxyCode}

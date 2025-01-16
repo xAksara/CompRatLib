@@ -1,0 +1,213 @@
+\doxysection{Matrix\texorpdfstring{$<$}{<} T, container\+\_\+T \texorpdfstring{$>$}{>} Class Template Reference}
+\hypertarget{classMatrix}{}\label{classMatrix}\index{Matrix$<$ T, container\_T $>$@{Matrix$<$ T, container\_T $>$}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classMatrix_a2ab10bc968e8c94bd9771c06adf11c1b}{Matrix}} (\mbox{\hyperlink{classComplex__number}{size\+\_\+t}} rows, \mbox{\hyperlink{classComplex__number}{size\+\_\+t}} columns)
+\begin{DoxyCompactList}\small\item\em Конструктор с двумя аргументами. Выставляет эпсилон = 0. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classMatrix_ae5018bb2aa1df63896d39c434e923e9e}{Matrix}} (\mbox{\hyperlink{classComplex__number}{size\+\_\+t}} rows, \mbox{\hyperlink{classComplex__number}{size\+\_\+t}} columns, \mbox{\hyperlink{classComplex__number}{double}} epsilon)
+\begin{DoxyCompactList}\small\item\em Конструктор с тремя аргументами \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classMatrix_ab877f47735b64d57dbb999739107e3b7}{Matrix}} (\mbox{\hyperlink{classComplex__number}{size\+\_\+t}} rows, \mbox{\hyperlink{classComplex__number}{size\+\_\+t}} columns, \mbox{\hyperlink{classComplex__number}{double}} epsilon, \mbox{\hyperlink{classComplex__number}{T}} \mbox{\hyperlink{classComplex__number}{init\+\_\+val}})
+\begin{DoxyCompactList}\small\item\em Конструктор с четырьмя аргументами. Создает матрицу из значений init\+\_\+val. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classMatrix_a0fa954f0e94dbebac04a687efeca2fd2}{Matrix}} (\mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std\+::string}} \mbox{\hyperlink{classComplex__number}{filename}})
+\begin{DoxyCompactList}\small\item\em Конструктор, создающий матрицу по файлую \end{DoxyCompactList}\item 
+\Hypertarget{classMatrix_af747752caf2084c19dfdba89b10f422f}\label{classMatrix_af747752caf2084c19dfdba89b10f422f} 
+{\bfseries Matrix} (\mbox{\hyperlink{classComplex__number}{const}} \mbox{\hyperlink{classMatrix}{Matrix}} \&\mbox{\hyperlink{classComplex__number}{rhs}})
+\item 
+\Hypertarget{classMatrix_a8597e30b5d1fc78712dc33995ebb881f}\label{classMatrix_a8597e30b5d1fc78712dc33995ebb881f} 
+{\bfseries Matrix} (\mbox{\hyperlink{classMatrix}{Matrix}} \&\&\mbox{\hyperlink{classComplex__number}{rhs}})
+\item 
+\Hypertarget{classMatrix_a569b11ad5ce57ec5e797c30b900db46a}\label{classMatrix_a569b11ad5ce57ec5e797c30b900db46a} 
+\mbox{\hyperlink{classMatrix}{Matrix}} \& {\bfseries operator=} (\mbox{\hyperlink{classComplex__number}{const}} \mbox{\hyperlink{classMatrix}{Matrix}} \&\mbox{\hyperlink{classComplex__number}{rhs}})
+\item 
+\Hypertarget{classMatrix_a06df492361ef6f66707c7ca074cf027f}\label{classMatrix_a06df492361ef6f66707c7ca074cf027f} 
+\mbox{\hyperlink{classMatrix}{Matrix}} \& {\bfseries operator=} (\mbox{\hyperlink{classMatrix}{Matrix}} \&\&\mbox{\hyperlink{classComplex__number}{rhs}}) \mbox{\hyperlink{classComplex__number}{noexcept}}
+\item 
+\Hypertarget{classMatrix_a55ecc11b126af8cc1ccafe12804e40d8}\label{classMatrix_a55ecc11b126af8cc1ccafe12804e40d8} 
+\mbox{\hyperlink{classComplex__number}{const}} \mbox{\hyperlink{classComplex__number}{T}} \& {\bfseries operator()} (\mbox{\hyperlink{classComplex__number}{size\+\_\+t}} \mbox{\hyperlink{classComplex__number}{i}}, \mbox{\hyperlink{classComplex__number}{size\+\_\+t}} \mbox{\hyperlink{classComplex__number}{j}}) \mbox{\hyperlink{classComplex__number}{const}}
+\item 
+\Hypertarget{classMatrix_a386869d0b137f01403859269434c0663}\label{classMatrix_a386869d0b137f01403859269434c0663} 
+\mbox{\hyperlink{classComplex__number}{T}} \& {\bfseries operator()} (\mbox{\hyperlink{classComplex__number}{size\+\_\+t}} \mbox{\hyperlink{classComplex__number}{i}}, \mbox{\hyperlink{classComplex__number}{size\+\_\+t}} \mbox{\hyperlink{classComplex__number}{j}})
+\item 
+\mbox{\hyperlink{classMatrix__proxy}{Matrix\+\_\+proxy}}$<$ \mbox{\hyperlink{classComplex__number}{T}}, \mbox{\hyperlink{classComplex__number}{container\+\_\+T}} $>$ \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classMatrix_aa585a9be5382f19c478142703f9e4b6b}{operator\mbox{[}$\,$\mbox{]}}} (\mbox{\hyperlink{classComplex__number}{const}} \mbox{\hyperlink{classMatrix__coords}{Matrix\+\_\+coords}} \&\mbox{\hyperlink{classComplex__number}{coords}})
+\begin{DoxyCompactList}\small\item\em позволяет получать срез матрицы. Возвращает указатель на созданный прокси объект \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classMatrix__proxy}{Matrix\+\_\+proxy}}$<$ \mbox{\hyperlink{classComplex__number}{T}}, \mbox{\hyperlink{classComplex__number}{container\+\_\+T}} $>$ \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classMatrix_a85949f8d787a89a33ea667136dca6a6e}{operator\mbox{[}$\,$\mbox{]}}} (\mbox{\hyperlink{classComplex__number}{const}} \mbox{\hyperlink{classMatrix__row__coord}{Matrix\+\_\+row\+\_\+coord}} \&\mbox{\hyperlink{classComplex__number}{coords}})
+\begin{DoxyCompactList}\small\item\em позволяет получать срез матрицы. Возвращает указатель на созданный прокси объект \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classMatrix__proxy}{Matrix\+\_\+proxy}}$<$ \mbox{\hyperlink{classComplex__number}{T}}, \mbox{\hyperlink{classComplex__number}{container\+\_\+T}} $>$ \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classMatrix_a62ae96eca8b84efcc165e75dcc77c0a2}{operator\mbox{[}$\,$\mbox{]}}} (\mbox{\hyperlink{classComplex__number}{const}} \mbox{\hyperlink{classMatrix__col__coord}{Matrix\+\_\+col\+\_\+coord}} \&\mbox{\hyperlink{classComplex__number}{coords}})
+\begin{DoxyCompactList}\small\item\em позволяет получать срез матрицы. Возвращает указатель на созданный прокси объект \end{DoxyCompactList}\item 
+\Hypertarget{classMatrix_a6b1fa144e76eff3d420e344243b81574}\label{classMatrix_a6b1fa144e76eff3d420e344243b81574} 
+\mbox{\hyperlink{classComplex__number}{void}} {\bfseries set} (\mbox{\hyperlink{classComplex__number}{size\+\_\+t}} \mbox{\hyperlink{classComplex__number}{i}}, \mbox{\hyperlink{classComplex__number}{size\+\_\+t}} \mbox{\hyperlink{classComplex__number}{j}}, \mbox{\hyperlink{classComplex__number}{const}} \mbox{\hyperlink{classComplex__number}{T}} \&\mbox{\hyperlink{classComplex__number}{val}})
+\item 
+\Hypertarget{classMatrix_a371b3c0b16e0d09667c76557e4a8b16f}\label{classMatrix_a371b3c0b16e0d09667c76557e4a8b16f} 
+\mbox{\hyperlink{classComplex__number}{const}} \mbox{\hyperlink{classComplex__number}{T}} \& {\bfseries get} (\mbox{\hyperlink{classComplex__number}{size\+\_\+t}} \mbox{\hyperlink{classComplex__number}{i}}, \mbox{\hyperlink{classComplex__number}{size\+\_\+t}} \mbox{\hyperlink{classComplex__number}{j}}) \mbox{\hyperlink{classComplex__number}{const}}
+\item 
+\Hypertarget{classMatrix_a6e4f6af59702378def1b1a2792851728}\label{classMatrix_a6e4f6af59702378def1b1a2792851728} 
+\mbox{\hyperlink{classComplex__number}{container\+\_\+T}} {\bfseries get\+Data} () \mbox{\hyperlink{classComplex__number}{const}}
+\item 
+\Hypertarget{classMatrix_a6f8a68bf6be1a66964aebb189272659d}\label{classMatrix_a6f8a68bf6be1a66964aebb189272659d} 
+\mbox{\hyperlink{classComplex__number}{size\+\_\+t}} {\bfseries get\+Rows} () \mbox{\hyperlink{classComplex__number}{const}}
+\item 
+\Hypertarget{classMatrix_ae61d17000ed0364481ffc0053c0fcd2f}\label{classMatrix_ae61d17000ed0364481ffc0053c0fcd2f} 
+\mbox{\hyperlink{classComplex__number}{size\+\_\+t}} {\bfseries get\+Columns} () \mbox{\hyperlink{classComplex__number}{const}}
+\item 
+\Hypertarget{classMatrix_a652fedd0fd9fdadc9e43319920f4d3fc}\label{classMatrix_a652fedd0fd9fdadc9e43319920f4d3fc} 
+\mbox{\hyperlink{classComplex__number}{double}} {\bfseries get\+Epsilon} () \mbox{\hyperlink{classComplex__number}{const}}
+\item 
+\Hypertarget{classMatrix_aaa1e3256e1639491a19fab77c4593360}\label{classMatrix_aaa1e3256e1639491a19fab77c4593360} 
+\mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std\+::string}} {\bfseries to\+\_\+string} () \mbox{\hyperlink{classComplex__number}{const}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classMatrix_ab3656287cbb8ba6d9085cf0e2c29dd51}\label{classMatrix_ab3656287cbb8ba6d9085cf0e2c29dd51} 
+\mbox{\hyperlink{classComplex__number}{class}} {\bfseries Matrix\+\_\+proxy$<$ T, container\+\_\+\+T $>$}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classMatrix_a2ab10bc968e8c94bd9771c06adf11c1b}\label{classMatrix_a2ab10bc968e8c94bd9771c06adf11c1b} 
+\index{Matrix$<$ T, container\_T $>$@{Matrix$<$ T, container\_T $>$}!Matrix@{Matrix}}
+\index{Matrix@{Matrix}!Matrix$<$ T, container\_T $>$@{Matrix$<$ T, container\_T $>$}}
+\doxysubsubsection{\texorpdfstring{Matrix()}{Matrix()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classComplex__number}{typename}} \mbox{\hyperlink{classComplex__number}{T}}  = double, \mbox{\hyperlink{classComplex__number}{typename}} \mbox{\hyperlink{classComplex__number}{container\+\_\+T}}  = std\+::map$<$std\+::pair$<$size\+\_\+t, size\+\_\+t$>$, T$>$$>$ \\
+\mbox{\hyperlink{classMatrix}{Matrix}}$<$ \mbox{\hyperlink{classComplex__number}{T}}, \mbox{\hyperlink{classComplex__number}{container\+\_\+T}} $>$\mbox{\hyperlink{classMatrix}{\+::\+Matrix}} (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classComplex__number}{size\+\_\+t}}}]{rows,  }\item[{\mbox{\hyperlink{classComplex__number}{size\+\_\+t}}}]{columns }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Конструктор с двумя аргументами. Выставляет эпсилон = 0. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em rows} & количество строк \\
+\hline
+{\em columns} & колчиество столбцов \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classMatrix_ae5018bb2aa1df63896d39c434e923e9e}\label{classMatrix_ae5018bb2aa1df63896d39c434e923e9e} 
+\index{Matrix$<$ T, container\_T $>$@{Matrix$<$ T, container\_T $>$}!Matrix@{Matrix}}
+\index{Matrix@{Matrix}!Matrix$<$ T, container\_T $>$@{Matrix$<$ T, container\_T $>$}}
+\doxysubsubsection{\texorpdfstring{Matrix()}{Matrix()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classComplex__number}{typename}} \mbox{\hyperlink{classComplex__number}{T}}  = double, \mbox{\hyperlink{classComplex__number}{typename}} \mbox{\hyperlink{classComplex__number}{container\+\_\+T}}  = std\+::map$<$std\+::pair$<$size\+\_\+t, size\+\_\+t$>$, T$>$$>$ \\
+\mbox{\hyperlink{classMatrix}{Matrix}}$<$ \mbox{\hyperlink{classComplex__number}{T}}, \mbox{\hyperlink{classComplex__number}{container\+\_\+T}} $>$\mbox{\hyperlink{classMatrix}{\+::\+Matrix}} (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classComplex__number}{size\+\_\+t}}}]{rows,  }\item[{\mbox{\hyperlink{classComplex__number}{size\+\_\+t}}}]{columns,  }\item[{\mbox{\hyperlink{classComplex__number}{double}}}]{epsilon }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Конструктор с тремя аргументами 
+
+
+\begin{DoxyParams}{Parameters}
+{\em rows} & количество строк \\
+\hline
+{\em columns} & колчиество столбцов \\
+\hline
+{\em epsilon} & эпсилон \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classMatrix_ab877f47735b64d57dbb999739107e3b7}\label{classMatrix_ab877f47735b64d57dbb999739107e3b7} 
+\index{Matrix$<$ T, container\_T $>$@{Matrix$<$ T, container\_T $>$}!Matrix@{Matrix}}
+\index{Matrix@{Matrix}!Matrix$<$ T, container\_T $>$@{Matrix$<$ T, container\_T $>$}}
+\doxysubsubsection{\texorpdfstring{Matrix()}{Matrix()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classComplex__number}{typename}} \mbox{\hyperlink{classComplex__number}{T}}  = double, \mbox{\hyperlink{classComplex__number}{typename}} \mbox{\hyperlink{classComplex__number}{container\+\_\+T}}  = std\+::map$<$std\+::pair$<$size\+\_\+t, size\+\_\+t$>$, T$>$$>$ \\
+\mbox{\hyperlink{classMatrix}{Matrix}}$<$ \mbox{\hyperlink{classComplex__number}{T}}, \mbox{\hyperlink{classComplex__number}{container\+\_\+T}} $>$\mbox{\hyperlink{classMatrix}{\+::\+Matrix}} (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classComplex__number}{size\+\_\+t}}}]{rows,  }\item[{\mbox{\hyperlink{classComplex__number}{size\+\_\+t}}}]{columns,  }\item[{\mbox{\hyperlink{classComplex__number}{double}}}]{epsilon,  }\item[{\mbox{\hyperlink{classComplex__number}{T}}}]{init\+\_\+val }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Конструктор с четырьмя аргументами. Создает матрицу из значений init\+\_\+val. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em rows} & количество строк \\
+\hline
+{\em columns} & колчиество столбцов \\
+\hline
+{\em epsilon} & эпсилон \\
+\hline
+{\em init\+\_\+val} & значение, которым нужно проинициализировать всю матрицу \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classMatrix_a0fa954f0e94dbebac04a687efeca2fd2}\label{classMatrix_a0fa954f0e94dbebac04a687efeca2fd2} 
+\index{Matrix$<$ T, container\_T $>$@{Matrix$<$ T, container\_T $>$}!Matrix@{Matrix}}
+\index{Matrix@{Matrix}!Matrix$<$ T, container\_T $>$@{Matrix$<$ T, container\_T $>$}}
+\doxysubsubsection{\texorpdfstring{Matrix()}{Matrix()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classComplex__number}{typename}} \mbox{\hyperlink{classComplex__number}{T}}  = double, \mbox{\hyperlink{classComplex__number}{typename}} \mbox{\hyperlink{classComplex__number}{container\+\_\+T}}  = std\+::map$<$std\+::pair$<$size\+\_\+t, size\+\_\+t$>$, T$>$$>$ \\
+\mbox{\hyperlink{classMatrix}{Matrix}}$<$ \mbox{\hyperlink{classComplex__number}{T}}, \mbox{\hyperlink{classComplex__number}{container\+\_\+T}} $>$\mbox{\hyperlink{classMatrix}{\+::\+Matrix}} (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std\+::string}}}]{filename }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Конструктор, создающий матрицу по файлую 
+
+
+\begin{DoxyParams}{Parameters}
+{\em filename} & имя файла с матрицей \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \doxylink{classWrongFileException}{Wrong\+File\+Exception}} & если файл имеет некорректный вид \\
+\hline
+\end{DoxyExceptions}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classMatrix_a62ae96eca8b84efcc165e75dcc77c0a2}\label{classMatrix_a62ae96eca8b84efcc165e75dcc77c0a2} 
+\index{Matrix$<$ T, container\_T $>$@{Matrix$<$ T, container\_T $>$}!operator\mbox{[}\mbox{]}@{operator[]}}
+\index{operator\mbox{[}\mbox{]}@{operator[]}!Matrix$<$ T, container\_T $>$@{Matrix$<$ T, container\_T $>$}}
+\doxysubsubsection{\texorpdfstring{operator[]()}{operator[]()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classComplex__number}{typename}} \mbox{\hyperlink{classComplex__number}{T}}  = double, \mbox{\hyperlink{classComplex__number}{typename}} \mbox{\hyperlink{classComplex__number}{container\+\_\+T}}  = std\+::map$<$std\+::pair$<$size\+\_\+t, size\+\_\+t$>$, T$>$$>$ \\
+\mbox{\hyperlink{classMatrix__proxy}{Matrix\+\_\+proxy}}$<$ \mbox{\hyperlink{classComplex__number}{T}}, \mbox{\hyperlink{classComplex__number}{container\+\_\+T}} $>$ \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classMatrix}{Matrix}}$<$ \mbox{\hyperlink{classComplex__number}{T}}, \mbox{\hyperlink{classComplex__number}{container\+\_\+T}} $>$\mbox{\hyperlink{classComplex__number}{\+::operator}}\mbox{[}$\,$\mbox{]} (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classComplex__number}{const}} \mbox{\hyperlink{classMatrix__col__coord}{Matrix\+\_\+col\+\_\+coord}} \&}]{coords }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+позволяет получать срез матрицы. Возвращает указатель на созданный прокси объект 
+
+
+\begin{DoxyParams}{Parameters}
+{\em coords} & Принимает объект \doxylink{classMatrix__col__coord}{Matrix\+\_\+col\+\_\+coord} с информацией о срезе \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Matrix\+\_\+proxy$<$\+T, container\+\_\+\+T$>$\texorpdfstring{$\ast$}{*} 
+\end{DoxyReturn}
+\Hypertarget{classMatrix_aa585a9be5382f19c478142703f9e4b6b}\label{classMatrix_aa585a9be5382f19c478142703f9e4b6b} 
+\index{Matrix$<$ T, container\_T $>$@{Matrix$<$ T, container\_T $>$}!operator\mbox{[}\mbox{]}@{operator[]}}
+\index{operator\mbox{[}\mbox{]}@{operator[]}!Matrix$<$ T, container\_T $>$@{Matrix$<$ T, container\_T $>$}}
+\doxysubsubsection{\texorpdfstring{operator[]()}{operator[]()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classComplex__number}{typename}} \mbox{\hyperlink{classComplex__number}{T}}  = double, \mbox{\hyperlink{classComplex__number}{typename}} \mbox{\hyperlink{classComplex__number}{container\+\_\+T}}  = std\+::map$<$std\+::pair$<$size\+\_\+t, size\+\_\+t$>$, T$>$$>$ \\
+\mbox{\hyperlink{classMatrix__proxy}{Matrix\+\_\+proxy}}$<$ \mbox{\hyperlink{classComplex__number}{T}}, \mbox{\hyperlink{classComplex__number}{container\+\_\+T}} $>$ \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classMatrix}{Matrix}}$<$ \mbox{\hyperlink{classComplex__number}{T}}, \mbox{\hyperlink{classComplex__number}{container\+\_\+T}} $>$\mbox{\hyperlink{classComplex__number}{\+::operator}}\mbox{[}$\,$\mbox{]} (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classComplex__number}{const}} \mbox{\hyperlink{classMatrix__coords}{Matrix\+\_\+coords}} \&}]{coords }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+позволяет получать срез матрицы. Возвращает указатель на созданный прокси объект 
+
+
+\begin{DoxyParams}{Parameters}
+{\em coords} & Принимает объект \doxylink{classMatrix__coords}{Matrix\+\_\+coords} с информацией о срезе \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Matrix\+\_\+proxy$<$\+T, container\+\_\+\+T$>$\texorpdfstring{$\ast$}{*} 
+\end{DoxyReturn}
+\Hypertarget{classMatrix_a85949f8d787a89a33ea667136dca6a6e}\label{classMatrix_a85949f8d787a89a33ea667136dca6a6e} 
+\index{Matrix$<$ T, container\_T $>$@{Matrix$<$ T, container\_T $>$}!operator\mbox{[}\mbox{]}@{operator[]}}
+\index{operator\mbox{[}\mbox{]}@{operator[]}!Matrix$<$ T, container\_T $>$@{Matrix$<$ T, container\_T $>$}}
+\doxysubsubsection{\texorpdfstring{operator[]()}{operator[]()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classComplex__number}{typename}} \mbox{\hyperlink{classComplex__number}{T}}  = double, \mbox{\hyperlink{classComplex__number}{typename}} \mbox{\hyperlink{classComplex__number}{container\+\_\+T}}  = std\+::map$<$std\+::pair$<$size\+\_\+t, size\+\_\+t$>$, T$>$$>$ \\
+\mbox{\hyperlink{classMatrix__proxy}{Matrix\+\_\+proxy}}$<$ \mbox{\hyperlink{classComplex__number}{T}}, \mbox{\hyperlink{classComplex__number}{container\+\_\+T}} $>$ \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classMatrix}{Matrix}}$<$ \mbox{\hyperlink{classComplex__number}{T}}, \mbox{\hyperlink{classComplex__number}{container\+\_\+T}} $>$\mbox{\hyperlink{classComplex__number}{\+::operator}}\mbox{[}$\,$\mbox{]} (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classComplex__number}{const}} \mbox{\hyperlink{classMatrix__row__coord}{Matrix\+\_\+row\+\_\+coord}} \&}]{coords }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+позволяет получать срез матрицы. Возвращает указатель на созданный прокси объект 
+
+
+\begin{DoxyParams}{Parameters}
+{\em coords} & Принимает объект \doxylink{classMatrix__row__coord}{Matrix\+\_\+row\+\_\+coord} с информацией о срезе \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Matrix\+\_\+proxy$<$\+T, container\+\_\+\+T$>$\texorpdfstring{$\ast$}{*} 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Matrix.\+hpp\end{DoxyCompactItemize}

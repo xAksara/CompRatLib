@@ -3,6 +3,7 @@
 #include <cmath>
 #include <cstdint>
 #include <stdexcept>
+#include <chrono>
 #include "Exceptions.hpp"
 #include "Rational_number.hpp"
 #include "Utils.hpp"
@@ -415,7 +416,7 @@ TEST(Vectors, BoolVector) {
 
 }
 
-TEST(Matrixs, Constructors) {
+TEST(Matrices, Constructors) {
     Matrix m1(10, 10, 0.1, 2);
     EXPECT_EQ(m1(4, 4), 2);
     Matrix m2(m1);
@@ -430,7 +431,7 @@ TEST(Matrixs, Constructors) {
     EXPECT_DOUBLE_EQ(m5.getEpsilon(), 0.1);
 }
 
-TEST(Matrixs, Operators) {
+TEST(Matrices, Operators) {
     Matrix simple1(10, 3, 0.1);
     Matrix simple2(10, 3, 0.2);
     simple1.set(0, 0, 1);
@@ -446,6 +447,26 @@ TEST(Matrixs, Operators) {
     simple_sum.set(2, 1, 20);
     simple_sum.set(3, 2, 30);
     EXPECT_EQ(simple1 + simple2, simple_sum);
+
+    Matrix simple3(10, 3, 0.1);
+    Matrix simple4(10, 3, 0.2);
+    simple3.set(0, 0, 1);
+    simple3.set(1, 1, 2);
+    simple3.set(2, 2, 3);
+    simple3.set(1, 0, 1);
+    simple3.set(2, 1, 2);
+    simple3.set(3, 2, 3);
+    simple4.set(1, 0, 0.15);
+    simple4.set(2, 1, 20);
+    simple4.set(3, 2, 30);
+    Matrix simple_sub(10, 3, 0.1);
+    simple_sub.set(0, 0, 1);
+    simple_sub.set(1, 1, 2);
+    simple_sub.set(2, 2, 3);
+    simple_sub.set(2, 1, -18);
+    simple_sub.set(3, 2, -27);
+    simple_sub.set(1, 0, 1);
+    EXPECT_EQ(simple3 - simple4, simple_sub);
 
 
     Matrix m1(10, 10, 0.1, 1);
@@ -530,11 +551,14 @@ TEST(Matrixs, Operators) {
     EXPECT_EQ(Rational_number(4) / m5, div_scalar4);
 }
 
-TEST(Matrixs, Complex) {
+TEST(Matrices, Complex) {
     // Работает только если типы комплексных чсел одинаковы, потому что иначе нужно было бы делать еще кучу 
     // специализаций шаблонных операторов (по крайней мере эта реализация того требует). И операции со скаляром
     // слева(для случаев когда вектор<комп<рац, ...>>, вектор<комп<..., рац>>, вектор<комп<рац, рац>>, а скаляры 
     // - комплексные) отсутствуют по той же причине 
+
+    //UPD: после добавления приведения комплексных к комплексным должно работать больше, наверное. И по идее огромное количество 
+    // специализацй шаблонов можно удалить.
     Matrix m1(10, 10, 0.1, Complex_number(Rational_number(6, 2), Rational_number(2)));
     Matrix sum_scalar1(10, 10, 0.1, Complex_number(Rational_number(11, 2), Rational_number(3)));
     Matrix sub_scalar1(10, 10, 0.1, Complex_number(Rational_number(1, 2), Rational_number(1)));
@@ -542,7 +566,6 @@ TEST(Matrixs, Complex) {
     Matrix div_scalar1(10, 10, 0.1, Complex_number(Rational_number(152, 116), Rational_number(32,116)));
 
     Complex_number c(Rational_number(5, 2), Rational_number(1));
-    // std::cout << m1 + Complex_number(Rational_number(5, 2), Rational_number(5, 2)) << std::endl;
     EXPECT_EQ(m1 + c, sum_scalar1);
     EXPECT_EQ(m1 - c, sub_scalar1);
     EXPECT_EQ(m1 * c, mul_scalar1);
@@ -564,11 +587,11 @@ TEST(Matrixs, Complex) {
     EXPECT_EQ(m4 * Complex_number(2), mul_scalar3);
     EXPECT_EQ(Complex_number(2) * m4, mul_scalar3);
     
-    EXPECT_EQ(m4 / 5, div_scalar3);
+    EXPECT_EQ(m4 / Complex_number(5), div_scalar3);
     EXPECT_EQ(Complex_number(5, 4) / m4, div_scalar3);
 }
 
-TEST(Matrixs, BoolMatrix) {
+TEST(Matrices, BoolMatrix) {
     Matrix<bool> m1(5, 5);
     Matrix<bool> m2(5, 5, 0);
     Matrix<bool> m3(5, 5, 1);
@@ -589,7 +612,7 @@ TEST(Matrixs, BoolMatrix) {
     EXPECT_THROW(m4 * m3, MatrixSizeMissmatch);
 }
 
-TEST(Vector, VecMatMul) {
+TEST(Vectors, VecMatMul) {
     Vector v(3);
     v(0) = 10;
     v(1) = 20;
@@ -621,7 +644,7 @@ TEST(Vector, VecMatMul) {
 
 
 // Простые ситуации с прокси. прокси убивается раньше, чем матрица
-TEST(Slices, SimpleMatrixSlices) {
+TEST(Slices, SimpleMatriceslices) {
     Matrix m(3, 4);
     m(0, 0) = 1;
     m(0, 1) = 2;
@@ -766,66 +789,7 @@ TEST(Slices, VecMulRowSlice) {
     EXPECT_EQ(v_copy, copy_result);
 
     delete proxy_row;
-
-    // std::cout << v *
-
-
 }
-
-// TEST(Slices, KillMatrixAndVecMulForMe) {
-//     Matrix m(3, 4);
-//     m(0, 0) = 1;
-//     m(0, 1) = 2;
-//     m(0, 2) = 3;
-//     m(0, 3) = 4;
-
-//     m(1, 0) = 5;
-//     m(1, 1) = 6;
-//     m(1, 2) = 7;
-//     m(1, 3) = 8;
-
-//     m(2, 0) = 9;
-//     m(2, 1) = 10;
-//     m(2, 2) = 11;
-//     m(2, 3) = 12;
-
-//     Matrix<>* m1 = new Matrix(m); 
-//     Matrix<>* m2 = new Matrix(m); 
-
-//     std::cout << "START SPAWNING PROXY" << std::endl;
-//     Matrix_coords coord(1, 1, 2, 3);
-//     auto proxy_matrix = m[coord]; // Используем auto потому что параметры шаблона матрицы были по умолчанию и не хочется их указывать
-//     auto proxy_matrix_local = m[coord]; // для этого прокси создадим локальную копию
-//     proxy_matrix_local->set(0, 0, 50);
-
-//     Matrix_row_coord row_coord(1, 1, 2);
-//     auto proxy_row = m[row_coord]; // Используем auto потому что параметры шаблона матрицы были по умолчанию и не хочется их указывать
-//     auto proxy_row_local = m[row_coord]; // для этого прокси создадим локальную копию
-//     proxy_row_local->set(0, 100);
-
-//     Matrix_col_coord col_coord(1, 1, 2);
-//     auto proxy_col = m[row_coord]; // Используем auto потому что параметры шаблона матрицы были по умолчанию и не хочется их указывать
-//     auto proxy_col_local = m[row_coord]; // для этого прокси создадим локальную копию
-//     proxy_col_local->set(0, 150);
-
-//     std::cout << "STOP SPAWNING PROXY" << std::endl;
-
-
-//     delete m1;
-//     delete m2;
-//     std::cout << "DELETE PROXY " << proxy_matrix;
-//     delete proxy_matrix; // освободим выделенный в m[] указатель
-//     std::cout << "DELETE PROXY " << proxy_matrix;
-//     delete proxy_row; // освободим выделенный в m[] указатель
-//     std::cout << "DELETE PROXY " << proxy_matrix;
-//     delete proxy_col; // освободим выделенный в m[] указатель
-//     std::cout << "DELETE PROXY " << proxy_matrix;
-//     delete proxy_matrix_local; // освободим выделенный в m[] указатель
-//     std::cout << "DELETE PROXY " << proxy_matrix;
-//     delete proxy_row_local; // освободим выделенный в m[] указательclea
-//     std::cout << "DELETE PROXY " << proxy_matrix;
-//     delete proxy_col_local; // освободим выделенный в m[] указатель
-// }
 
 TEST(Parsing, Vector_parse) {
     Vector<Complex_number<double, double>> vcff("parsing/VCFF.txt");
@@ -879,9 +843,7 @@ TEST(Parsing, Vector_parse) {
 }
 
 TEST(Parsing, Matrix_parse) {
-    std::cout << "1 " << std::endl;
     Matrix<Complex_number<double, double>> mcff("parsing/MCFF.txt");
-    std::cout << "2" << std::endl;
     Matrix<Complex_number<double, double>> rmcff(50000, 500);
     rmcff(0, 0) = Complex_number<double>(100);
     rmcff(5999, 1) = Complex_number<double>(23, 5.1);
@@ -927,6 +889,38 @@ TEST(Parsing, Matrix_parse) {
     rmb.set(21, 1, 1);
     EXPECT_EQ(mb, rmb);
 }
+
+// TEST(MatricesMulTest, MulSpeed) {
+//     try {
+//     Matrix<Complex_number<int, int>> m1("file1.txt");
+//     Matrix<Complex_number<int, int>> m2("file2.txt");
+//     // EXPECT_ANY_THROW(m1*m2);
+//     auto start = std::chrono::high_resolution_clock::now();
+//     Matrix<Complex_number<int, int>> res1 = m1 * m2;
+//     auto end = std::chrono::high_resolution_clock::now();
+//     std::chrono::duration<double> elapsed = end - start;
+//     std::cout << "обычное умножение: " << elapsed.count() << " сек" << std::endl;
+//     start = std::chrono::high_resolution_clock::now();
+//     Matrix<Complex_number<int, int>> res2 = fast_or_no_mul(m1, m2);
+//     end = std::chrono::high_resolution_clock::now();
+//     elapsed = end - start;
+//     std::cout << "(не) быстрое умножение: " << elapsed.count() << " сек" << std::endl;
+//     // EXPECT_EQ(res1, res2);
+//     res1 == res2;
+//     // }
+//     // catch (MatrixSizeMissmatch e) {
+//     //     std::cout << e.getMessage() << std::endl;
+//     // } catch (WrongFileException e) {
+//     //     std::cout << e.getMessage() << std::endl;
+//     } catch (MyBaseException& e) {
+//         std::cout << e.getMessage() << std::endl;
+//     } catch (std::exception& e) {
+//         std::cout << "std: " << e.what() << std::endl;
+//     } catch (...) {
+//         std::cout << "ффф" << std::endl;
+//     }    
+// }
+
 
 int run_all_my_tests(int argc, char **argv) {
     testing::InitGoogleTest(&argc, argv);

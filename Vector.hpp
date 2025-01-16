@@ -71,7 +71,12 @@
 // которые используются внутри функций. А если будут то по идее все ок. Так что в целом типы,
 // определенные пользователем тоже можно скормить этому шаблону, и если звезды сойдутся то код скомпилируется.
 
-
+/**
+ * @class Класс представляющий разреженные векторы
+ * 
+ * @tparam T тип элемента
+ * @tparam container_T тип контейнера(map или unordered_map параметризованные size_t и T)
+ */
 template <typename T = double, typename container_T = std::map<size_t, T>>
 class Vector {
 private:
@@ -80,12 +85,27 @@ private:
     double epsilon;
     static const T zero;
 public:
+    /**
+     * @brief Конструктор с одним аргументом. Выставляет эпсилон = 0
+     * @param size размер вектора 
+     */
     Vector(size_t size) : size(size), epsilon(0) {}
+    /**
+     * @brief Конструктор с двумя аргументами
+     * @param size размер вектора 
+     * @param epsilon эпсилон
+     */
     Vector(size_t size, double epsilon) : size(size), epsilon(epsilon) { 
         if (epsilon < 0) {
             throw NegativeEpsilonException(epsilon);
         }
     }
+    /**
+     * @brief Конструктор с тремя аргументами. Инициализирует вектор значениями init_val
+     * @param size размер вектора 
+     * @param size эпсилон
+     * @param size начальное значение
+     */
     Vector(size_t size, double epsilon, T init_val) : size(size), epsilon(epsilon) { 
         if (epsilon < 0) {
             throw NegativeEpsilonException(epsilon);
@@ -106,6 +126,12 @@ public:
         size = rhs.size;
         epsilon = rhs.epsilon;
     }
+    /**
+     * @brief Конструктор, строящий вектор по срезу строки
+     * @tparam proxy_container_T тип контейнера прокси (матрицы, его создавшей)
+     * @param rhs срез строки матрицы
+     * @throw ProxyToVectorException если прокси неправильный
+     */
     template<typename proxy_container_T>
     Vector(const Matrix_proxy<T, proxy_container_T>& rhs) { 
         if (!rhs.is_row) {
@@ -120,7 +146,11 @@ public:
             }
         }
     }
-
+    /**
+     * @brief Конструктор, создающий вектор по файлу
+     * @param filename имя файла с вектором
+     * @throw WrongFileException если файл имеет некорректный вид
+     */
     Vector(std::string filename) {
         epsilon = 0;
         std::ifstream file(filename);
@@ -222,6 +252,13 @@ public:
         }
         return *this;
     }
+    /**
+     * @brief Оператор присваивания, строящий вектор по срезу строки
+     * @tparam proxy_container_T тип контейнера прокси (матрицы, его создавшей)
+     * @param rhs срез строки матрицы
+     * @throw ProxyToVectorException если прокси неправильный
+     * @return построенный вектор
+     */
     template<typename proxy_container_T>
     Vector& operator=(const Matrix_proxy<T, proxy_container_T>& rhs) { 
         if (!rhs.is_row) {

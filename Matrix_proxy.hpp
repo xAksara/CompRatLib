@@ -8,9 +8,15 @@
 template <typename T, typename Container>
 class Matrix;
 
+/**
+ * @class Прокси обхект позволяющий обращаться к срезу матрицы
+ * 
+ * @tparam T тип элементов матрицы
+ * @tparam container_T контейнер матрицы
+ */
 template<typename T, typename container_T>
 class Matrix_proxy {
-    friend class Matrix<T, container_T>;
+    friend class Matrix<T, container_T>; // для клин поинтер
     size_t r1, r2, c1, c2;
     size_t proxy_rows, proxy_columns;
     Matrix<T, container_T>* matrix_p;
@@ -18,7 +24,10 @@ class Matrix_proxy {
     bool is_copy = false;
     
 
-
+/**
+ * @brief создает локальную копию матрицы исключая элементы, не вошедшие в срез
+ * 
+ */
     void make_local_copy() {
         is_copy = true;
         // matrix_p->clean_pointer(this);
@@ -31,11 +40,13 @@ class Matrix_proxy {
         }
         matrix_p = result_p;
     }
-
+/**
+ * @brief обнуляет указатель на матрицу, после чего в случае обращения к элеиментам среза бросает исключение
+ * 
+ */
     void clean_pointer() {
         initial_matrix_p = nullptr;
         if (is_copy) {
-            std::cout << "aaaa333a" << std::endl;
             if (matrix_p != nullptr) {
                 std::cout << "DELETE " << matrix_p << std::endl;
                 delete matrix_p;
@@ -43,9 +54,7 @@ class Matrix_proxy {
             std::cout << "Pointer: " << matrix_p << std::endl;
             matrix_p = nullptr;
             is_copy = false;
-            std::cout << "22222" << std::endl;
         } else {
-            std::cout << "aaaaa" << std::endl;
             matrix_p = nullptr;
         }
     }
@@ -54,7 +63,12 @@ class Matrix_proxy {
 public:
     bool is_row = false;
     bool is_column = false;
-
+/**
+ * @brief Строит прокси обхект по матрице и переданным координатам
+ * 
+ * @param matrix исходная матрица
+ * @param coords координаты среза
+ */
     Matrix_proxy(Matrix<T, container_T>& matrix, const Matrix_coords& coords)
         : matrix_p(&matrix), initial_matrix_p(&matrix)
     { 
@@ -65,7 +79,12 @@ public:
         proxy_rows = r2 - r1 + 1;
         proxy_columns = c2 - c1 + 1;
     }
-
+/**
+ * @brief Строит прокси обхект по матрице и переданным координатам
+ * 
+ * @param matrix исходная матрица
+ * @param coords координаты среза
+ */
     Matrix_proxy(Matrix<T, container_T>& matrix, const Matrix_row_coord& coords)
         : matrix_p(&matrix), is_row(true), initial_matrix_p(&matrix)
     { 
@@ -76,7 +95,12 @@ public:
         proxy_rows = 1;
         proxy_columns = c2 - c1 + 1;
     }
-
+/**
+ * @brief Строит прокси обхект по матрице и переданным координатам
+ * 
+ * @param matrix исходная матрица
+ * @param coords координаты среза
+ */
     Matrix_proxy(Matrix<T, container_T>& matrix, const Matrix_col_coord& coords)
         : matrix_p(&matrix), is_column(true), initial_matrix_p(&matrix)
     { 
@@ -95,7 +119,6 @@ public:
             initial_matrix_p->clean_pointer(this);
         }
         if (is_copy && matrix_p != nullptr) {
-            std::cout << "1" << std::endl;
             std::cout << "DELETE " << matrix_p << std::endl;
             delete matrix_p;
         }

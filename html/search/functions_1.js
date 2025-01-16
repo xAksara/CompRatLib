@@ -1,0 +1,5 @@
+var searchData=
+[
+  ['matrix_0',['matrix',['../classMatrix.html#a2ab10bc968e8c94bd9771c06adf11c1b',1,'Matrix::Matrix(size_t rows, size_t columns)'],['../classMatrix.html#ae5018bb2aa1df63896d39c434e923e9e',1,'Matrix::Matrix(size_t rows, size_t columns, double epsilon)'],['../classMatrix.html#ab877f47735b64d57dbb999739107e3b7',1,'Matrix::Matrix(size_t rows, size_t columns, double epsilon, T init_val)'],['../classMatrix.html#a0fa954f0e94dbebac04a687efeca2fd2',1,'Matrix::Matrix(std::string filename)']]],
+  ['matrix_5fproxy_1',['matrix_proxy',['../classMatrix__proxy.html#a258c3b0178aee7877f904b264383ed8f',1,'Matrix_proxy::Matrix_proxy(Matrix&lt; T, container_T &gt; &amp;matrix, const Matrix_coords &amp;coords)'],['../classMatrix__proxy.html#ab5ed5b640a9cc37794495f011cfd3c28',1,'Matrix_proxy::Matrix_proxy(Matrix&lt; T, container_T &gt; &amp;matrix, const Matrix_row_coord &amp;coords)'],['../classMatrix__proxy.html#ab367fcf65172627881a913d51d7019ce',1,'Matrix_proxy::Matrix_proxy(Matrix&lt; T, container_T &gt; &amp;matrix, const Matrix_col_coord &amp;coords)']]]
+];

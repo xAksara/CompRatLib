@@ -1,6 +1,10 @@
 #pragma once
 #include <cstdlib>
 
+/**
+ * @class Класс для хранения координат среза. Используется как аргумент Matrix[arg]
+ * 
+ */
 class Matrix_coords {
 public:
     size_t r1, r2, c1, c2;

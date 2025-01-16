@@ -73,9 +73,15 @@
 // которые используются внутри функций. А если будут то по идее все ок. Так что в целом типы,
 // определенные пользователем тоже можно скормить этому шаблону, и если звезды сойдутся то код скомпилируется.
 
-
+/**
+ * @class Класс представляющий разреженные матрицы
+ * 
+ * @tparam T тип элемента
+ * @tparam container_T тип контейнера(map или unordered_map параметризованные std::pair<size_t, size_t> и T)
+ */
 template <typename T = double, typename container_T = std::map<std::pair<size_t, size_t>, T>>
 class Matrix {
+    friend class Matrix_proxy<T, container_T>; // для клин поинтер
 private:
     container_T data;
     size_t rows;
@@ -84,19 +90,35 @@ private:
     static const T zero;
     std::vector<Matrix_proxy<T, container_T>*> proxies;
     std::unordered_set<Matrix_proxy<T, container_T>*> proxies_set;
-public:
     void clean_pointer(Matrix_proxy<T, container_T>* p) {
         std::cout << "DELETE PROXY FROM SET " << p << std::endl;
         proxies_set.erase(p);
     }
-
+public:
+    /**
+     * @brief Конструктор с двумя аргументами. Выставляет эпсилон = 0
+     * @param rows количество строк
+     * @param columns колчиество столбцов
+     */
     Matrix(size_t rows, size_t columns) : rows(rows), columns(columns), epsilon(0) {}
-    // explicit потому что сильно копипастил вектор и констуркторы вида Matrix(5, 0.1, 5) приводят дабл к сайз_т
-    explicit Matrix(size_t rows, size_t columns, double epsilon) : rows(rows), columns(columns), epsilon(epsilon) { 
+    /**
+     * @brief Конструктор с тремя аргументами
+     * @param rows количество строк
+     * @param columns колчиество столбцов
+     * @param epsilon эпсилон
+     */
+    Matrix(size_t rows, size_t columns, double epsilon) : rows(rows), columns(columns), epsilon(epsilon) { 
         if (epsilon < 0) {
             throw NegativeEpsilonException(epsilon);
         }
     }
+    /**
+     * @brief Конструктор с четырьмя аргументами. Создает матрицу из значений init_val
+     * @param rows количество строк
+     * @param columns колчиество столбцов
+     * @param epsilon эпсилон
+     * @param init_val значение, которым нужно проинициализировать всю матрицу
+     */
     Matrix(size_t rows, size_t columns, double epsilon, T init_val) : rows(rows), columns(columns), epsilon(epsilon) { 
         if (epsilon < 0) {
             throw NegativeEpsilonException(epsilon);
@@ -109,6 +131,11 @@ public:
             }
         }
     }
+    /**
+     * @brief Конструктор, создающий матрицу по файлую
+     * @param filename имя файла с матрицей
+     * @throw WrongFileException если файл имеет некорректный вид
+     */
     Matrix(std::string filename) {
         epsilon = 0;
         std::ifstream file(filename);
@@ -117,19 +144,14 @@ public:
         file.close();
         std::string file_content = ss.str(); // переносим содержимое в строку
         ss.str(""); // чистим
-        std::cout << "ZASTRYAL TYT" << std::endl;
         std::string temp_str = delete_comments(file_content);
-        std::cout << "POCHEMY NE VIVODITSA" << std::endl;
         ss << temp_str;
-        std::cout << "POCHEMY VIVODITSA" << std::endl;
 
         std::string file_data_type;
         ss >> file_data_type;
-        std::cout << "POCHEMY VIVODITSA2222222" << file_data_type <<  std::endl;
         if (file_data_type != "matrix") {
-            throw WrongFileException("Файл должен хранить матрицу. Имя файла: " + filename);
+            throw WrongFileException("Файл должен хранить матрицу. Хранит: " + file_data_type);
         }
-        std::cout << "FILE DATA TYPE CLEAR" << std::endl;
 
         std::string element_type;
         ss >> element_type;
@@ -141,7 +163,6 @@ public:
             Complex_number<double, int> c_float_int;
             Complex_number<double, double> c_float_float;
             T for_comparison;
-            std::cout << "FILE DATA TYPE CLEAR" << std::endl;
         
             if (type_real == "integer" && type_image == "integer") {
                 if (typeid(for_comparison).name() != typeid(c_int_int).name()) {
@@ -164,10 +185,8 @@ public:
             }
             ss >> rows >> columns;
             size_t row, column;
-            std::cout << "FILE DATA TYPE CLEAR" << std::endl;
 
             while (true) {
-            std::cout << "FILE DATA TYPE CLEAR3" << std::endl;
                 ss >> row >> column;
                 if (ss.fail() || ss.eof()) {
                     break;
@@ -178,7 +197,6 @@ public:
                 T element(value.c_str());
                 data[{row - 1, column - 1}] = element;
             }
-            std::cout << "FILE DATA TYPE CLEAR4" << std::endl;
         } else if (element_type == "rational") {
             ss >> rows >> columns;
             size_t row, column;
@@ -196,10 +214,9 @@ public:
         } else {
             throw WrongFileException("Не верный формат файла. Файл: " + filename);
         }
-        std::cout << "READED" << std::endl;
     }
-
-    Matrix(Matrix& rhs) {
+    
+    Matrix(const Matrix& rhs) {
         data = rhs.data;
         rows = rhs.rows;
         columns = rhs.columns;
@@ -252,6 +269,12 @@ public:
         return data[std::make_pair(i, j)];
     }
 
+/**
+ * @brief позволяет получать срез матрицы. Возвращает указатель на созданный прокси объект
+ * 
+ * @param coords Принимает объект Matrix_coords с информацией о срезе
+ * @return Matrix_proxy<T, container_T>* 
+ */
     Matrix_proxy<T, container_T>* operator[](const Matrix_coords& coords) {
         Matrix_proxy<T, container_T>* proxy = new Matrix_proxy<T, container_T>(*this, coords);
         std::cout << "NEW PROXY" << proxy << std::endl;
@@ -259,7 +282,12 @@ public:
         proxies_set.insert(proxy);
         return proxy;
     }
-
+/**
+ * @brief позволяет получать срез матрицы. Возвращает указатель на созданный прокси объект
+ * 
+ * @param coords Принимает объект Matrix_row_coord с информацией о срезе
+ * @return Matrix_proxy<T, container_T>* 
+ */
     Matrix_proxy<T, container_T>* operator[](const Matrix_row_coord& coords) {
         Matrix_proxy<T, container_T>* proxy = new Matrix_proxy<T, container_T>(*this, coords);
         // proxies.push_back(proxy);
@@ -267,7 +295,12 @@ public:
         proxies_set.insert(proxy);
         return proxy;
     }
-
+/**
+ * @brief позволяет получать срез матрицы. Возвращает указатель на созданный прокси объект
+ * 
+ * @param coords Принимает объект Matrix_col_coord с информацией о срезе
+ * @return Matrix_proxy<T, container_T>* 
+ */
     Matrix_proxy<T, container_T>* operator[](const Matrix_col_coord& coords) {
         Matrix_proxy<T, container_T>* proxy = new Matrix_proxy<T, container_T>(*this, coords);
         // proxies.push_back(proxy);
@@ -282,6 +315,13 @@ public:
         }
         if (abs(val) >= epsilon)
             data[std::make_pair(i, j)] = val;
+    }
+    const T& get(size_t i, size_t j) const {
+        if (i >= rows || j >= columns) {
+            throw MatrixIndexOutOfRangeException(i, j, rows, columns);
+        }
+        const auto& it = data.find(std::make_pair(i, j));
+        return (it != data.end()) ? it->second : zero;
     }
     container_T getData() const { return data; }
     size_t getRows() const { return rows; }
@@ -311,10 +351,18 @@ bool operator==(const Matrix<lhs_T, lhs_container_T>& lhs, const Matrix<rhs_T, r
     //     }
     // }
     for (const auto& [key, value] : lhs_data) {
-        if (value != rhs_data[key]) return false;
+        if (value != rhs.get(key.first, key.second)) {
+            std::cout << value << "   vs   " << rhs.get(key.first, key.second) << std::endl;
+            std::cout << key.first << "   --   " << key.second << std::endl;
+            return false;
+        }
     }
     for (const auto& [key, value] : rhs_data) {
-        if (value != lhs_data[key]) return false;
+        if (value != lhs.get(key.first, key.second)) {
+            std::cout << value << "   vs   " << lhs.get(key.first, key.second) << std::endl;
+            std::cout << key.first << "   --   " << key.second << std::endl;
+            return false;
+        }
     }
 
     return true;
@@ -325,11 +373,18 @@ bool operator!=(const Matrix<lhs_T, lhs_container_T>& lhs, const Matrix<rhs_T, r
     if (lhs.getRows() != rhs.getRows() || lhs.getColumns() != rhs.getColumns() || lhs.getEpsilon() != rhs.getEpsilon()) return true;
     lhs_container_T lhs_data = lhs.getData();
     rhs_container_T rhs_data = rhs.getData();
-    for (size_t i = 0; i <  lhs.getRows(); ++i) {
-        for (size_t j = 0; j < lhs.getColumns(); ++j) {
-            if (lhs_data[std::make_pair(i, j)] != rhs_data[std::make_pair(i, j)]) return true;
-        }
+    // for (size_t i = 0; i <  lhs.getRows(); ++i) {
+    //     for (size_t j = 0; j < lhs.getColumns(); ++j) {
+    //         if (lhs_data[std::make_pair(i, j)] != rhs_data[std::make_pair(i, j)]) return true;
+    //     }
+    // }
+    for (const auto& [key, value] : lhs_data) {
+        if (value != rhs.get(key.first, key.second)) return true;
     }
+    for (const auto& [key, value] : rhs_data) {
+        if (value != lhs.get(key.first, key.second)) return true;
+    }
+
     return false;
 }
 
@@ -338,17 +393,22 @@ Matrix<lhs_T, lhs_container_T> operator+(const Matrix<lhs_T, lhs_container_T>& l
     if (lhs.getRows() != rhs.getRows() || lhs.getColumns() != rhs.getColumns()) {
         throw MatrixSizeMissmatch(lhs.getRows(), lhs.getColumns(), rhs.getRows(), rhs.getColumns());
     }
-    double eps = lhs.getEpsilon();
-    size_t rows = lhs.getRows();
-    size_t columns = lhs.getColumns();
-    lhs_container_T lhs_data = lhs.getData();
+    // double eps = lhs.getEpsilon();
+    // size_t rows = lhs.getRows();
+    // size_t columns = lhs.getColumns();
+    // lhs_container_T lhs_data = lhs.getData();
     rhs_container_T rhs_data = rhs.getData();
-    Matrix<lhs_T, lhs_container_T> result(rows, columns, eps);
-    for (size_t i = 0; i < lhs.getRows(); ++i) {
-        for (size_t j = 0; j < lhs.getColumns(); ++j) {
-            lhs_T sum = lhs_data[std::make_pair(i, j)] + rhs_data[std::make_pair(i, j)]; // работаем с копией, так что можем засорять нулями
-            result.set(i, j, sum);
-        }
+    // Matrix<lhs_T, lhs_container_T> result(rows, columns, eps);
+    Matrix<lhs_T, lhs_container_T> result = lhs;
+    // for (size_t i = 0; i < lhs.getRows(); ++i) {
+    //     for (size_t j = 0; j < lhs.getColumns(); ++j) {
+    //         lhs_T sum = lhs_data[std::make_pair(i, j)] + rhs_data[std::make_pair(i, j)]; // работаем с копией, так что можем засорять нулями
+    //         result.set(i, j, sum);
+    //     }
+    // }
+    for (const auto& [key, value] : rhs_data) {
+        lhs_T sub = lhs.get(key.first, key.second) + value;
+        result.set(key.first, key.second, sub);
     }
     return result;
 }
@@ -360,15 +420,20 @@ Matrix<lhs_T, lhs_container_T> operator-(const Matrix<lhs_T, lhs_container_T>& l
     }
     double eps = lhs.getEpsilon();
     size_t rows = lhs.getRows();
-size_t columns = lhs.getColumns();
-    lhs_container_T lhs_data = lhs.getData();
+    // size_t columns = lhs.getColumns();
+    // lhs_container_T lhs_data = lhs.getData();
     rhs_container_T rhs_data = rhs.getData();
-    Matrix<lhs_T, lhs_container_T> result(rows, columns, eps);
-    for (size_t i = 0; i <  lhs.getRows(); ++i) {
-        for (size_t j = 0; j < lhs.getColumns(); ++j) {
-            lhs_T sub = lhs_data[std::make_pair(i, j)] - rhs_data[std::make_pair(i, j)]; // работаем с копией, так что можем засорять нулями
-            result.set(i, j, sub);
-        }
+    // Matrix<lhs_T, lhs_container_T> result(rows, columns, eps);
+    // for (size_t i = 0; i <  lhs.getRows(); ++i) {
+    //     for (size_t j = 0; j < lhs.getColumns(); ++j) {
+    //         lhs_T sub = lhs_data[std::make_pair(i, j)] - rhs_data[std::make_pair(i, j)]; // работаем с копией, так что можем засорять нулями
+    //         result.set(i, j, sub);
+    //     }
+    // }
+    Matrix<lhs_T, lhs_container_T> result = lhs;
+    for (const auto& [key, value] : rhs_data) {
+        lhs_T sub = lhs.get(key.first, key.second) - value;
+        result.set(key.first, key.second, sub);
     }
     return result;
 }
@@ -380,11 +445,9 @@ Matrix<lhs_T, lhs_container_T> operator+(const Matrix<lhs_T, lhs_container_T>& l
     size_t columns = lhs.getColumns();
     lhs_container_T lhs_data = lhs.getData();
     Matrix<lhs_T, lhs_container_T> result(rows, columns, eps);
-    for (size_t i = 0; i <  lhs.getRows(); ++i) {
-        for (size_t j = 0; j < lhs.getColumns(); ++j) {
-            lhs_T sum = lhs_data[std::make_pair(i, j)] + rhs; // работаем с копией, так что можем засорять нулями
-            result.set(i, j, sum);
-        }
+    for (const auto& [key, value] : lhs_data) {
+        lhs_T sum = value + rhs;
+        result.set(key.first, key.second, sum);
     }
     return result;
 }
@@ -396,11 +459,9 @@ Matrix<lhs_T, lhs_container_T> operator-(const Matrix<lhs_T, lhs_container_T>& l
     size_t columns = lhs.getColumns();
     lhs_container_T lhs_data = lhs.getData();
     Matrix<lhs_T, lhs_container_T> result(rows, columns, eps);
-    for (size_t i = 0; i <  lhs.getRows(); ++i) {
-        for (size_t j = 0; j < lhs.getColumns(); ++j) {
-            lhs_T sum = lhs_data[std::make_pair(i, j)] - rhs; // работаем с копией, так что можем засорять нулями
-            result.set(i, j, sum);
-        }
+    for (const auto& [key, value] : lhs_data) {
+        lhs_T sum = value - rhs;
+        result.set(key.first, key.second, sum);
     }
     return result;
 }
@@ -412,11 +473,9 @@ Matrix<lhs_T, lhs_container_T> operator*(const Matrix<lhs_T, lhs_container_T>& l
     size_t columns = lhs.getColumns();
     lhs_container_T lhs_data = lhs.getData();
     Matrix<lhs_T, lhs_container_T> result(rows, columns, eps);
-    for (size_t i = 0; i <  lhs.getRows(); ++i) {
-        for (size_t j = 0; j < lhs.getColumns(); ++j) {
-            lhs_T sum = lhs_data[std::make_pair(i, j)] * rhs; // работаем с копией, так что можем засорять нулями
-            result.set(i, j, sum);
-        }
+    for (const auto& [key, value] : lhs_data) {
+        lhs_T sum = value * rhs;
+        result.set(key.first, key.second, sum);
     }
     return result;
 }
@@ -428,11 +487,15 @@ Matrix<lhs_T, lhs_container_T> operator/(const Matrix<lhs_T, lhs_container_T>& l
     size_t columns = lhs.getColumns();
     lhs_container_T lhs_data = lhs.getData();
     Matrix<lhs_T, lhs_container_T> result(rows, columns, eps);
-    for (size_t i = 0; i <  lhs.getRows(); ++i) {
-        for (size_t j = 0; j < lhs.getColumns(); ++j) {
-            lhs_T sum = lhs_data[std::make_pair(i, j)] / rhs; // работаем с копией, так что можем засорять нулями
-            result.set(i, j, sum);
-        }
+    // for (size_t i = 0; i <  lhs.getRows(); ++i) {
+    //     for (size_t j = 0; j < lhs.getColumns(); ++j) {
+    //         lhs_T sum = lhs_data[std::make_pair(i, j)] / rhs; // работаем с копией, так что можем засорять нулями
+    //         result.set(i, j, sum);
+    //     }
+    // }
+    for (const auto& [key, value] : lhs_data) {
+        lhs_T sum = value / rhs;
+        result.set(key.first, key.second, sum);
     }
     return result;
 }
@@ -441,14 +504,12 @@ template<typename lhs_T, typename rhs_T, typename rhs_container_T>
 Matrix<rhs_T, rhs_container_T> operator+(const lhs_T& lhs, const Matrix<rhs_T, rhs_container_T>& rhs) {
     double eps = rhs.getEpsilon();
     size_t rows = rhs.getRows();
-size_t columns = rhs.getColumns();
+    size_t columns = rhs.getColumns();
     rhs_container_T rhs_data = rhs.getData();
     Matrix<rhs_T, rhs_container_T> result(rows, columns, eps);
-    for (size_t i = 0; i <  rhs.getColumns(); ++i) {
-        for (size_t j = 0; j < rhs.getColumns(); ++j) {
-            rhs_T sum = rhs_data[std::make_pair(i, j)] + lhs; // работаем с копией, так что можем засорять нулями
-            result.set(i, j, sum);
-        }
+        for (const auto& [key, value] : rhs_data) {
+        rhs_T sum = lhs + value;
+        result.set(key.first, key.second, sum);
     }
     return result;
 }
@@ -457,14 +518,12 @@ template<typename lhs_T, typename rhs_T, typename rhs_container_T>
 Matrix<rhs_T, rhs_container_T> operator-(const lhs_T& lhs, const Matrix<rhs_T, rhs_container_T>& rhs) {
     double eps = rhs.getEpsilon();
     size_t rows = rhs.getRows();
-size_t columns = rhs.getColumns();
+    size_t columns = rhs.getColumns();
     rhs_container_T rhs_data = rhs.getData();
     Matrix<rhs_T, rhs_container_T> result(rows, columns, eps);
-    for (size_t i = 0; i <  rhs.getColumns(); ++i) {
-        for (size_t j = 0; j < rhs.getColumns(); ++j) {
-            rhs_T sum = static_cast<rhs_T>(lhs) - rhs_data[std::make_pair(i, j)]; // работаем с копией, так что можем засорять нулями
-            result.set(i, j, sum);
-        }
+        for (const auto& [key, value] : rhs_data) {
+        rhs_T sum = lhs - value;
+        result.set(key.first, key.second, sum);
     }
     return result;
 }
@@ -473,14 +532,12 @@ template<typename lhs_T, typename rhs_T, typename rhs_container_T>
 Matrix<rhs_T, rhs_container_T> operator*(const lhs_T& lhs, const Matrix<rhs_T, rhs_container_T>& rhs) {
     double eps = rhs.getEpsilon();
     size_t rows = rhs.getRows();
-size_t columns = rhs.getColumns();
+    size_t columns = rhs.getColumns();
     rhs_container_T rhs_data = rhs.getData();
     Matrix<rhs_T, rhs_container_T> result(rows, columns, eps);
-    for (size_t i = 0; i <  rhs.getColumns(); ++i) {
-        for (size_t j = 0; j < rhs.getColumns(); ++j) {
-            rhs_T sum = rhs_data[std::make_pair(i, j)] * lhs; // работаем с копией, так что можем засорять нулями
-            result.set(i, j, sum);
-        }
+        for (const auto& [key, value] : rhs_data) {
+        rhs_T sum = lhs * value;
+        result.set(key.first, key.second, sum);
     }
     return result;
 }
@@ -489,14 +546,18 @@ template<typename lhs_T, typename rhs_T, typename rhs_container_T>
 Matrix<rhs_T, rhs_container_T> operator/(const lhs_T& lhs, const Matrix<rhs_T, rhs_container_T>& rhs) {
     double eps = rhs.getEpsilon();
     size_t rows = rhs.getRows();
-size_t columns = rhs.getColumns();
+    size_t columns = rhs.getColumns();
     rhs_container_T rhs_data = rhs.getData();
     Matrix<rhs_T, rhs_container_T> result(rows, columns, eps);
-    for (size_t i = 0; i <  rhs.getColumns(); ++i) {
-        for (size_t j = 0; j < rhs.getColumns(); ++j) {
-            rhs_T sum = static_cast<rhs_T>(lhs) / rhs_data[std::make_pair(i, j)]; // работаем с копией, так что можем засорять нулями
-            result.set(i, j, sum);
-        }
+    // for (size_t i = 0; i <  rhs.getColumns(); ++i) {
+    //     for (size_t j = 0; j < rhs.getColumns(); ++j) {
+    //         rhs_T sum = static_cast<rhs_T>(lhs) / rhs_data[std::make_pair(i, j)]; // работаем с копией, так что можем засорять нулями
+    //         result.set(i, j, sum);
+    //     }
+    // }
+    for (const auto& [key, value] : rhs_data) {
+        rhs_T sum = lhs / value;
+        result.set(key.first, key.second, sum);
     }
     return result;
 }
@@ -510,11 +571,9 @@ Matrix<Rational_number<rhs_T>> operator+(const Matrix<lhs_T, lhs_container_T>& l
     size_t columns = lhs.getColumns();
     lhs_container_T lhs_data = lhs.getData();
     Matrix<Rational_number<rhs_T>> result(rows, columns, eps);
-    for (size_t i = 0; i <  lhs.getRows(); ++i) {
-        for (size_t j = 0; j < lhs.getColumns(); ++j) {
-            Rational_number<rhs_T> sum = lhs_data[std::make_pair(i, j)] + rhs; // работаем с копией, так что можем засорять нулями
-            result.set(i, j, sum);
-        }
+    for (const auto& [key, value] : lhs_data) {
+        Rational_number<rhs_T> sum = value + rhs;
+        result.set(key.first, key.second, sum);
     }
     return result;
 
@@ -527,11 +586,9 @@ Matrix<Rational_number<rhs_T>> operator-(const Matrix<lhs_T, lhs_container_T>& l
     size_t columns = lhs.getColumns();
     lhs_container_T lhs_data = lhs.getData();
     Matrix<Rational_number<rhs_T>> result(rows, columns, eps);
-    for (size_t i = 0; i <  lhs.getRows(); ++i) {
-        for (size_t j = 0; j < lhs.getColumns(); ++j) {
-            Rational_number<rhs_T> sum = lhs_data[std::make_pair(i, j)] - rhs; // работаем с копией, так что можем засорять нулями
-            result.set(i, j, sum);
-        }
+    for (const auto& [key, value] : lhs_data) {
+        Rational_number<rhs_T> sum = value - rhs;
+        result.set(key.first, key.second, sum);
     }
     return result;
 }
@@ -543,11 +600,15 @@ Matrix<Rational_number<rhs_T>> operator*(const Matrix<lhs_T, lhs_container_T>& l
     size_t columns = lhs.getColumns();
     lhs_container_T lhs_data = lhs.getData();
     Matrix<Rational_number<rhs_T>> result(rows, columns, eps);
-    for (size_t i = 0; i <  lhs.getRows(); ++i) {
-        for (size_t j = 0; j < lhs.getColumns(); ++j) {
-            Rational_number<rhs_T> sum = lhs_data[std::make_pair(i, j)] * rhs; // работаем с копией, так что можем засорять нулями
-            result.set(i, j, sum);
-        }
+    // for (size_t i = 0; i <  lhs.getRows(); ++i) {
+    //     for (size_t j = 0; j < lhs.getColumns(); ++j) {
+    //         Rational_number<rhs_T> sum = lhs_data[std::make_pair(i, j)] * rhs; // работаем с копией, так что можем засорять нулями
+    //         result.set(i, j, sum);
+    //     }
+    // }
+    for (const auto& [key, value] : lhs_data) {
+        Rational_number<rhs_T> sum = value * rhs;
+        result.set(key.first, key.second, sum);
     }
     return result;
 }
@@ -559,11 +620,15 @@ Matrix<Rational_number<rhs_T>> operator/(const Matrix<lhs_T, lhs_container_T>& l
     size_t columns = lhs.getColumns();
     lhs_container_T lhs_data = lhs.getData();
     Matrix<Rational_number<rhs_T>> result(rows, columns, eps);
-    for (size_t i = 0; i <  lhs.getRows(); ++i) {
-        for (size_t j = 0; j < lhs.getColumns(); ++j) {
-            Rational_number<rhs_T> sum = lhs_data[std::make_pair(i, j)] / rhs; // работаем с копией, так что можем засорять нулями
-            result.set(i, j, sum);
-        }
+    // for (size_t i = 0; i <  lhs.getRows(); ++i) {
+    //     for (size_t j = 0; j < lhs.getColumns(); ++j) {
+    //         Rational_number<rhs_T> sum = lhs_data[std::make_pair(i, j)] / rhs; // работаем с копией, так что можем засорять нулями
+    //         result.set(i, j, sum);
+    //     }
+    // }
+    for (const auto& [key, value] : lhs_data) {
+        Rational_number<rhs_T> sum = value / rhs;
+        result.set(key.first, key.second, sum);
     }
     return result;
 }
@@ -575,11 +640,9 @@ Matrix<Rational_number<lhs_T>> operator+(const Rational_number<lhs_T>& lhs, cons
 size_t columns = rhs.getColumns();
     rhs_container_T rhs_data = rhs.getData();
     Matrix<Rational_number<lhs_T>> result(rows, columns, eps);
-    for (size_t i = 0; i <  rhs.getColumns(); ++i) {
-        for (size_t j = 0; j < rhs.getColumns(); ++j) {
-            Rational_number<lhs_T> sum = rhs_data[std::make_pair(i, j)] + lhs; // работаем с копией, так что можем засорять нулями
-            result.set(i, j, sum);
-        }
+    for (const auto& [key, value] : rhs_data) {
+        Rational_number<lhs_T> sum = lhs + value;
+        result.set(key.first, key.second, sum);
     }
     return result;
 }
@@ -591,11 +654,9 @@ Matrix<Rational_number<lhs_T>> operator-(const Rational_number<lhs_T>& lhs, cons
     size_t columns = rhs.getColumns();
     rhs_container_T rhs_data = rhs.getData();
     Matrix<Rational_number<lhs_T>> result(rows, columns, eps);
-    for (size_t i = 0; i <  rhs.getColumns(); ++i) {
-        for (size_t j = 0; j < rhs.getColumns(); ++j) {
-            Rational_number<lhs_T> sum = lhs - rhs_data[std::make_pair(i, j)]; // работаем с копией, так что можем засорять нулями
-            result.set(i, j, sum);
-        }
+    for (const auto& [key, value] : rhs_data) {
+        Rational_number<lhs_T> sum = lhs - value;
+        result.set(key.first, key.second, sum);
     }
     return result;
 }
@@ -607,11 +668,9 @@ Matrix<Rational_number<lhs_T>> operator*(const Rational_number<lhs_T>& lhs, cons
     size_t columns = rhs.getColumns();
     rhs_container_T rhs_data = rhs.getData();
     Matrix<Rational_number<lhs_T>> result(rows, columns, eps);
-    for (size_t i = 0; i <  rhs.getColumns(); ++i) {
-        for (size_t j = 0; j < rhs.getColumns(); ++j) {
-            Rational_number<lhs_T> sum = rhs_data[std::make_pair(i, j)] * lhs; // работаем с копией, так что можем засорять нулями
-            result.set(i, j, sum);
-        }
+    for (const auto& [key, value] : rhs_data) {
+        Rational_number<lhs_T> sum = lhs * value;
+        result.set(key.first, key.second, sum);
     }
     return result;
 }
@@ -623,12 +682,17 @@ Matrix<Rational_number<lhs_T>> operator/(const Rational_number<lhs_T>& lhs, cons
     size_t columns = rhs.getColumns();
     rhs_container_T rhs_data = rhs.getData();
     Matrix<Rational_number<lhs_T>> result(rows, columns, eps);
-    for (size_t i = 0; i <  rhs.getColumns(); ++i) {
-        for (size_t j = 0; j < rhs.getColumns(); ++j) {
-            Rational_number<lhs_T> sum = lhs / rhs_data[std::make_pair(i, j)]; // работаем с копией, так что можем засорять нулями
-            result.set(i, j, sum);
-        }
+    // for (size_t i = 0; i <  rhs.getColumns(); ++i) {
+    //     for (size_t j = 0; j < rhs.getColumns(); ++j) {
+    //         Rational_number<lhs_T> sum = lhs / rhs_data[std::make_pair(i, j)]; // работаем с копией, так что можем засорять нулями
+    //         result.set(i, j, sum);
+    //     }
+    // }
+    for (const auto& [key, value] : rhs_data) {
+        Rational_number<lhs_T> sum = lhs / value;
+        result.set(key.first, key.second, sum);
     }
+    
     return result;
 }
 
@@ -639,12 +703,17 @@ Matrix<Complex_number<rhs_real, rhs_imag>> operator+(const Matrix<lhs_T, lhs_con
     size_t columns = lhs.getColumns();
     lhs_container_T lhs_data = lhs.getData();
     Matrix<Complex_number<rhs_real, rhs_imag>> result(rows, columns, eps);
-    for (size_t i = 0; i <  lhs.getRows(); ++i) {
-        for (size_t j = 0; j < lhs.getColumns(); ++j) {
-            Complex_number<rhs_real, rhs_imag> sum = lhs_data[std::make_pair(i, j)] + rhs; // работаем с копией, так что можем засорять нулями
-            result.set(i, j, sum);
-        }
+    // for (size_t i = 0; i <  lhs.getRows(); ++i) {
+    //     for (size_t j = 0; j < lhs.getColumns(); ++j) {
+    //         Complex_number<rhs_real, rhs_imag> sum = lhs_data[std::make_pair(i, j)] + rhs; // работаем с копией, так что можем засорять нулями
+    //         result.set(i, j, sum);
+    //     }
+    // }
+    for (const auto& [key, value] : lhs_data) {
+        Complex_number<rhs_real, rhs_imag> sum = lhs.get(key.first, key.second) + rhs;
+        result.set(key.first, key.second, sum);
     }
+    
     return result;
 }
 
@@ -655,11 +724,15 @@ Matrix<Complex_number<rhs_real, rhs_imag>> operator-(const Matrix<lhs_T, lhs_con
     size_t columns = lhs.getColumns();
     lhs_container_T lhs_data = lhs.getData();
     Matrix<Complex_number<rhs_real, rhs_imag>> result(rows, columns, eps);
-    for (size_t i = 0; i <  lhs.getRows(); ++i) {
-        for (size_t j = 0; j < lhs.getColumns(); ++j) {
-            Complex_number<rhs_real, rhs_imag> sum = lhs_data[std::make_pair(i, j)] - rhs; // работаем с копией, так что можем засорять нулями
-            result.set(i, j, sum);
-        }
+    // for (size_t i = 0; i <  lhs.getRows(); ++i) {
+    //     for (size_t j = 0; j < lhs.getColumns(); ++j) {
+    //         Complex_number<rhs_real, rhs_imag> sum = lhs_data[std::make_pair(i, j)] - rhs; // работаем с копией, так что можем засорять нулями
+    //         result.set(i, j, sum);
+    //     }
+    // }
+    for (const auto& [key, value] : lhs_data) {
+        Complex_number<rhs_real, rhs_imag> sum = lhs.get(key.first, key.second) - rhs;
+        result.set(key.first, key.second, sum);
     }
     return result;
 }
@@ -671,11 +744,15 @@ Matrix<Complex_number<rhs_real, rhs_imag>> operator*(const Matrix<lhs_T, lhs_con
     size_t columns = lhs.getColumns();
     lhs_container_T lhs_data = lhs.getData();
     Matrix<Complex_number<rhs_real, rhs_imag>> result(rows, columns, eps);
-    for (size_t i = 0; i <  lhs.getRows(); ++i) {
-        for (size_t j = 0; j < lhs.getColumns(); ++j) {
-            Complex_number<rhs_real, rhs_imag> sum = lhs_data[std::make_pair(i, j)] * rhs; // работаем с копией, так что можем засорять нулями
-            result.set(i, j, sum);
-        }
+    // for (size_t i = 0; i <  lhs.getRows(); ++i) {
+    //     for (size_t j = 0; j < lhs.getColumns(); ++j) {
+    //         Complex_number<rhs_real, rhs_imag> sum = lhs_data[std::make_pair(i, j)] * rhs; // работаем с копией, так что можем засорять нулями
+    //         result.set(i, j, sum);
+    //     }
+    // }
+    for (const auto& [key, value] : lhs_data) {
+        Complex_number<rhs_real, rhs_imag> sum = lhs.get(key.first, key.second) * rhs;
+        result.set(key.first, key.second, sum);
     }
     return result;
 }
@@ -687,11 +764,15 @@ Matrix<Complex_number<rhs_real, rhs_imag>> operator/(const Matrix<lhs_T, lhs_con
     size_t columns = lhs.getColumns();
     lhs_container_T lhs_data = lhs.getData();
     Matrix<Complex_number<rhs_real, rhs_imag>> result(rows, columns, eps);
-    for (size_t i = 0; i <  lhs.getRows(); ++i) {
-        for (size_t j = 0; j < lhs.getColumns(); ++j) {
-            Complex_number<rhs_real, rhs_imag> sum = lhs_data[std::make_pair(i, j)] / rhs; // работаем с копией, так что можем засорять нулями
-            result.set(i, j, sum);
-        }
+    // for (size_t i = 0; i <  lhs.getRows(); ++i) {
+    //     for (size_t j = 0; j < lhs.getColumns(); ++j) {
+    //         Complex_number<rhs_real, rhs_imag> sum = lhs_data[std::make_pair(i, j)] / rhs; // работаем с копией, так что можем засорять нулями
+    //         result.set(i, j, sum);
+    //     }
+    // }
+    for (const auto& [key, value] : lhs_data) {
+        Complex_number<rhs_real, rhs_imag> sum = value / rhs;
+        result.set(key.first, key.second, sum);
     }
     return result;
 }
@@ -706,11 +787,9 @@ Matrix<Complex_number<lhs_real, lhs_imag>> operator+(const Complex_number<lhs_re
     size_t columns = rhs.getColumns();
     rhs_container_T rhs_data = rhs.getData();
     Matrix<Complex_number<lhs_real, lhs_imag>> result(rows, columns, eps);
-    for (size_t i = 0; i <  rhs.getColumns(); ++i) {
-        for (size_t j = 0; j < rhs.getColumns(); ++j) {
-            Complex_number<lhs_real, lhs_imag> sum = lhs + rhs_data[std::make_pair(i, j)]; // работаем с копией, так что можем засорять нулями
-            result.set(i, j, sum);
-        }
+    for (const auto& [key, value] : rhs_data) {
+        Complex_number<lhs_real, lhs_imag> sum = lhs + value;
+        result.set(key.first, key.second, sum);
     }
     return result;
 }
@@ -719,14 +798,12 @@ template<typename lhs_real, typename lhs_imag, typename rhs_T, typename rhs_cont
 Matrix<Complex_number<lhs_real, lhs_imag>> operator-(const Complex_number<lhs_real, lhs_imag>& lhs, const Matrix<rhs_T, rhs_container_T>& rhs) {
     double eps = rhs.getEpsilon();
     size_t rows = rhs.getRows();
-size_t columns = rhs.getColumns();
+    size_t columns = rhs.getColumns();
     rhs_container_T rhs_data = rhs.getData();
     Matrix<Complex_number<lhs_real, lhs_imag>> result(rows, columns, eps);
-    for (size_t i = 0; i <  rhs.getColumns(); ++i) {
-        for (size_t j = 0; j < rhs.getColumns(); ++j) {
-            Complex_number<lhs_real, lhs_imag> sum = lhs - rhs_data[std::make_pair(i, j)]; // работаем с копией, так что можем засорять нулями
-            result.set(i, j, sum);
-        }
+    for (const auto& [key, value] : rhs_data) {
+        Complex_number<lhs_real, lhs_imag> sum = lhs - value;
+        result.set(key.first, key.second, sum);
     }
     return result;
 }
@@ -738,11 +815,9 @@ Matrix<Complex_number<lhs_real, lhs_imag>> operator*(const Complex_number<lhs_re
     size_t columns = rhs.getColumns();
     rhs_container_T rhs_data = rhs.getData();
     Matrix<Complex_number<lhs_real, lhs_imag>> result(rows, columns, eps);
-    for (size_t i = 0; i <  rhs.getColumns(); ++i) {
-        for (size_t j = 0; j < rhs.getColumns(); ++j) {
-            Complex_number<lhs_real, lhs_imag> sum = lhs * rhs_data[std::make_pair(i, j)]; // работаем с копией, так что можем засорять нулями
-            result.set(i, j, sum);
-        }
+    for (const auto& [key, value] : rhs_data) {
+        Complex_number<lhs_real, lhs_imag> sum = lhs * value;
+        result.set(key.first, key.second, sum);
     }
     return result;
 }
@@ -755,11 +830,15 @@ Matrix<Complex_number<lhs_real, lhs_imag>> operator/(const Complex_number<lhs_re
     size_t columns = rhs.getColumns();
     rhs_container_T rhs_data = rhs.getData();
     Matrix<Complex_number<lhs_real, lhs_imag>> result(rows, columns, eps);
-    for (size_t i = 0; i <  rhs.getColumns(); ++i) {
-        for (size_t j = 0; j < rhs.getColumns(); ++j) {
-            Complex_number<lhs_real, lhs_imag> sum = lhs / rhs_data[std::make_pair(i, j)]; // работаем с копией, так что можем засорять нулями
-            result.set(i, j, sum);
-        }
+    // for (size_t i = 0; i <  rhs.getColumns(); ++i) {
+    //     for (size_t j = 0; j < rhs.getColumns(); ++j) {
+    //         Complex_number<lhs_real, lhs_imag> sum = lhs / rhs_data[std::make_pair(i, j)]; // работаем с копией, так что можем засорять нулями
+    //         result.set(i, j, sum);
+    //     }
+    // }
+    for (const auto& [key, value] : rhs_data) {
+        Complex_number<lhs_real, lhs_imag> sum = lhs / value;
+        result.set(key.first, key.second, sum);
     }
     return result;
 }
@@ -777,11 +856,15 @@ Matrix<Complex_number<Rational_number<rhs_real>, Rational_number<rhs_imag>>> ope
     size_t columns = lhs.getColumns();
     lhs_container_T lhs_data = lhs.getData();
     Matrix<Complex_number<Rational_number<rhs_real>, Rational_number<rhs_imag>>> result(rows, columns, eps);
-    for (size_t i = 0; i <  lhs.getRows(); ++i) {
-        for (size_t j = 0; j < lhs.getColumns(); ++j) {
-            Complex_number<Rational_number<rhs_real>, Rational_number<rhs_imag>> sum = rhs + lhs_data[std::make_pair(i, j)]; // работаем с копией, так что можем засорять нулями
-            result.set(i, j, sum);
-        }
+    // for (size_t i = 0; i <  lhs.getRows(); ++i) {
+    //     for (size_t j = 0; j < lhs.getColumns(); ++j) {
+    //         Complex_number<Rational_number<rhs_real>, Rational_number<rhs_imag>> sum = rhs + lhs_data[std::make_pair(i, j)]; // работаем с копией, так что можем засорять нулями
+    //         result.set(i, j, sum);
+    //     }
+    // }
+    for (const auto& [key, value] : lhs_data) {
+        // Complex_number<rhs_real, rhs_imag> sum = value + rhs;
+        result.set(key.first, key.second, value + rhs);
     }
     return result;
 }
@@ -793,11 +876,16 @@ Matrix<Complex_number<Rational_number<rhs_real>, Rational_number<rhs_imag>>> ope
     size_t columns = lhs.getColumns();
     lhs_container_T lhs_data = lhs.getData();
     Matrix<Complex_number<Rational_number<rhs_real>, Rational_number<rhs_imag>>> result(rows, columns, eps);
-    for (size_t i = 0; i <  lhs.getRows(); ++i) {
-        for (size_t j = 0; j < lhs.getColumns(); ++j) {
-            Complex_number<Rational_number<rhs_real>, Rational_number<rhs_imag>> sum = Complex_number<Rational_number<rhs_real>, Rational_number<rhs_imag>>(lhs_data[std::make_pair(i, j)]) - rhs; // работаем с копией, так что можем засорять нулями
-            result.set(i, j, sum);
-        }
+    // for (size_t i = 0; i <  lhs.getRows(); ++i) {
+    //     for (size_t j = 0; j < lhs.getColumns(); ++j) {
+    //         Complex_number<Rational_number<rhs_real>, Rational_number<rhs_imag>> sum = Complex_number<Rational_number<rhs_real>, Rational_number<rhs_imag>>(lhs_data[std::make_pair(i, j)]) - rhs; // работаем с копией, так что можем засорять нулями
+    //         result.set(i, j, sum);
+    //     }
+    // }
+    for (const auto& [key, value] : lhs_data) {
+        // Complex_number<rhs_real, rhs_imag> sum = value - rhs;
+        // result.set(key.first, key.second, sum);
+        result.set(key.first, key.second, value - rhs);
     }
     return result;
 }
@@ -809,11 +897,10 @@ Matrix<Complex_number<Rational_number<rhs_real>, Rational_number<rhs_imag>>> ope
     size_t columns = lhs.getColumns();
     lhs_container_T lhs_data = lhs.getData();
     Matrix<Complex_number<Rational_number<rhs_real>, Rational_number<rhs_imag>>> result(rows, columns, eps);
-    for (size_t i = 0; i <  lhs.getRows(); ++i) {
-        for (size_t j = 0; j < lhs.getColumns(); ++j) {
-            Complex_number<Rational_number<rhs_real>, Rational_number<rhs_imag>> sum = Complex_number<Rational_number<rhs_real>, Rational_number<rhs_imag>>(lhs_data[std::make_pair(i, j)]) * rhs; // работаем с копией, так что можем засорять нулями
-            result.set(i, j, sum);
-        }
+    for (const auto& [key, value] : lhs_data) {
+        // Complex_number<rhs_real, rhs_imag> sum = value * rhs;
+        // result.set(key.first, key.second, sum);
+        result.set(key.first, key.second, value * rhs);
     }
     return result;
 }
@@ -825,11 +912,10 @@ Matrix<Complex_number<Rational_number<rhs_real>, Rational_number<rhs_imag>>> ope
     size_t columns = lhs.getColumns();
     lhs_container_T lhs_data = lhs.getData();
     Matrix<Complex_number<Rational_number<rhs_real>, Rational_number<rhs_imag>>> result(rows, columns, eps);
-    for (size_t i = 0; i <  lhs.getRows(); ++i) {
-        for (size_t j = 0; j < lhs.getColumns(); ++j) {
-            Complex_number<Rational_number<rhs_real>, Rational_number<rhs_imag>> sum = Complex_number<Rational_number<rhs_real>, Rational_number<rhs_imag>>(lhs_data[std::make_pair(i, j)]) / rhs; // работаем с копией, так что можем засорять нулями
-            result.set(i, j, sum);
-        }
+    for (const auto& [key, value] : lhs_data) {
+        // Complex_number<rhs_real, rhs_imag> sum = value / rhs;
+        // result.set(key.first, key.second, sum);
+        result.set(key.first, key.second, value / rhs);
     }
     return result;
 }
@@ -965,8 +1051,56 @@ std::ostream& operator<<(std::ostream& os, const Matrix<T, container_T>& v) {
 }
 
 template <typename T, typename container_T>
-const T Matrix<T, container_T>::zero = 0;
+const T Matrix<T, container_T>::zero = T(); // если оставить zero = 0 то проблема с complex<rational>. Оно не знает какой конструктор выбрать
+// от Rational или от string, потому что ноль приводится и к тому и к тому
+// если сделать конструктор от строки експлисит, то
+// Matrix.hpp:989:40: error: conversion from ‘int’ to non-scalar type ‘const Complex_number<Rational_number<int>, Rational_number<int> >’ requested
 
 
 
+template<typename lhs_T, typename lhs_container_T, typename rhs_T, typename rhs_container_T>
+Matrix<lhs_T, lhs_container_T> operator*(const Matrix<lhs_T, lhs_container_T>& lhs, const Matrix<rhs_T, rhs_container_T>& rhs) {
+    if (lhs.getColumns() != rhs.getRows()) {
+        throw MatrixSizeMissmatch(lhs.getRows(), lhs.getColumns(), rhs.getRows(), rhs.getColumns());
+    }
+    lhs_container_T lhs_data = lhs.getData();
+    rhs_container_T rhs_data = rhs.getData();
+    Matrix<lhs_T, lhs_container_T> result(lhs.getRows(), rhs.getColumns(), lhs.getEpsilon());
+    double epsilon = lhs.getEpsilon();
 
+    for (size_t i = 0; i < lhs.getRows(); ++i) {
+        for (size_t j = 0; j < rhs.getColumns(); ++j) {
+            lhs_T sum = 0;
+            for (size_t k = 0; k < lhs.getColumns(); ++k) {
+                sum += lhs_data[{i, k}] * rhs_data[{k, j}];
+            }
+            result.set(i, j, sum);
+        }
+    }
+    return result;
+}
+
+template<typename lhs_T, typename lhs_container_T, typename rhs_T, typename rhs_container_T>
+Matrix<lhs_T, lhs_container_T> fast_or_no_mul(const Matrix<lhs_T, lhs_container_T>& lhs, const Matrix<rhs_T, rhs_container_T>& rhs) {
+    if (lhs.getColumns() != rhs.getRows()) {
+        throw MatrixSizeMissmatch(lhs.getRows(), lhs.getColumns(), rhs.getRows(), rhs.getColumns());
+    }
+    lhs_container_T lhs_data = lhs.getData();
+    rhs_container_T rhs_data = rhs.getData();
+    Matrix<lhs_T, lhs_container_T> result(lhs.getRows(), rhs.getColumns(), lhs.getEpsilon());
+    double epsilon = lhs.getEpsilon();
+
+    for (const auto& [key1, value1] : lhs_data) {
+        // https://habr.com/ru/articles/343622/
+        // тут показана распаковка пары таким образом. Причем фишка 17 стандарта, так что все валидно. 
+        // Можно key.first и key.second, но зачем, если так красивее
+        const auto& [row1, col1] = key1;
+        for (const auto& [key2, value2] : rhs_data) {
+            const auto& [row2, col2] = key2;
+            if (col1 == row2) {
+                result.set(row1, col2, result(row1, col2) + value1 * value2);
+            }
+        }
+    }
+    return result;
+}

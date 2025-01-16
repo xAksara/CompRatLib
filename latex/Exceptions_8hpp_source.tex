@@ -1,0 +1,177 @@
+\doxysection{Exceptions.\+hpp}
+\hypertarget{Exceptions_8hpp_source}{}\label{Exceptions_8hpp_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <sstream>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classMyBaseException}{MyBaseException}}\ \{}
+\DoxyCodeLine{00010\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00011\ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::string}}\ getMessage()\ =\ 0;}
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{classMyBaseException}{\string~MyBaseException}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00013\ \};}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{comment}{//\ Потому\ что\ не\ работает\ макрос,\ список\ аргументов\ шаблона\ путает\ с\ аргументами\ макроса(вроде)\ }}
+\DoxyCodeLine{00016\ \textcolor{comment}{//\ (в\ скобки\ оборачивать\ второй\ аргумент\ пробовал\ -\/\ не\ работает)}}
+\DoxyCodeLine{00017\ \textcolor{comment}{//\ \ \ \ ASSERT\_THROW(Rational\_number<int>("{}5/0"{}),\ DivisionByZeroException<std::string,\ std::string>);}}
+\DoxyCodeLine{00018\ \textcolor{comment}{//\ \ \ \ \ \ GoogleTests.hpp:22:96:\ error:\ macro\ "{}ASSERT\_THROW"{}\ passed\ 3\ arguments,\ but\ takes\ just\ 2}}
+\DoxyCodeLine{00019\ \textcolor{comment}{//\ \ \ \ \ \ 22\ |\ \ \ \ \ ASSERT\_THROW(Rational\_number<int>("{}5/0"{}),\ DivisionByZeroException<std::string,\ std::string>)}}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classZeroDivision}{ZeroDivision}}\ \{\ \};}
+\DoxyCodeLine{00022\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classInvalidArgument}{InvalidArgument}}\ \{\ \};}
+\DoxyCodeLine{00023\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classOverflow}{Overflow}}\ \{\ \};}
+\DoxyCodeLine{00024\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classNegativeEpsilon}{NegativeEpsilon}}\ \{\ \};}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T1,\ \textcolor{keyword}{typename}\ T2>}
+\DoxyCodeLine{00027\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classDivisionByZeroException}{DivisionByZeroException}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classZeroDivision}{ZeroDivision}},\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classMyBaseException}{MyBaseException}}\ \{}
+\DoxyCodeLine{00028\ \ \ \ \ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::string}}\ message;}
+\DoxyCodeLine{00029\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{T1}}\ numerator;}
+\DoxyCodeLine{00030\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{T2}}\ denominator;}
+\DoxyCodeLine{00031\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00032\ \ \ \ \ \mbox{\hyperlink{classDivisionByZeroException}{DivisionByZeroException}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{T1}}\&\ num,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{T2}}\&\ denom)\ :\ numerator(num),\ denominator(denom),\ message(\textcolor{stringliteral}{"{}Division\ by\ zero."{}})\ \{\ \}}
+\DoxyCodeLine{00033\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{T1}}\ getNumerator()\ \{\ \textcolor{keywordflow}{return}\ numerator;\ \}}
+\DoxyCodeLine{00034\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{T1}}\ getDenominator()\ \{\ \textcolor{keywordflow}{return}\ denominator;\ \}}
+\DoxyCodeLine{00035\ \ \ \ \ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::string}}\ getMessage()\textcolor{keyword}{\ override\ }\{\ \textcolor{keywordflow}{return}\ message;\ \}}
+\DoxyCodeLine{00036\ \};}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00039\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classInvalidArgumentException}{InvalidArgumentException}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classInvalidArgument}{InvalidArgument}},\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classMyBaseException}{MyBaseException}}\ \ \{}
+\DoxyCodeLine{00040\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{T}}\ argument;}
+\DoxyCodeLine{00041\ \ \ \ \ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::string}}\ message;}
+\DoxyCodeLine{00042\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00043\ \ \ \ \ \mbox{\hyperlink{classInvalidArgumentException}{InvalidArgumentException}}(\mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::string}}\ \mbox{\hyperlink{classComplex__number}{what}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{T}}\&\ \mbox{\hyperlink{classComplex__number}{arg}})\ \{}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::ostringstream}}\ \mbox{\hyperlink{classComplex__number}{oss}};}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classComplex__number}{oss}}\ <<\ \mbox{\hyperlink{classComplex__number}{what}}\ <<\ \mbox{\hyperlink{classComplex__number}{arg}}\ <<\ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::endl}};}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ message\ =\ \mbox{\hyperlink{classComplex__number}{oss}}.str();}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ argument\ =\ \mbox{\hyperlink{classComplex__number}{arg}};}
+\DoxyCodeLine{00048\ \ \ \ \ \}}
+\DoxyCodeLine{00049\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{T}}\ getArgument()\ \{\ \textcolor{keywordflow}{return}\ argument;\ \}}
+\DoxyCodeLine{00050\ \ \ \ \ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::string}}\ getMessage()\textcolor{keyword}{\ override\ }\{\ \textcolor{keywordflow}{return}\ message;\ \}}
+\DoxyCodeLine{00051\ \};}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ from\_T>}
+\DoxyCodeLine{00054\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classOverflowException}{OverflowException}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classOverflow}{Overflow}},\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classMyBaseException}{MyBaseException}}\ \ \{}
+\DoxyCodeLine{00055\ \ \ \ \ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::string}}\ message;}
+\DoxyCodeLine{00056\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00057\ \ \ \ \ \mbox{\hyperlink{classOverflowException}{OverflowException}}(\mbox{\hyperlink{classComplex__number}{from\_T}}\ \mbox{\hyperlink{classComplex__number}{from}})\ \{}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::ostringstream}}\ \mbox{\hyperlink{classComplex__number}{oss}};}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classComplex__number}{oss}}\ <<\ \textcolor{stringliteral}{"{}Переполнение.\ Значение\ "{}}\ <<\ \mbox{\hyperlink{classComplex__number}{from}}\ <<\ \textcolor{stringliteral}{"{}\ слишком\ велико."{}}\ <<\ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::endl}};}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ message\ =\ \mbox{\hyperlink{classComplex__number}{oss}}.str();}
+\DoxyCodeLine{00061\ \ \ \ \ \}}
+\DoxyCodeLine{00062\ \ \ \ \ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::string}}\ getMessage()\textcolor{keyword}{\ override\ }\{\ \textcolor{keywordflow}{return}\ message;\ \}}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00064\ \};}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classNegativeEpsilonException}{NegativeEpsilonException}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classMyBaseException}{MyBaseException}}\ \ \{}
+\DoxyCodeLine{00067\ \ \ \ \ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::string}}\ message;}
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{keywordtype}{double}\ epsilon;}
+\DoxyCodeLine{00069\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00070\ \ \ \ \ \mbox{\hyperlink{classNegativeEpsilonException}{NegativeEpsilonException}}(\textcolor{keywordtype}{double}\ epsilon)\ :\ epsilon(epsilon)\ \{}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::ostringstream}}\ \mbox{\hyperlink{classComplex__number}{oss}};}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classComplex__number}{oss}}\ <<\ \textcolor{stringliteral}{"{}Эпсилон\ должен\ быть\ больше\ или\ равен\ нулю.\ Передано:\ "{}}\ <<\ epsilon\ <<\ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::endl}};}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ message\ =\ \mbox{\hyperlink{classComplex__number}{oss}}.str();}
+\DoxyCodeLine{00074\ \ \ \ \ \}}
+\DoxyCodeLine{00075\ \ \ \ \ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::string}}\ getMessage()\textcolor{keyword}{\ override\ }\{\ \textcolor{keywordflow}{return}\ message;\ \}}
+\DoxyCodeLine{00076\ \};}
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00078\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classVectorIndexOutOfRangeException}{VectorIndexOutOfRangeException}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classMyBaseException}{MyBaseException}}\ \ \{}
+\DoxyCodeLine{00079\ \ \ \ \ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::string}}\ message;}
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ size1;}
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ max\_size1;}
+\DoxyCodeLine{00082\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00083\ \ \ \ \ \mbox{\hyperlink{classVectorIndexOutOfRangeException}{VectorIndexOutOfRangeException}}(\textcolor{keywordtype}{size\_t}\ size,\ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{classComplex__number}{max\_size}})\ :\ size1(size),\ max\_size1(\mbox{\hyperlink{classComplex__number}{max\_size}})\ \{}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::ostringstream}}\ \mbox{\hyperlink{classComplex__number}{oss}};}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classComplex__number}{oss}}\ <<\ \textcolor{stringliteral}{"{}Ошибка\ в\ индексе\ вектора.\ Передано:\ "{}}\ <<\ size1\ <<\ \textcolor{stringliteral}{"{}.\ Максимальный\ индекс"{}}\ <<\ max\_size1\ <<\ \textcolor{charliteral}{'.'}\ <<\ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::endl}};}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ message\ =\ \mbox{\hyperlink{classComplex__number}{oss}}.str();}
+\DoxyCodeLine{00087\ \ \ \ \ \}}
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ getVectorSize()\ \{\ \textcolor{keywordflow}{return}\ max\_size1;\ \}}
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ getVectorIndex()\ \{\ \textcolor{keywordflow}{return}\ size1;\ \}}
+\DoxyCodeLine{00090\ \ \ \ \ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::string}}\ getMessage()\textcolor{keyword}{\ override\ }\{\ \textcolor{keywordflow}{return}\ message;\ \}}
+\DoxyCodeLine{00091\ \};}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00094\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classMatrixIndexOutOfRangeException}{MatrixIndexOutOfRangeException}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classMyBaseException}{MyBaseException}}\ \ \{}
+\DoxyCodeLine{00095\ \ \ \ \ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::string}}\ message;}
+\DoxyCodeLine{00096\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ size1;}
+\DoxyCodeLine{00097\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ max\_size1;}
+\DoxyCodeLine{00098\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ size2;}
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ max\_size2;}
+\DoxyCodeLine{00100\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00101\ \ \ \ \ \mbox{\hyperlink{classMatrixIndexOutOfRangeException}{MatrixIndexOutOfRangeException}}(\textcolor{keywordtype}{size\_t}\ size1,\ \textcolor{keywordtype}{size\_t}\ size2,\ \textcolor{keywordtype}{size\_t}\ max\_size1,\ \textcolor{keywordtype}{size\_t}\ max\_size2)\ :\ size1(size1),\ max\_size1(max\_size1),\ size2(size2),\ max\_size2(max\_size2)\ \{}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::ostringstream}}\ \mbox{\hyperlink{classComplex__number}{oss}};}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classComplex__number}{oss}}\ <<\ \textcolor{stringliteral}{"{}Ошибка\ в\ индексах\ матрицы.\ Передано:\ ("{}}\ <<\ size1\ <<\ \textcolor{stringliteral}{"{},\ "{}}\ <<\ size2\ <<\ \textcolor{stringliteral}{"{}).\ Максимальные\ индексы:\ ("{}}\ <<\ max\_size1\ <<\ \textcolor{stringliteral}{"{},\ "{}}\ <<\ max\_size2\ <<\ \textcolor{stringliteral}{"{})."{}}\ <<\ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::endl}};}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ message\ =\ \mbox{\hyperlink{classComplex__number}{oss}}.str();}
+\DoxyCodeLine{00105\ \ \ \ \ \}}
+\DoxyCodeLine{00106\ \ \ \ \ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::pair<size\_t,\ size\_t>}}\ getMatrixSize()\ \{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::make\_pair}}(max\_size1,\ max\_size2);\ \}}
+\DoxyCodeLine{00107\ \ \ \ \ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::pair<size\_t,\ size\_t>}}\ getMatrixIndeces()\ \{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::make\_pair}}(size1,\ size2);\ \}}
+\DoxyCodeLine{00108\ \ \ \ \ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::string}}\ getMessage()\textcolor{keyword}{\ override\ }\{\ \textcolor{keywordflow}{return}\ message;\ \}}
+\DoxyCodeLine{00109\ \};}
+\DoxyCodeLine{00110\ }
+\DoxyCodeLine{00111\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classVectorSizeMissmatch}{VectorSizeMissmatch}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classMyBaseException}{MyBaseException}}\ \{}
+\DoxyCodeLine{00112\ \ \ \ \ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::string}}\ message;}
+\DoxyCodeLine{00113\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ size1;}
+\DoxyCodeLine{00114\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ size2;}
+\DoxyCodeLine{00115\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00116\ \ \ \ \ \mbox{\hyperlink{classVectorSizeMissmatch}{VectorSizeMissmatch}}(\textcolor{keywordtype}{size\_t}\ size1,\ \textcolor{keywordtype}{size\_t}\ size2)\ \{}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::ostringstream}}\ \mbox{\hyperlink{classComplex__number}{oss}};}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classComplex__number}{oss}}\ <<\ \textcolor{stringliteral}{"{}Неверные\ размеры\ векторов.\ Размер\ левого\ вектора:\ "{}}\ <<\ size1\ <<\ \textcolor{stringliteral}{"{}.\ Правого:\ "{}}\ <<\ size2\ <<\ \textcolor{charliteral}{'.'}\ <<\ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::endl}};}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ message\ =\ \mbox{\hyperlink{classComplex__number}{oss}}.str();}
+\DoxyCodeLine{00120\ \ \ \ \ \}}
+\DoxyCodeLine{00121\ }
+\DoxyCodeLine{00122\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ getLeftSize()\ \{\ \textcolor{keywordflow}{return}\ size1;\ \}}
+\DoxyCodeLine{00123\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ getRightSize()\ \{\ \textcolor{keywordflow}{return}\ size2;\ \}}
+\DoxyCodeLine{00124\ \ \ \ \ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::string}}\ getMessage()\textcolor{keyword}{\ override\ }\{\ \textcolor{keywordflow}{return}\ message;\ \}}
+\DoxyCodeLine{00125\ \};}
+\DoxyCodeLine{00126\ }
+\DoxyCodeLine{00127\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classMatrixSizeMissmatch}{MatrixSizeMissmatch}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classMyBaseException}{MyBaseException}}\ \{}
+\DoxyCodeLine{00128\ \ \ \ \ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::string}}\ message;}
+\DoxyCodeLine{00129\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ rows1;}
+\DoxyCodeLine{00130\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ columns1;}
+\DoxyCodeLine{00131\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ rows2;}
+\DoxyCodeLine{00132\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ columns2;}
+\DoxyCodeLine{00133\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00134\ \ \ \ \ \mbox{\hyperlink{classMatrixSizeMissmatch}{MatrixSizeMissmatch}}(\textcolor{keywordtype}{size\_t}\ rows1,\ \textcolor{keywordtype}{size\_t}\ columns1,\ \textcolor{keywordtype}{size\_t}\ rows2,\ \textcolor{keywordtype}{size\_t}\ columns2)\ \{}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::ostringstream}}\ \mbox{\hyperlink{classComplex__number}{oss}};}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classComplex__number}{oss}}\ <<\ \textcolor{stringliteral}{"{}Неверные\ размеры\ матрицы.\ Размеры\ левой\ матрицы:\ ["{}}\ <<\ rows1\ <<\ \textcolor{stringliteral}{"{},\ "{}}\ <<\ columns1\ <<\ \textcolor{stringliteral}{"{}]\ .\ Размеры\ правой\ матрицы:\ ["{}}\ <<\ rows1\ <<\ \textcolor{stringliteral}{"{},\ "{}}\ <<\ columns1\ <<\ \textcolor{stringliteral}{"{}]\ ."{}}\ <<\ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::endl}};}
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ message\ =\ \mbox{\hyperlink{classComplex__number}{oss}}.str();}
+\DoxyCodeLine{00138\ \ \ \ \ \}}
+\DoxyCodeLine{00139\ }
+\DoxyCodeLine{00140\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ getLeftRows()\ \{\ \textcolor{keywordflow}{return}\ rows1;\ \}}
+\DoxyCodeLine{00141\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ getLeftColumns()\ \{\ \textcolor{keywordflow}{return}\ columns1;\ \}}
+\DoxyCodeLine{00142\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ getRightRows()\ \{\ \textcolor{keywordflow}{return}\ rows2;\ \}}
+\DoxyCodeLine{00143\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ getRightColumns()\ \{\ \textcolor{keywordflow}{return}\ columns2;\ \}}
+\DoxyCodeLine{00144\ \ \ \ \ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::string}}\ getMessage()\textcolor{keyword}{\ override\ }\{\ \textcolor{keywordflow}{return}\ message;\ \}}
+\DoxyCodeLine{00145\ \};}
+\DoxyCodeLine{00146\ }
+\DoxyCodeLine{00147\ }
+\DoxyCodeLine{00148\ }
+\DoxyCodeLine{00149\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classEmptyContainerException}{EmptyContainerException}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classMyBaseException}{MyBaseException}}\ \ \{}
+\DoxyCodeLine{00150\ \ \ \ \ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::string}}\ message;}
+\DoxyCodeLine{00151\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00152\ \ \ \ \ \mbox{\hyperlink{classEmptyContainerException}{EmptyContainerException}}()\ :\ message(\textcolor{stringliteral}{"{}Указатель\ на\ матрицу\ null."{}})\ \{\}}
+\DoxyCodeLine{00153\ \ \ \ \ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::string}}\ getMessage()\textcolor{keyword}{\ override\ }\{\ \textcolor{keywordflow}{return}\ message;\ \}}
+\DoxyCodeLine{00154\ \};}
+\DoxyCodeLine{00155\ }
+\DoxyCodeLine{00156\ }
+\DoxyCodeLine{00157\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00158\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classProxyToVectorException}{ProxyToVectorException}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classMyBaseException}{MyBaseException}}\ \ \{}
+\DoxyCodeLine{00159\ \ \ \ \ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::string}}\ message;}
+\DoxyCodeLine{00160\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{T}}\ proxy;}
+\DoxyCodeLine{00161\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00162\ \ \ \ \ \mbox{\hyperlink{classProxyToVectorException}{ProxyToVectorException}}(\mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::string}}\ message,\ \mbox{\hyperlink{classComplex__number}{T}}\ proxy)\ :\ message(message),\ proxy(proxy)\ \{\}}
+\DoxyCodeLine{00163\ \ \ \ \ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::string}}\ getMessage()\textcolor{keyword}{\ override\ }\{\ \textcolor{keywordflow}{return}\ message;\ \}}
+\DoxyCodeLine{00164\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{T}}\ getProxy()\ \{\ \textcolor{keywordflow}{return}\ proxy;\ \}}
+\DoxyCodeLine{00165\ \};}
+\DoxyCodeLine{00166\ }
+\DoxyCodeLine{00167\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classWrongFileException}{WrongFileException}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classMyBaseException}{MyBaseException}}\ \{}
+\DoxyCodeLine{00168\ \ \ \ \ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::string}}\ message;}
+\DoxyCodeLine{00169\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00170\ \ \ \ \ \mbox{\hyperlink{classWrongFileException}{WrongFileException}}(\mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::string}}\ message)\ :\ message(message)\ \{\}}
+\DoxyCodeLine{00171\ \ \ \ \ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::string}}\ getMessage()\textcolor{keyword}{\ override\ }\{\ \textcolor{keywordflow}{return}\ message;\ \}}
+\DoxyCodeLine{00172\ \};}
+
+\end{DoxyCode}

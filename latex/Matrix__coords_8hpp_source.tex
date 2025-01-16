@@ -1,0 +1,26 @@
+\doxysection{Matrix\+\_\+coords.\+hpp}
+\hypertarget{Matrix__coords_8hpp_source}{}\label{Matrix__coords_8hpp_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ <cstdlib>}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00008\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classMatrix__coords}{Matrix\_coords}}\ \{}
+\DoxyCodeLine{00009\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00010\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ r1,\ r2,\ c1,\ c2;}
+\DoxyCodeLine{00011\ \ \ \ \ \mbox{\hyperlink{classMatrix__coords}{Matrix\_coords}}(\textcolor{keywordtype}{size\_t}\ r1,\ \textcolor{keywordtype}{size\_t}\ c1,\ \textcolor{keywordtype}{size\_t}\ r2,\ \textcolor{keywordtype}{size\_t}\ c2)\ :\ r1(r1),\ c1(c1),\ r2(r2),\ c2(c2)\ \{\ \}}
+\DoxyCodeLine{00012\ \ \ \ \ \mbox{\hyperlink{classMatrix__coords}{Matrix\_coords}}(\textcolor{keywordtype}{size\_t}\ r1,\ \textcolor{keywordtype}{size\_t}\ c1)\ :\ r2(r1),\ c2(c1)\ \{\ \}}
+\DoxyCodeLine{00013\ \};}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classMatrix__row__coord}{Matrix\_row\_coord}}\ \{}
+\DoxyCodeLine{00016\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ r,\ c1,\ c2;}
+\DoxyCodeLine{00018\ \ \ \ \ \mbox{\hyperlink{classMatrix__row__coord}{Matrix\_row\_coord}}(\textcolor{keywordtype}{size\_t}\ r,\ \textcolor{keywordtype}{size\_t}\ c1,\ \textcolor{keywordtype}{size\_t}\ c2)\ :\ c1(c1),\ c2(c2),\ r(r)\ \{\ \}}
+\DoxyCodeLine{00019\ \};}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classMatrix__col__coord}{Matrix\_col\_coord}}\ \{}
+\DoxyCodeLine{00022\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ r1,\ r2,\ c;}
+\DoxyCodeLine{00024\ \ \ \ \ \mbox{\hyperlink{classMatrix__col__coord}{Matrix\_col\_coord}}(\textcolor{keywordtype}{size\_t}\ c,\ \textcolor{keywordtype}{size\_t}\ r1,\ \textcolor{keywordtype}{size\_t}\ r2)\ :\ r1(r1),\ r2(r2),\ c(c)\ \{\ \}}
+\DoxyCodeLine{00025\ \};}
+
+\end{DoxyCode}

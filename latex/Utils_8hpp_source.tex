@@ -1,0 +1,188 @@
+\doxysection{Utils.\+hpp}
+\hypertarget{Utils_8hpp_source}{}\label{Utils_8hpp_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <cctype>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <limits>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <cmath>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <sstream>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <fstream>}\ \textcolor{comment}{//\ для\ гетлайна}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{comment}{//\ \#include\ "{}Rational\_number.hpp"{}}}
+\DoxyCodeLine{00010\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ num\_type>}
+\DoxyCodeLine{00011\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classRational__number}{Rational\_number}};}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ type\_real,\ \textcolor{keyword}{typename}\ type\_imag>}
+\DoxyCodeLine{00014\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classComplex__number}{Complex\_number}};}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{keywordtype}{bool}\ isInteger(\mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::string}}\ \mbox{\hyperlink{classComplex__number}{str}})\ \{}
+\DoxyCodeLine{00017\ \ \ \ \ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::stringstream}}\ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{ss}};}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{classComplex__number}{idx}}\ =\ 0;\ \mbox{\hyperlink{classComplex__number}{idx}}\ <\ \mbox{\hyperlink{classComplex__number}{str}}.size();\ ++\mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{idx}})\ \{}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classComplex__number}{str}}[\mbox{\hyperlink{classComplex__number}{idx}}]\ !=\ \textcolor{charliteral}{'\ '}\ \&\&\ \mbox{\hyperlink{classComplex__number}{str}}[\mbox{\hyperlink{classComplex__number}{idx}}]\ !=\ \textcolor{charliteral}{'\(\backslash\)t'})\ \mbox{\hyperlink{classComplex__number}{ss}}\ <<\ \mbox{\hyperlink{classComplex__number}{str}}[\mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{idx}}];}
+\DoxyCodeLine{00020\ \ \ \ \ \}}
+\DoxyCodeLine{00021\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{str}}\ =\ \mbox{\hyperlink{classComplex__number}{ss}}.str();}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classComplex__number}{str}}.size()\ ==\ 0)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{classComplex__number}{idx}}\ =\ 0;}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classComplex__number}{str}}[0]\ ==\ \textcolor{charliteral}{'-\/'})\ ++\mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{idx}};}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordflow}{for}\ (;\mbox{\hyperlink{classComplex__number}{idx}}\ <\ \mbox{\hyperlink{classComplex__number}{str}}.size();\ ++\mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{idx}})\ \{}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!\mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::isdigit}}(\mbox{\hyperlink{classComplex__number}{str}}[\mbox{\hyperlink{classComplex__number}{idx}}]))\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00027\ \ \ \ \ \}}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00029\ \}}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \textcolor{keywordtype}{bool}\ isNumber(\mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::string}}\ \mbox{\hyperlink{classComplex__number}{str}})\ \{}
+\DoxyCodeLine{00032\ \ \ \ \ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::stringstream}}\ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{ss}};}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{classComplex__number}{idx}}\ =\ 0;\ \mbox{\hyperlink{classComplex__number}{idx}}\ <\ \mbox{\hyperlink{classComplex__number}{str}}.size();\ ++\mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{idx}})\ \{}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classComplex__number}{str}}[\mbox{\hyperlink{classComplex__number}{idx}}]\ !=\ \textcolor{charliteral}{'\ '}\ \&\&\ \mbox{\hyperlink{classComplex__number}{str}}[\mbox{\hyperlink{classComplex__number}{idx}}]\ !=\ \textcolor{charliteral}{'\(\backslash\)t'})\ \mbox{\hyperlink{classComplex__number}{ss}}\ <<\ \mbox{\hyperlink{classComplex__number}{str}}[\mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{idx}}];}
+\DoxyCodeLine{00035\ \ \ \ \ \}}
+\DoxyCodeLine{00036\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{str}}\ =\ \mbox{\hyperlink{classComplex__number}{ss}}.str();}
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classComplex__number}{str}}.size()\ ==\ 0)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{classComplex__number}{idx}}\ =\ 0;}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classComplex__number}{isComma}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classComplex__number}{str}}[0]\ ==\ \textcolor{charliteral}{'-\/'})\ ++\mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{idx}};}
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordflow}{for}\ (;\mbox{\hyperlink{classComplex__number}{idx}}\ <\ \mbox{\hyperlink{classComplex__number}{str}}.size();\ ++\mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{idx}})\ \{}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!\mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::isdigit}}(\mbox{\hyperlink{classComplex__number}{str}}[\mbox{\hyperlink{classComplex__number}{idx}}]))\ \{}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classComplex__number}{str}}[\mbox{\hyperlink{classComplex__number}{idx}}]\ ==\ \textcolor{charliteral}{'.'}\ \&\&\ \mbox{\hyperlink{classComplex__number}{isComma}})\ \{}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classComplex__number}{str}}[\mbox{\hyperlink{classComplex__number}{idx}}]\ ==\ \textcolor{charliteral}{'.'})\ \{}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classComplex__number}{isComma}}\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00049\ \ \ \ \ \}}
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00051\ \}}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00054\ \mbox{\hyperlink{classComplex__number}{T}}\ parseInteger(\mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::string}}\ \mbox{\hyperlink{classComplex__number}{str}})\ \{}
+\DoxyCodeLine{00055\ \ \ \ \ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::stringstream}}\ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{ss}};}
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{classComplex__number}{idx}}\ =\ 0;\ \mbox{\hyperlink{classComplex__number}{idx}}\ <\ \mbox{\hyperlink{classComplex__number}{str}}.size();\ ++\mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{idx}})\ \{}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classComplex__number}{str}}[\mbox{\hyperlink{classComplex__number}{idx}}]\ !=\ \textcolor{charliteral}{'\ '}\ \&\&\ \mbox{\hyperlink{classComplex__number}{str}}[\mbox{\hyperlink{classComplex__number}{idx}}]\ !=\ \textcolor{charliteral}{'\(\backslash\)t'})\ \mbox{\hyperlink{classComplex__number}{ss}}\ <<\ \mbox{\hyperlink{classComplex__number}{str}}[\mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{idx}}];}
+\DoxyCodeLine{00058\ \ \ \ \ \}}
+\DoxyCodeLine{00059\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{str}}\ =\ \mbox{\hyperlink{classComplex__number}{ss}}.str();}
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long}\ \mbox{\hyperlink{classComplex__number}{result}}\ =\ 0;\ \textcolor{comment}{//\ потому\ что\ не\ знаем\ куда\ влезет}}
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classComplex__number}{is\_negative}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{classComplex__number}{idx}}\ =\ 0;}
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classComplex__number}{str}}[0]\ ==\ \textcolor{charliteral}{'-\/'})\ \{}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classComplex__number}{is\_negative}}\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ ++\mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{idx}};}
+\DoxyCodeLine{00066\ \ \ \ \ \}}
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keywordflow}{for}\ (;\mbox{\hyperlink{classComplex__number}{idx}}\ <\ \mbox{\hyperlink{classComplex__number}{str}}.size();\ ++\mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{idx}})\ \{}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classComplex__number}{digit}}\ =\ \mbox{\hyperlink{classComplex__number}{str}}[\mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{idx}}]\ -\/\ \textcolor{charliteral}{'0'};}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classComplex__number}{result}}\ *=\ 10;}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classComplex__number}{result}}\ +=\ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{digit}};}
+\DoxyCodeLine{00071\ \ \ \ \ \}}
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keywordflow}{if}\ (!\mbox{\hyperlink{classComplex__number}{is\_negative}})\ \{}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classComplex__number}{result}}\ >\ std::numeric\_limits<T>::max())\ \{\ \textcolor{comment}{//\ проверка\ что\ влезаем\ в\ тип\ T\ https://en.cppreference.com/w/cpp/types/numeric\_limits}}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \mbox{\hyperlink{classOverflowException}{OverflowException}}(\mbox{\hyperlink{classComplex__number}{result}});}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{result}};}
+\DoxyCodeLine{00077\ \ \ \ \ \}}
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ тут\ раньше\ было\ -\/result\ <\ numeric\_limits<T>min()\ но\ вроде\ бред}}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classComplex__number}{result}}\ >\ std::numeric\_limits<T>::max())\ \{}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \mbox{\hyperlink{classOverflowException}{OverflowException}}(\mbox{\hyperlink{classComplex__number}{result}});}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ -\/\mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{result}};}
+\DoxyCodeLine{00084\ \ \ \ \ \}}
+\DoxyCodeLine{00085\ \}}
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00087\ \textcolor{keywordtype}{double}\ parseDouble(\mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::string}}\ \mbox{\hyperlink{classComplex__number}{str}})\ \{}
+\DoxyCodeLine{00088\ \ \ \ \ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::stringstream}}\ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{ss}};}
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{classComplex__number}{idx}}\ =\ 0;\ \mbox{\hyperlink{classComplex__number}{idx}}\ <\ \mbox{\hyperlink{classComplex__number}{str}}.size();\ ++\mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{idx}})\ \{}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classComplex__number}{str}}[\mbox{\hyperlink{classComplex__number}{idx}}]\ !=\ \textcolor{charliteral}{'\ '}\ \&\&\ \mbox{\hyperlink{classComplex__number}{str}}[\mbox{\hyperlink{classComplex__number}{idx}}]\ !=\ \textcolor{charliteral}{'\(\backslash\)t'})\ \mbox{\hyperlink{classComplex__number}{ss}}\ <<\ \mbox{\hyperlink{classComplex__number}{str}}[\mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{idx}}];}
+\DoxyCodeLine{00091\ \ \ \ \ \}}
+\DoxyCodeLine{00092\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{str}}\ =\ \mbox{\hyperlink{classComplex__number}{ss}}.str();}
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classComplex__number}{result}}\ =\ 0;}
+\DoxyCodeLine{00094\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classComplex__number}{drob\_part}}\ =\ 0;}
+\DoxyCodeLine{00095\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classComplex__number}{is\_negative}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00096\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classComplex__number}{dotFlag}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00097\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classComplex__number}{afterDotCounter}}\ =\ 0;}
+\DoxyCodeLine{00098\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{classComplex__number}{idx}}\ =\ 0;}
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classComplex__number}{str}}[0]\ ==\ \textcolor{charliteral}{'-\/'})\ \{}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classComplex__number}{is\_negative}}\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ ++\mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{idx}};}
+\DoxyCodeLine{00102\ \ \ \ \ \}}
+\DoxyCodeLine{00103\ \ \ \ \ \textcolor{keywordflow}{for}\ (;\mbox{\hyperlink{classComplex__number}{idx}}\ <\ \mbox{\hyperlink{classComplex__number}{str}}.size();\ ++\mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{idx}})\ \{}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classComplex__number}{str}}[\mbox{\hyperlink{classComplex__number}{idx}}]\ ==\ \textcolor{charliteral}{'.'})\ \{}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classComplex__number}{dotFlag}}\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!\mbox{\hyperlink{classComplex__number}{dotFlag}})\ \{}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classComplex__number}{digit}}\ =\ \mbox{\hyperlink{classComplex__number}{str}}[\mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{idx}}]\ -\/\ \textcolor{charliteral}{'0'};}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classComplex__number}{result}}\ *=\ 10;}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classComplex__number}{result}}\ +=\ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{digit}};}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \ \ \ \ ++\mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{afterDotCounter}};}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classComplex__number}{digit}}\ =\ \mbox{\hyperlink{classComplex__number}{str}}[\mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{idx}}]\ -\/\ \textcolor{charliteral}{'0'};}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classComplex__number}{drob\_part}}\ +=\ \mbox{\hyperlink{classComplex__number}{digit}}\ /\ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::pow}}(10,\ \mbox{\hyperlink{classComplex__number}{afterDotCounter}});}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00117\ \ \ \ \ \}}
+\DoxyCodeLine{00118\ \ \ \ \ \textcolor{keywordflow}{return}\ (\mbox{\hyperlink{classComplex__number}{result}}\ +\ \mbox{\hyperlink{classComplex__number}{drob\_part}})\ *\ (\mbox{\hyperlink{classComplex__number}{is\_negative}}\ ?\ -\/1\ :\ 1);}
+\DoxyCodeLine{00119\ \}}
+\DoxyCodeLine{00120\ }
+\DoxyCodeLine{00121\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00122\ \textcolor{keywordtype}{double}\ sqrt(\mbox{\hyperlink{classComplex__number}{T}}\ \mbox{\hyperlink{classComplex__number}{val}})\ \{}
+\DoxyCodeLine{00123\ \ \ \ \ \textcolor{keywordflow}{return}\ std::sqrt(\mbox{\hyperlink{classComplex__number}{val}});}
+\DoxyCodeLine{00124\ \}}
+\DoxyCodeLine{00125\ }
+\DoxyCodeLine{00126\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ num\_type>}
+\DoxyCodeLine{00127\ \textcolor{keywordtype}{double}\ sqrt(\mbox{\hyperlink{classComplex__number}{Rational\_number<num\_type>}}\ r)\ \{}
+\DoxyCodeLine{00128\ \ \ \ \ \textcolor{keywordflow}{return}\ std::sqrt(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{double}\textcolor{keyword}{>}(r));}
+\DoxyCodeLine{00129\ \}}
+\DoxyCodeLine{00130\ }
+\DoxyCodeLine{00131\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00132\ \mbox{\hyperlink{classComplex__number}{T}}\ abs(\mbox{\hyperlink{classComplex__number}{T}}\ \mbox{\hyperlink{classComplex__number}{val}})\ \{}
+\DoxyCodeLine{00133\ \ \ \ \ \textcolor{keywordflow}{return}\ std::abs(\mbox{\hyperlink{classComplex__number}{val}});}
+\DoxyCodeLine{00134\ \}}
+\DoxyCodeLine{00135\ }
+\DoxyCodeLine{00136\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ num\_type>}
+\DoxyCodeLine{00137\ \mbox{\hyperlink{classComplex__number}{Rational\_number<num\_type>}}\ abs(\textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Rational\_number<num\_type>}}\&\ r)\ \{}
+\DoxyCodeLine{00138\ \ \ \ \ \textcolor{keywordflow}{if}\ (r.getNumerator()\ <\ 0)\ \{}
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{Rational\_number<num\_type>}}(-\/r.getNumerator(),\ r.getDenominator());}
+\DoxyCodeLine{00140\ \ \ \ \ \}}
+\DoxyCodeLine{00141\ \ \ \ \ \textcolor{keywordflow}{return}\ r;}
+\DoxyCodeLine{00142\ \}}
+\DoxyCodeLine{00143\ }
+\DoxyCodeLine{00144\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ type\_real,\ \textcolor{keyword}{typename}\ type\_imag>}
+\DoxyCodeLine{00145\ \textcolor{keywordtype}{double}\ abs(\textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Complex\_number<type\_real,\ type\_imag>}}\&\ c)\ \{}
+\DoxyCodeLine{00146\ \ \ \ \ \textcolor{keywordflow}{return}\ c.modulus();}
+\DoxyCodeLine{00147\ \}}
+\DoxyCodeLine{00148\ }
+\DoxyCodeLine{00149\ \textcolor{comment}{//\ std::stringstream\ delete\_comments(std::ifstream\ file)\ \{}}
+\DoxyCodeLine{00150\ \textcolor{comment}{//\ \ \ \ \ std::stringstream\ stream\_without\_comments;}}
+\DoxyCodeLine{00151\ \textcolor{comment}{//\ \ \ \ \ std::string\ line;}}
+\DoxyCodeLine{00152\ \textcolor{comment}{//\ \ \ \ \ while\ (std::getline(file,\ line))\ \{}}
+\DoxyCodeLine{00153\ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ size\_t\ sharp\ =\ line.find('\#');}}
+\DoxyCodeLine{00154\ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ if\ (sharp\ !=\ std::string::npos)\ \{}}
+\DoxyCodeLine{00155\ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ if\ (sharp\ !=\ 0)\ \{}}
+\DoxyCodeLine{00156\ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ stream\_without\_comments\ <<\ line.substr(0,\ sharp)\ <<\ std::endl;}}
+\DoxyCodeLine{00157\ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \}}}
+\DoxyCodeLine{00158\ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \}\ else\ \{}}
+\DoxyCodeLine{00159\ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ stream\_without\_comments\ <<\ line\ <<\ std::endl;}}
+\DoxyCodeLine{00160\ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \}}}
+\DoxyCodeLine{00161\ \textcolor{comment}{//\ \ \ \ \ \}}}
+\DoxyCodeLine{00162\ \textcolor{comment}{//\ \ \ \ \ std::cout\ <<\ "{}deleted\ comments\ from\ file"{}\ <<\ std::endl;}}
+\DoxyCodeLine{00163\ \textcolor{comment}{//\ \ \ \ \ return\ stream\_without\_comments;}}
+\DoxyCodeLine{00164\ \textcolor{comment}{//\ \}}}
+\DoxyCodeLine{00165\ }
+\DoxyCodeLine{00166\ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::string}}\ delete\_comments(\textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::string}}\ \mbox{\hyperlink{classComplex__number}{file\_content}})\ \{}
+\DoxyCodeLine{00167\ \ \ \ \ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::stringstream}}\ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{stream\_without\_comments}};}
+\DoxyCodeLine{00168\ \ \ \ \ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::stringstream}}\ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{input}}(\mbox{\hyperlink{classComplex__number}{file\_content}});}
+\DoxyCodeLine{00169\ \ \ \ \ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::string}}\ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{line}};}
+\DoxyCodeLine{00170\ }
+\DoxyCodeLine{00171\ \ \ \ \ \textcolor{keywordflow}{while}\ (\mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::getline}}(\mbox{\hyperlink{classComplex__number}{input}},\ \mbox{\hyperlink{classComplex__number}{line}}))\ \{}
+\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{classComplex__number}{sharp}}\ =\ \mbox{\hyperlink{classComplex__number}{line}}.find(\textcolor{charliteral}{'\#'});}
+\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classComplex__number}{sharp}}\ !=\ std::string::npos)\ \{}
+\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classComplex__number}{sharp}}\ !=\ 0)\ \{}
+\DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classComplex__number}{stream\_without\_comments}}\ <<\ \mbox{\hyperlink{classComplex__number}{line}}.substr(0,\ \mbox{\hyperlink{classComplex__number}{sharp}})\ <<\ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::endl}};}
+\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classComplex__number}{stream\_without\_comments}}\ <<\ \mbox{\hyperlink{classComplex__number}{line}}\ <<\ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::endl}};}
+\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00180\ \ \ \ \ \}}
+\DoxyCodeLine{00181\ \ \ \ \ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::string}}\ \mbox{\hyperlink{classComplex__number}{result}}\ =\ \mbox{\hyperlink{classComplex__number}{stream\_without\_comments}}.str();}
+\DoxyCodeLine{00182\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{result}};}
+\DoxyCodeLine{00183\ \}}
+
+\end{DoxyCode}

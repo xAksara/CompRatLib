@@ -1,0 +1,193 @@
+\doxysection{Vector\texorpdfstring{$<$}{<} T, container\+\_\+T \texorpdfstring{$>$}{>} Class Template Reference}
+\hypertarget{classVector}{}\label{classVector}\index{Vector$<$ T, container\_T $>$@{Vector$<$ T, container\_T $>$}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classVector_a1eed33298c3cae8ef458149238507799}{Vector}} (\mbox{\hyperlink{classComplex__number}{size\+\_\+t}} size)
+\begin{DoxyCompactList}\small\item\em Конструктор с одним аргументом. Выставляет эпсилон = 0. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classVector_ad8f7a40c2c42dd34ffe94f5ef9699a57}{Vector}} (\mbox{\hyperlink{classComplex__number}{size\+\_\+t}} size, \mbox{\hyperlink{classComplex__number}{double}} epsilon)
+\begin{DoxyCompactList}\small\item\em Конструктор с двумя аргументами \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classVector_afdfe347c4b7f37c0f0ec1e74811d4377}{Vector}} (\mbox{\hyperlink{classComplex__number}{size\+\_\+t}} size, \mbox{\hyperlink{classComplex__number}{double}} epsilon, \mbox{\hyperlink{classComplex__number}{T}} \mbox{\hyperlink{classComplex__number}{init\+\_\+val}})
+\begin{DoxyCompactList}\small\item\em Конструктор с тремя аргументами. Инициализирует вектор значениями init\+\_\+val. \end{DoxyCompactList}\item 
+\Hypertarget{classVector_aa58bd281c7abcfe0585ab0f4c0d6e811}\label{classVector_aa58bd281c7abcfe0585ab0f4c0d6e811} 
+{\bfseries Vector} (\mbox{\hyperlink{classVector}{Vector}} \&\mbox{\hyperlink{classComplex__number}{rhs}})
+\item 
+\Hypertarget{classVector_a74939bc3a1b8b64cba2b622051fb6d0c}\label{classVector_a74939bc3a1b8b64cba2b622051fb6d0c} 
+{\bfseries Vector} (\mbox{\hyperlink{classVector}{Vector}} \&\&\mbox{\hyperlink{classComplex__number}{rhs}})
+\item 
+{\footnotesize template$<$\mbox{\hyperlink{classComplex__number}{typename}} \mbox{\hyperlink{classComplex__number}{proxy\+\_\+container\+\_\+T}} $>$ }\\\mbox{\hyperlink{classVector_a127c971a001baf5fcff04cf1c0d1dbd0}{Vector}} (\mbox{\hyperlink{classComplex__number}{const}} \mbox{\hyperlink{classMatrix__proxy}{Matrix\+\_\+proxy}}$<$ \mbox{\hyperlink{classComplex__number}{T}}, \mbox{\hyperlink{classComplex__number}{proxy\+\_\+container\+\_\+T}} $>$ \&\mbox{\hyperlink{classComplex__number}{rhs}})
+\begin{DoxyCompactList}\small\item\em Конструктор, строящий вектор по срезу строки \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classVector_ab95082aff9b70fc38e734576308f4673}{Vector}} (\mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std\+::string}} \mbox{\hyperlink{classComplex__number}{filename}})
+\begin{DoxyCompactList}\small\item\em Конструктор, создающий вектор по файлу \end{DoxyCompactList}\item 
+\Hypertarget{classVector_a3ac10ecee7ef42aa9ef29effc5f1a97a}\label{classVector_a3ac10ecee7ef42aa9ef29effc5f1a97a} 
+\mbox{\hyperlink{classVector}{Vector}} \& {\bfseries operator=} (\mbox{\hyperlink{classComplex__number}{const}} \mbox{\hyperlink{classVector}{Vector}} \&\mbox{\hyperlink{classComplex__number}{rhs}})
+\item 
+\Hypertarget{classVector_a6c9b3b6018bf9c976021b8456e45e59a}\label{classVector_a6c9b3b6018bf9c976021b8456e45e59a} 
+\mbox{\hyperlink{classVector}{Vector}} \& {\bfseries operator=} (\mbox{\hyperlink{classVector}{Vector}} \&\&\mbox{\hyperlink{classComplex__number}{rhs}}) \mbox{\hyperlink{classComplex__number}{noexcept}}
+\item 
+{\footnotesize template$<$\mbox{\hyperlink{classComplex__number}{typename}} \mbox{\hyperlink{classComplex__number}{proxy\+\_\+container\+\_\+T}} $>$ }\\\mbox{\hyperlink{classVector}{Vector}} \& \mbox{\hyperlink{classVector_aa250e457832ba74ed0363d7e6056251b}{operator=}} (\mbox{\hyperlink{classComplex__number}{const}} \mbox{\hyperlink{classMatrix__proxy}{Matrix\+\_\+proxy}}$<$ \mbox{\hyperlink{classComplex__number}{T}}, \mbox{\hyperlink{classComplex__number}{proxy\+\_\+container\+\_\+T}} $>$ \&\mbox{\hyperlink{classComplex__number}{rhs}})
+\begin{DoxyCompactList}\small\item\em Оператор присваивания, строящий вектор по срезу строки \end{DoxyCompactList}\item 
+\Hypertarget{classVector_a97a8b7d4195253199d469e0eb59c7d0e}\label{classVector_a97a8b7d4195253199d469e0eb59c7d0e} 
+\mbox{\hyperlink{classComplex__number}{const}} \mbox{\hyperlink{classComplex__number}{T}} \& {\bfseries operator()} (\mbox{\hyperlink{classComplex__number}{size\+\_\+t}} \mbox{\hyperlink{classComplex__number}{idx}}) \mbox{\hyperlink{classComplex__number}{const}}
+\item 
+\Hypertarget{classVector_ac19338688ad85ce47faf1dbaa428edb5}\label{classVector_ac19338688ad85ce47faf1dbaa428edb5} 
+\mbox{\hyperlink{classComplex__number}{T}} \& {\bfseries operator()} (\mbox{\hyperlink{classComplex__number}{size\+\_\+t}} \mbox{\hyperlink{classComplex__number}{idx}})
+\item 
+\Hypertarget{classVector_a09ce5e161659104aa6186a6e2c46d91a}\label{classVector_a09ce5e161659104aa6186a6e2c46d91a} 
+\mbox{\hyperlink{classComplex__number}{void}} {\bfseries set} (\mbox{\hyperlink{classComplex__number}{size\+\_\+t}} \mbox{\hyperlink{classComplex__number}{idx}}, \mbox{\hyperlink{classComplex__number}{const}} \mbox{\hyperlink{classComplex__number}{T}} \&\mbox{\hyperlink{classComplex__number}{val}})
+\item 
+\Hypertarget{classVector_ac2209f59b61be881fc73d76bdf9122e8}\label{classVector_ac2209f59b61be881fc73d76bdf9122e8} 
+\mbox{\hyperlink{classComplex__number}{container\+\_\+T}} {\bfseries get\+Data} () \mbox{\hyperlink{classComplex__number}{const}}
+\item 
+\Hypertarget{classVector_a49d59502dc79ee4c900ec1371b59b7d8}\label{classVector_a49d59502dc79ee4c900ec1371b59b7d8} 
+\mbox{\hyperlink{classComplex__number}{size\+\_\+t}} {\bfseries get\+Size} () \mbox{\hyperlink{classComplex__number}{const}}
+\item 
+\Hypertarget{classVector_a6eeac5449e1638439cc3025773a45c6c}\label{classVector_a6eeac5449e1638439cc3025773a45c6c} 
+\mbox{\hyperlink{classComplex__number}{double}} {\bfseries get\+Epsilon} () \mbox{\hyperlink{classComplex__number}{const}}
+\item 
+\Hypertarget{classVector_add29d2f42671d7748a8f0f15f142edad}\label{classVector_add29d2f42671d7748a8f0f15f142edad} 
+\mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std\+::string}} {\bfseries to\+\_\+string} () \mbox{\hyperlink{classComplex__number}{const}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classVector_a1eed33298c3cae8ef458149238507799}\label{classVector_a1eed33298c3cae8ef458149238507799} 
+\index{Vector$<$ T, container\_T $>$@{Vector$<$ T, container\_T $>$}!Vector@{Vector}}
+\index{Vector@{Vector}!Vector$<$ T, container\_T $>$@{Vector$<$ T, container\_T $>$}}
+\doxysubsubsection{\texorpdfstring{Vector()}{Vector()}\hspace{0.1cm}{\footnotesize\ttfamily [1/5]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classComplex__number}{typename}} \mbox{\hyperlink{classComplex__number}{T}}  = double, \mbox{\hyperlink{classComplex__number}{typename}} \mbox{\hyperlink{classComplex__number}{container\+\_\+T}}  = std\+::map$<$size\+\_\+t, T$>$$>$ \\
+\mbox{\hyperlink{classVector}{Vector}}$<$ \mbox{\hyperlink{classComplex__number}{T}}, \mbox{\hyperlink{classComplex__number}{container\+\_\+T}} $>$\mbox{\hyperlink{classVector}{\+::\+Vector}} (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classComplex__number}{size\+\_\+t}}}]{size }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Конструктор с одним аргументом. Выставляет эпсилон = 0. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em size} & размер вектора \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classVector_ad8f7a40c2c42dd34ffe94f5ef9699a57}\label{classVector_ad8f7a40c2c42dd34ffe94f5ef9699a57} 
+\index{Vector$<$ T, container\_T $>$@{Vector$<$ T, container\_T $>$}!Vector@{Vector}}
+\index{Vector@{Vector}!Vector$<$ T, container\_T $>$@{Vector$<$ T, container\_T $>$}}
+\doxysubsubsection{\texorpdfstring{Vector()}{Vector()}\hspace{0.1cm}{\footnotesize\ttfamily [2/5]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classComplex__number}{typename}} \mbox{\hyperlink{classComplex__number}{T}}  = double, \mbox{\hyperlink{classComplex__number}{typename}} \mbox{\hyperlink{classComplex__number}{container\+\_\+T}}  = std\+::map$<$size\+\_\+t, T$>$$>$ \\
+\mbox{\hyperlink{classVector}{Vector}}$<$ \mbox{\hyperlink{classComplex__number}{T}}, \mbox{\hyperlink{classComplex__number}{container\+\_\+T}} $>$\mbox{\hyperlink{classVector}{\+::\+Vector}} (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classComplex__number}{size\+\_\+t}}}]{size,  }\item[{\mbox{\hyperlink{classComplex__number}{double}}}]{epsilon }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Конструктор с двумя аргументами 
+
+
+\begin{DoxyParams}{Parameters}
+{\em size} & размер вектора \\
+\hline
+{\em epsilon} & эпсилон \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classVector_afdfe347c4b7f37c0f0ec1e74811d4377}\label{classVector_afdfe347c4b7f37c0f0ec1e74811d4377} 
+\index{Vector$<$ T, container\_T $>$@{Vector$<$ T, container\_T $>$}!Vector@{Vector}}
+\index{Vector@{Vector}!Vector$<$ T, container\_T $>$@{Vector$<$ T, container\_T $>$}}
+\doxysubsubsection{\texorpdfstring{Vector()}{Vector()}\hspace{0.1cm}{\footnotesize\ttfamily [3/5]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classComplex__number}{typename}} \mbox{\hyperlink{classComplex__number}{T}}  = double, \mbox{\hyperlink{classComplex__number}{typename}} \mbox{\hyperlink{classComplex__number}{container\+\_\+T}}  = std\+::map$<$size\+\_\+t, T$>$$>$ \\
+\mbox{\hyperlink{classVector}{Vector}}$<$ \mbox{\hyperlink{classComplex__number}{T}}, \mbox{\hyperlink{classComplex__number}{container\+\_\+T}} $>$\mbox{\hyperlink{classVector}{\+::\+Vector}} (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classComplex__number}{size\+\_\+t}}}]{size,  }\item[{\mbox{\hyperlink{classComplex__number}{double}}}]{epsilon,  }\item[{\mbox{\hyperlink{classComplex__number}{T}}}]{init\+\_\+val }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Конструктор с тремя аргументами. Инициализирует вектор значениями init\+\_\+val. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em size} & размер вектора \\
+\hline
+{\em size} & эпсилон \\
+\hline
+{\em size} & начальное значение \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classVector_a127c971a001baf5fcff04cf1c0d1dbd0}\label{classVector_a127c971a001baf5fcff04cf1c0d1dbd0} 
+\index{Vector$<$ T, container\_T $>$@{Vector$<$ T, container\_T $>$}!Vector@{Vector}}
+\index{Vector@{Vector}!Vector$<$ T, container\_T $>$@{Vector$<$ T, container\_T $>$}}
+\doxysubsubsection{\texorpdfstring{Vector()}{Vector()}\hspace{0.1cm}{\footnotesize\ttfamily [4/5]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classComplex__number}{typename}} \mbox{\hyperlink{classComplex__number}{T}}  = double, \mbox{\hyperlink{classComplex__number}{typename}} \mbox{\hyperlink{classComplex__number}{container\+\_\+T}}  = std\+::map$<$size\+\_\+t, T$>$$>$ \\
+template$<$\mbox{\hyperlink{classComplex__number}{typename}} \mbox{\hyperlink{classComplex__number}{proxy\+\_\+container\+\_\+T}} $>$ \\
+\mbox{\hyperlink{classVector}{Vector}}$<$ \mbox{\hyperlink{classComplex__number}{T}}, \mbox{\hyperlink{classComplex__number}{container\+\_\+T}} $>$\mbox{\hyperlink{classVector}{\+::\+Vector}} (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classComplex__number}{const}} \mbox{\hyperlink{classMatrix__proxy}{Matrix\+\_\+proxy}}$<$ \mbox{\hyperlink{classComplex__number}{T}}, \mbox{\hyperlink{classComplex__number}{proxy\+\_\+container\+\_\+T}} $>$ \&}]{rhs }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Конструктор, строящий вектор по срезу строки 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em proxy\+\_\+container\+\_\+T} & тип контейнера прокси (матрицы, его создавшей) \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em rhs} & срез строки матрицы \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \doxylink{classProxyToVectorException}{Proxy\+To\+Vector\+Exception}} & если прокси неправильный \\
+\hline
+\end{DoxyExceptions}
+\Hypertarget{classVector_ab95082aff9b70fc38e734576308f4673}\label{classVector_ab95082aff9b70fc38e734576308f4673} 
+\index{Vector$<$ T, container\_T $>$@{Vector$<$ T, container\_T $>$}!Vector@{Vector}}
+\index{Vector@{Vector}!Vector$<$ T, container\_T $>$@{Vector$<$ T, container\_T $>$}}
+\doxysubsubsection{\texorpdfstring{Vector()}{Vector()}\hspace{0.1cm}{\footnotesize\ttfamily [5/5]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classComplex__number}{typename}} \mbox{\hyperlink{classComplex__number}{T}}  = double, \mbox{\hyperlink{classComplex__number}{typename}} \mbox{\hyperlink{classComplex__number}{container\+\_\+T}}  = std\+::map$<$size\+\_\+t, T$>$$>$ \\
+\mbox{\hyperlink{classVector}{Vector}}$<$ \mbox{\hyperlink{classComplex__number}{T}}, \mbox{\hyperlink{classComplex__number}{container\+\_\+T}} $>$\mbox{\hyperlink{classVector}{\+::\+Vector}} (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std\+::string}}}]{filename }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Конструктор, создающий вектор по файлу 
+
+
+\begin{DoxyParams}{Parameters}
+{\em filename} & имя файла с вектором \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \doxylink{classWrongFileException}{Wrong\+File\+Exception}} & если файл имеет некорректный вид \\
+\hline
+\end{DoxyExceptions}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classVector_aa250e457832ba74ed0363d7e6056251b}\label{classVector_aa250e457832ba74ed0363d7e6056251b} 
+\index{Vector$<$ T, container\_T $>$@{Vector$<$ T, container\_T $>$}!operator=@{operator=}}
+\index{operator=@{operator=}!Vector$<$ T, container\_T $>$@{Vector$<$ T, container\_T $>$}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classComplex__number}{typename}} \mbox{\hyperlink{classComplex__number}{T}}  = double, \mbox{\hyperlink{classComplex__number}{typename}} \mbox{\hyperlink{classComplex__number}{container\+\_\+T}}  = std\+::map$<$size\+\_\+t, T$>$$>$ \\
+template$<$\mbox{\hyperlink{classComplex__number}{typename}} \mbox{\hyperlink{classComplex__number}{proxy\+\_\+container\+\_\+T}} $>$ \\
+\mbox{\hyperlink{classVector}{Vector}} \& \mbox{\hyperlink{classVector}{Vector}}$<$ \mbox{\hyperlink{classComplex__number}{T}}, \mbox{\hyperlink{classComplex__number}{container\+\_\+T}} $>$\mbox{\hyperlink{classComplex__number}{\+::operator}}= (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classComplex__number}{const}} \mbox{\hyperlink{classMatrix__proxy}{Matrix\+\_\+proxy}}$<$ \mbox{\hyperlink{classComplex__number}{T}}, \mbox{\hyperlink{classComplex__number}{proxy\+\_\+container\+\_\+T}} $>$ \&}]{rhs }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Оператор присваивания, строящий вектор по срезу строки 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em proxy\+\_\+container\+\_\+T} & тип контейнера прокси (матрицы, его создавшей) \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em rhs} & срез строки матрицы \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \doxylink{classProxyToVectorException}{Proxy\+To\+Vector\+Exception}} & если прокси неправильный \\
+\hline
+\end{DoxyExceptions}
+\begin{DoxyReturn}{Returns}
+построенный вектор 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Vector.\+hpp\end{DoxyCompactItemize}

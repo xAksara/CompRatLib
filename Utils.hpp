@@ -178,9 +178,6 @@ std::string delete_comments(const std::string file_content) {
             stream_without_comments << line << std::endl;
         }
     }
-
-    std::cout << "deleted comments from file" << std::endl;
     std::string result = stream_without_comments.str();
-    std::cout << result;
     return result;
 }

@@ -63,7 +63,10 @@
 // #define sub sub_for_normal_people_not_for_cpp_mainers
 
 
-
+/**
+ * @class Класс рациональных чисел.
+ * @tparam num_type тип числителя. Тогда знаменатель unsigned num_type
+ */
 template<typename num_type = long long>
 class Rational_number {
     using denom_type = std::make_unsigned_t<num_type>; // unsigned num_type нельзя, поэтому делаем через make_unsigned_t (https://en.cppreference.com/w/cpp/types/make_unsigned)
@@ -93,8 +96,16 @@ private:
     }
 
 public:
+    /**
+     * @brief Констрктор c 1 параметром
+     * @param number числитель
+     */
     Rational_number(num_type number) : num(number), denom(1) { }
-
+    /**
+     * @brief Констрктор c 1 параметром
+     * @param numerator числитель
+     * @param denominator знаменатель
+     */
     Rational_number(num_type numerator, denom_type denominator) {
         if (denominator == 0) {
             throw DivisionByZeroException(numerator, denominator);
@@ -102,7 +113,12 @@ public:
         num = numerator;
         denom = (num == 0) ? 1 : denominator;
     }
-
+/**
+ * @brief конструктор принимающий строку
+ * 
+ * @param numStr строка
+ * @throw InvalidArgumentException если строка неверного формата
+ */
     Rational_number(std::string numStr) {
         size_t slash_idx = numStr.find('/');
         if (slash_idx == std::string::npos) {

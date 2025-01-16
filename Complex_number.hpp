@@ -4,15 +4,43 @@
 #include "Exceptions.hpp"
 #include "Rational_number.hpp"
 
+
+/**
+ * @class Класс комплексных чисел.
+ * @tparam type_real тип вещественной части
+ * @tparam type_imag тип мнимой части
+ */
 template<typename type_real = double, typename type_imag = type_real>
 class Complex_number {
     type_real real;
     type_imag image;
 public:
+    /**
+     * @brief Констрктор по умолчанию. Устанавливает мнимую и вещественные части равные 0
+     */
     Complex_number() : real(0), image(0) {}
+    /**
+     * @brief Конструктор с одним аргументом
+     * @param real значение вещественной части
+     */
     Complex_number(type_real real) : real(real), image(0) {}
+     /**
+     * @brief Конструктор с двумя аргументами
+     * @param real значение вещественной части
+     * @param imag значение мнимой части
+     */
     Complex_number(type_real real, type_imag image) : real(real), image(image) {}
-    Complex_number(std::string numStr) {
+    // Matrix.hpp:836:56: error: conversion from ‘Complex_number<Rational_number<int>,Rational_number<int>>’ to non-scalar type ‘Complex_number<int,int>’ requested
+    // 836 |         Complex_number<rhs_real, rhs_imag> sum = value - rhs;
+    // так что делаем для таких случаев констурткор.
+    template <typename other_real, typename other_imag>
+    Complex_number(const Complex_number<other_real, other_imag>& other) : real(type_real(other.getReal())), image(type_imag(other.getImage())) {}
+    /**
+     * @brief Конструктор с принимающий строку
+     * @param numStr строка
+     * @throw InvalidArgumentException если строка не имеет нужный вид
+     */
+    explicit Complex_number(std::string numStr) {
         size_t comma_idx = numStr.find(',');
         if (comma_idx == std::string::npos) {
             // значит только вещественная часть

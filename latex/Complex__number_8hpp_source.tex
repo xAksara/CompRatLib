@@ -1,0 +1,359 @@
+\doxysection{Complex\+\_\+number.\+hpp}
+\hypertarget{Complex__number_8hpp_source}{}\label{Complex__number_8hpp_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}Utils.hpp"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}Exceptions.hpp"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}Rational\_number.hpp"{}}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00013\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ type\_real\ =\ \textcolor{keywordtype}{double},\ \textcolor{keyword}{typename}\ type\_imag\ =\ type\_real>}
+\DoxyCodeLine{00014\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classComplex__number}{Complex\_number}}\ \{}
+\DoxyCodeLine{00015\ \ \ \ \ type\_real\ real;}
+\DoxyCodeLine{00016\ \ \ \ \ type\_imag\ image;}
+\DoxyCodeLine{00017\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00021\ \ \ \ \ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{Complex\_number}}()\ :\ real(0),\ image(0)\ \{\}}
+\DoxyCodeLine{00026\ \ \ \ \ \mbox{\hyperlink{classComplex__number_ac4bf3a25d550f5f2566679acddd24b0c}{Complex\_number}}(type\_real\ real)\ :\ real(real),\ image(0)\ \{\}}
+\DoxyCodeLine{00032\ \ \ \ \ \mbox{\hyperlink{classComplex__number_a812816d273bf7411259ee3eb361fb260}{Complex\_number}}(type\_real\ real,\ type\_imag\ image)\ :\ real(real),\ image(image)\ \{\}}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{comment}{//\ Matrix.hpp:836:56:\ error:\ conversion\ from\ ‘Complex\_number<Rational\_number<int>,Rational\_number<int>>’\ to\ non-\/scalar\ type\ ‘Complex\_number<int,int>’\ requested}}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{comment}{//\ 836\ |\ \ \ \ \ \ \ \ \ Complex\_number<rhs\_real,\ rhs\_imag>\ sum\ =\ value\ -\/\ rhs;}}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{comment}{//\ так\ что\ делаем\ для\ таких\ случаев\ констурткор.}}
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ other\_real,\ \textcolor{keyword}{typename}\ other\_imag>}
+\DoxyCodeLine{00037\ \ \ \ \ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{Complex\_number}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Complex\_number<other\_real,\ other\_imag>}}\&\ other)\ :\ real(type\_real(other.getReal())),\ image(type\_imag(other.getImage()))\ \{\}}
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{classComplex__number_a3a290e840b386327d6f33da36b5937b2}{Complex\_number}}(std::string\ numStr)\ \{}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ comma\_idx\ =\ numStr.find(\textcolor{charliteral}{','});}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (comma\_idx\ ==\ std::string::npos)\ \{}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ значит\ только\ вещественная\ часть}}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!isNumber(numStr))\ \{}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \mbox{\hyperlink{classInvalidArgumentException}{InvalidArgumentException}}(\textcolor{stringliteral}{"{}Строка\ должна\ быть\ вида\ \(\backslash\)"{}123,123\(\backslash\)"{},\ \(\backslash\)"{}12.3,123\(\backslash\)"{},\ \(\backslash\)"{}12.3,12.3\(\backslash\)"{},\ \(\backslash\)"{}123,12.3\(\backslash\)"{},\ \(\backslash\)"{}12.3\(\backslash\)"{}\ или\ \ \(\backslash\)"{}123\(\backslash\)"{}.\ Передано:\ "{}},\ numStr);}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \ \ \ \ real\ =\ parseDouble(numStr);}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \ \ \ \ image\ =\ 0;}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \ \ \ \ std::string\ real\_str(numStr.begin(),\ numStr.begin()\ +\ comma\_idx);}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \ \ \ \ std::string\ image\_str(numStr.begin()\ +\ comma\_idx\ +\ 1,\ numStr.end());}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!isNumber(real\_str)\ ||\ !isNumber(image\_str))\ \{}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \mbox{\hyperlink{classInvalidArgumentException}{InvalidArgumentException}}(\textcolor{stringliteral}{"{}Строка\ должна\ быть\ вида\ \(\backslash\)"{}123,123\(\backslash\)"{},\ \(\backslash\)"{}12.3,123\(\backslash\)"{},\ \(\backslash\)"{}12.3,12.3\(\backslash\)"{},\ \(\backslash\)"{}123,12.3\(\backslash\)"{},\ \(\backslash\)"{}12.3\(\backslash\)"{}\ или\ \ \(\backslash\)"{}123\(\backslash\)"{}.\ Передано:\ "{}},\ numStr);}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \ \ \ \ real\ =\ parseDouble(real\_str);}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \ \ \ \ image\ =\ parseDouble(image\_str);}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00061\ \ \ \ \ \}}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ \ \ \ \ type\_real\ getReal()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ real;\ \}}
+\DoxyCodeLine{00064\ \ \ \ \ type\_imag\ getImage()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ image;\ \}}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordtype}{void}\ setReal(type\_real\ val)\ \{\ real\ =\ val;\ \}}
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keywordtype}{void}\ setImage(type\_imag\ val)\ \{\ image\ =\ val;\ \}}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keywordtype}{double}\ modulus()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ sqrt(real\ *\ real\ +\ image\ *\ image);}
+\DoxyCodeLine{00071\ \ \ \ \ \}}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00073\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Complex\_number}}\&\ operator++()\ \{}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ real\ +=\ 1;}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00076\ \ \ \ \ \}}
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00078\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Complex\_number}}\ operator++(\textcolor{keywordtype}{int})\ \{}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Complex\_number}}\ res\ =\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ real\ +=\ 1;}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *res;}
+\DoxyCodeLine{00082\ \ \ \ \ \}}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00084\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Complex\_number}}\&\ operator-\/-\/()\ \{}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ real\ -\/=\ 1;}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00087\ \ \ \ \ \}}
+\DoxyCodeLine{00088\ }
+\DoxyCodeLine{00089\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Complex\_number}}\ operator-\/-\/(\textcolor{keywordtype}{int})\ \{}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Complex\_number}}\ res\ =\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ real\ -\/=\ 1;}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *res;}
+\DoxyCodeLine{00093\ \ \ \ \ \}}
+\DoxyCodeLine{00094\ }
+\DoxyCodeLine{00095\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Complex\_number}}\ operator-\/()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{Complex\_number}}(-\/real,\ -\/image);}
+\DoxyCodeLine{00097\ \ \ \ \ \}}
+\DoxyCodeLine{00098\ \};}
+\DoxyCodeLine{00099\ }
+\DoxyCodeLine{00100\ \textcolor{comment}{//\ Комплексныые\ +\ комплексные}}
+\DoxyCodeLine{00101\ }
+\DoxyCodeLine{00102\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ lhs\_real,\ \textcolor{keyword}{typename}\ lhs\_imag,\ \textcolor{keyword}{typename}\ rhs\_real,\ \textcolor{keyword}{typename}\ rhs\_imag>}
+\DoxyCodeLine{00103\ \mbox{\hyperlink{classComplex__number}{Complex\_number<lhs\_real,\ lhs\_imag>}}\ operator+(\textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Complex\_number<lhs\_real,\ lhs\_imag>}}\&\ lhs,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Complex\_number<rhs\_real,\ rhs\_imag>}}\&\ rhs)\ \{}
+\DoxyCodeLine{00104\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex__number}{Complex\_number<lhs\_real,\ lhs\_imag>}}(\mbox{\hyperlink{classComplex__number}{lhs}}.getReal()\ +\ \mbox{\hyperlink{classComplex__number}{rhs}}.getReal(),\ \mbox{\hyperlink{classComplex__number}{lhs}}.getImage()\ +\ \mbox{\hyperlink{classComplex__number}{rhs}}.getImage());}
+\DoxyCodeLine{00105\ \}}
+\DoxyCodeLine{00106\ }
+\DoxyCodeLine{00107\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ lhs\_real,\ \textcolor{keyword}{typename}\ lhs\_imag,\ \textcolor{keyword}{typename}\ rhs\_real,\ \textcolor{keyword}{typename}\ rhs\_imag>}
+\DoxyCodeLine{00108\ \mbox{\hyperlink{classComplex__number}{Complex\_number<lhs\_real,\ lhs\_imag>}}\ operator-\/(\textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Complex\_number<lhs\_real,\ lhs\_imag>}}\&\ \mbox{\hyperlink{classComplex__number}{lhs}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Complex\_number<rhs\_real,\ rhs\_imag>}}\&\ \mbox{\hyperlink{classComplex__number}{rhs}})\ \{}
+\DoxyCodeLine{00109\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex__number}{Complex\_number<lhs\_real,\ lhs\_imag>}}(\mbox{\hyperlink{classComplex__number}{lhs}}.getReal()\ -\/\ \mbox{\hyperlink{classComplex__number}{rhs}}.getReal(),\ \mbox{\hyperlink{classComplex__number}{lhs}}.getImage()\ -\/\ \mbox{\hyperlink{classComplex__number}{rhs}}.getImage());}
+\DoxyCodeLine{00110\ \}}
+\DoxyCodeLine{00111\ }
+\DoxyCodeLine{00112\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ lhs\_real,\ \textcolor{keyword}{typename}\ lhs\_imag,\ \textcolor{keyword}{typename}\ rhs\_real,\ \textcolor{keyword}{typename}\ rhs\_imag>}
+\DoxyCodeLine{00113\ \mbox{\hyperlink{classComplex__number}{Complex\_number<lhs\_real,\ lhs\_imag>}}\ operator*(\textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Complex\_number<lhs\_real,\ lhs\_imag>}}\&\ \mbox{\hyperlink{classComplex__number}{lhs}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Complex\_number<rhs\_real,\ rhs\_imag>}}\&\ \mbox{\hyperlink{classComplex__number}{rhs}})\ \{}
+\DoxyCodeLine{00114\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex__number}{Complex\_number<lhs\_real,\ lhs\_imag>}}(\mbox{\hyperlink{classComplex__number}{lhs}}.getReal()\ *\ \mbox{\hyperlink{classComplex__number}{rhs}}.getReal()\ -\/\ \mbox{\hyperlink{classComplex__number}{lhs}}.getImage()\ *\ \mbox{\hyperlink{classComplex__number}{rhs}}.getImage(),\ \mbox{\hyperlink{classComplex__number}{lhs}}.getReal()\ *\ \mbox{\hyperlink{classComplex__number}{rhs}}.getImage()\ +\ \mbox{\hyperlink{classComplex__number}{lhs}}.getImage()\ *\ \mbox{\hyperlink{classComplex__number}{rhs}}.getReal());}
+\DoxyCodeLine{00115\ \}}
+\DoxyCodeLine{00116\ }
+\DoxyCodeLine{00117\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ lhs\_real,\ \textcolor{keyword}{typename}\ lhs\_imag,\ \textcolor{keyword}{typename}\ rhs\_real,\ \textcolor{keyword}{typename}\ rhs\_imag>}
+\DoxyCodeLine{00118\ \mbox{\hyperlink{classComplex__number}{Complex\_number<lhs\_real,\ lhs\_imag>}}\ operator/(\textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Complex\_number<lhs\_real,\ lhs\_imag>}}\&\ \mbox{\hyperlink{classComplex__number}{lhs}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Complex\_number<rhs\_real,\ rhs\_imag>}}\&\ \mbox{\hyperlink{classComplex__number}{rhs}})\ \{}
+\DoxyCodeLine{00119\ \ \ \ \ \textcolor{comment}{//\ Если\ где-\/то\ беззнаковое,\ то\ пользователь\ сам\ виноват}}
+\DoxyCodeLine{00120\ \ \ \ \ \textcolor{keyword}{auto}\ denominator\ =\ \mbox{\hyperlink{classComplex__number}{rhs}}.getReal()\ *\ \mbox{\hyperlink{classComplex__number}{rhs}}.getReal()\ +\ \mbox{\hyperlink{classComplex__number}{rhs}}.getImage()\ *\ \mbox{\hyperlink{classComplex__number}{rhs}}.getImage();}
+\DoxyCodeLine{00121\ \ \ \ \ \textcolor{keywordflow}{if}\ (denominator\ ==\ 0)\ \{}
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \mbox{\hyperlink{classDivisionByZeroException}{DivisionByZeroException}}(\mbox{\hyperlink{classComplex__number}{lhs}},\ \mbox{\hyperlink{classComplex__number}{rhs}});}
+\DoxyCodeLine{00123\ \ \ \ \ \}}
+\DoxyCodeLine{00124\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex__number}{Complex\_number<lhs\_real,\ lhs\_imag>}}(}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ (\mbox{\hyperlink{classComplex__number}{lhs}}.getReal()\ *\ \mbox{\hyperlink{classComplex__number}{rhs}}.getReal()\ +\ \mbox{\hyperlink{classComplex__number}{lhs}}.getImage()\ *\ \mbox{\hyperlink{classComplex__number}{rhs}}.getImage())\ /\ denominator,}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ (\mbox{\hyperlink{classComplex__number}{lhs}}.getImage()\ *\ \mbox{\hyperlink{classComplex__number}{rhs}}.getReal()\ -\/\ \mbox{\hyperlink{classComplex__number}{lhs}}.getReal()\ *\ \mbox{\hyperlink{classComplex__number}{rhs}}.getImage())\ /\ denominator}
+\DoxyCodeLine{00127\ \ \ \ \ );}
+\DoxyCodeLine{00128\ \}}
+\DoxyCodeLine{00129\ }
+\DoxyCodeLine{00130\ \textcolor{comment}{//\ Логические\ операторы\ для\ комплексных}}
+\DoxyCodeLine{00131\ }
+\DoxyCodeLine{00132\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ lhs\_real,\ \textcolor{keyword}{typename}\ lhs\_imag,\ \textcolor{keyword}{typename}\ rhs\_real,\ \textcolor{keyword}{typename}\ rhs\_imag>}
+\DoxyCodeLine{00133\ \textcolor{keywordtype}{bool}\ operator==(\textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Complex\_number<lhs\_real,\ lhs\_imag>}}\&\ \mbox{\hyperlink{classComplex__number}{lhs}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Complex\_number<rhs\_real,\ rhs\_imag>}}\&\ \mbox{\hyperlink{classComplex__number}{rhs}})\ \{}
+\DoxyCodeLine{00134\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex__number}{lhs}}.getReal()\ ==\ \mbox{\hyperlink{classComplex__number}{rhs}}.getReal()\ \&\&\ \mbox{\hyperlink{classComplex__number}{lhs}}.getImage()\ ==\ \mbox{\hyperlink{classComplex__number}{rhs}}.getImage();}
+\DoxyCodeLine{00135\ \}}
+\DoxyCodeLine{00136\ }
+\DoxyCodeLine{00137\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ lhs\_real,\ \textcolor{keyword}{typename}\ lhs\_imag,\ \textcolor{keyword}{typename}\ rhs\_real,\ \textcolor{keyword}{typename}\ rhs\_imag>}
+\DoxyCodeLine{00138\ \textcolor{keywordtype}{bool}\ operator!=(\textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Complex\_number<lhs\_real,\ lhs\_imag>}}\&\ \mbox{\hyperlink{classComplex__number}{lhs}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Complex\_number<rhs\_real,\ rhs\_imag>}}\&\ \mbox{\hyperlink{classComplex__number}{rhs}})\ \{}
+\DoxyCodeLine{00139\ \ \ \ \ \textcolor{keywordflow}{return}\ !(\mbox{\hyperlink{classComplex__number}{lhs}}.getReal()\ ==\ \mbox{\hyperlink{classComplex__number}{rhs}}.getReal()\ \&\&\ \mbox{\hyperlink{classComplex__number}{lhs}}.getImage()\ ==\ \mbox{\hyperlink{classComplex__number}{rhs}}.getImage());}
+\DoxyCodeLine{00140\ \}}
+\DoxyCodeLine{00141\ }
+\DoxyCodeLine{00142\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ lhs\_real,\ \textcolor{keyword}{typename}\ lhs\_imag,\ \textcolor{keyword}{typename}\ rhs\_real,\ \textcolor{keyword}{typename}\ rhs\_imag>}
+\DoxyCodeLine{00143\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classComplex__number}{operator<}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Complex\_number<lhs\_real,\ lhs\_imag>}}\&\ \mbox{\hyperlink{classComplex__number}{lhs}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Complex\_number<rhs\_real,\ rhs\_imag>}}\&\ \mbox{\hyperlink{classComplex__number}{rhs}})\ \{}
+\DoxyCodeLine{00144\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex__number}{lhs}}.modulus()\ <\ \mbox{\hyperlink{classComplex__number}{rhs}}.modulus();}
+\DoxyCodeLine{00145\ \}}
+\DoxyCodeLine{00146\ }
+\DoxyCodeLine{00147\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ lhs\_real,\ \textcolor{keyword}{typename}\ lhs\_imag,\ \textcolor{keyword}{typename}\ rhs\_real,\ \textcolor{keyword}{typename}\ rhs\_imag>}
+\DoxyCodeLine{00148\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classComplex__number}{operator<=}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Complex\_number<lhs\_real,\ lhs\_imag>}}\&\ \mbox{\hyperlink{classComplex__number}{lhs}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Complex\_number<rhs\_real,\ rhs\_imag>}}\&\ \mbox{\hyperlink{classComplex__number}{rhs}})\ \{}
+\DoxyCodeLine{00149\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex__number}{lhs}}.modulus()\ <=\ \mbox{\hyperlink{classComplex__number}{rhs}}.modulus();}
+\DoxyCodeLine{00150\ \}}
+\DoxyCodeLine{00151\ }
+\DoxyCodeLine{00152\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ lhs\_real,\ \textcolor{keyword}{typename}\ lhs\_imag,\ \textcolor{keyword}{typename}\ rhs\_real,\ \textcolor{keyword}{typename}\ rhs\_imag>}
+\DoxyCodeLine{00153\ \textcolor{keywordtype}{bool}\ operator>(\textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Complex\_number<lhs\_real,\ lhs\_imag>}}\&\ \mbox{\hyperlink{classComplex__number}{lhs}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Complex\_number<rhs\_real,\ rhs\_imag>}}\&\ \mbox{\hyperlink{classComplex__number}{rhs}})\ \{}
+\DoxyCodeLine{00154\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex__number}{lhs}}.modulus()\ >\ \mbox{\hyperlink{classComplex__number}{rhs}}.modulus();}
+\DoxyCodeLine{00155\ \}}
+\DoxyCodeLine{00156\ }
+\DoxyCodeLine{00157\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ lhs\_real,\ \textcolor{keyword}{typename}\ lhs\_imag,\ \textcolor{keyword}{typename}\ rhs\_real,\ \textcolor{keyword}{typename}\ rhs\_imag>}
+\DoxyCodeLine{00158\ \textcolor{keywordtype}{bool}\ operator>=(\textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Complex\_number<lhs\_real,\ lhs\_imag>}}\&\ \mbox{\hyperlink{classComplex__number}{lhs}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Complex\_number<rhs\_real,\ rhs\_imag>}}\&\ \mbox{\hyperlink{classComplex__number}{rhs}})\ \{}
+\DoxyCodeLine{00159\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex__number}{lhs}}.modulus()\ >=\ \mbox{\hyperlink{classComplex__number}{rhs}}.modulus();}
+\DoxyCodeLine{00160\ \}}
+\DoxyCodeLine{00161\ }
+\DoxyCodeLine{00162\ }
+\DoxyCodeLine{00163\ }
+\DoxyCodeLine{00164\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ lhs\_real,\ \textcolor{keyword}{typename}\ lhs\_imag,\ \textcolor{keyword}{typename}\ rhs\_type>}
+\DoxyCodeLine{00165\ \textcolor{keywordtype}{bool}\ operator==(\textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Complex\_number<lhs\_real,\ lhs\_imag>}}\&\ \mbox{\hyperlink{classComplex__number}{lhs}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{rhs\_type}}\&\ \mbox{\hyperlink{classComplex__number}{rhs}})\ \{}
+\DoxyCodeLine{00166\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex__number}{lhs}}\ ==\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(\mbox{\hyperlink{classComplex__number}{rhs}});}
+\DoxyCodeLine{00167\ \}}
+\DoxyCodeLine{00168\ }
+\DoxyCodeLine{00169\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ lhs\_real,\ \textcolor{keyword}{typename}\ lhs\_imag,\ \textcolor{keyword}{typename}\ rhs\_type>}
+\DoxyCodeLine{00170\ \textcolor{keywordtype}{bool}\ operator!=(\textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Complex\_number<lhs\_real,\ lhs\_imag>}}\&\ \mbox{\hyperlink{classComplex__number}{lhs}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{rhs\_type}}\&\ \mbox{\hyperlink{classComplex__number}{rhs}})\ \{}
+\DoxyCodeLine{00171\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex__number}{lhs}}\ !=\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(\mbox{\hyperlink{classComplex__number}{rhs}});}
+\DoxyCodeLine{00172\ \}}
+\DoxyCodeLine{00173\ }
+\DoxyCodeLine{00174\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ lhs\_real,\ \textcolor{keyword}{typename}\ lhs\_imag,\ \textcolor{keyword}{typename}\ rhs\_type>}
+\DoxyCodeLine{00175\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classComplex__number}{operator<}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Complex\_number<lhs\_real,\ lhs\_imag>}}\&\ \mbox{\hyperlink{classComplex__number}{lhs}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{rhs\_type}}\&\ \mbox{\hyperlink{classComplex__number}{rhs}})\ \{}
+\DoxyCodeLine{00176\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex__number}{lhs}}.modulus()\ <\ \mbox{\hyperlink{classComplex__number}{rhs}};}
+\DoxyCodeLine{00177\ \}}
+\DoxyCodeLine{00178\ }
+\DoxyCodeLine{00179\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ lhs\_real,\ \textcolor{keyword}{typename}\ lhs\_imag,\ \textcolor{keyword}{typename}\ rhs\_type>}
+\DoxyCodeLine{00180\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classComplex__number}{operator<=}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Complex\_number<lhs\_real,\ lhs\_imag>}}\&\ \mbox{\hyperlink{classComplex__number}{lhs}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{rhs\_type}}\&\ \mbox{\hyperlink{classComplex__number}{rhs}})\ \{}
+\DoxyCodeLine{00181\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex__number}{lhs}}.modulus()\ <=\ \mbox{\hyperlink{classComplex__number}{rhs}};}
+\DoxyCodeLine{00182\ \}}
+\DoxyCodeLine{00183\ }
+\DoxyCodeLine{00184\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ lhs\_real,\ \textcolor{keyword}{typename}\ lhs\_imag,\ \textcolor{keyword}{typename}\ rhs\_type>}
+\DoxyCodeLine{00185\ \textcolor{keywordtype}{bool}\ operator>(\textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Complex\_number<lhs\_real,\ lhs\_imag>}}\&\ \mbox{\hyperlink{classComplex__number}{lhs}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{rhs\_type}}\&\ \mbox{\hyperlink{classComplex__number}{rhs}})\ \{}
+\DoxyCodeLine{00186\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex__number}{lhs}}.modulus()\ >\ \mbox{\hyperlink{classComplex__number}{rhs}};}
+\DoxyCodeLine{00187\ \}}
+\DoxyCodeLine{00188\ }
+\DoxyCodeLine{00189\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ lhs\_real,\ \textcolor{keyword}{typename}\ lhs\_imag,\ \textcolor{keyword}{typename}\ rhs\_type>}
+\DoxyCodeLine{00190\ \textcolor{keywordtype}{bool}\ operator>=(\textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Complex\_number<lhs\_real,\ lhs\_imag>}}\&\ \mbox{\hyperlink{classComplex__number}{lhs}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{rhs\_type}}\&\ \mbox{\hyperlink{classComplex__number}{rhs}})\ \{}
+\DoxyCodeLine{00191\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex__number}{lhs}}.modulus()\ >=\ \mbox{\hyperlink{classComplex__number}{rhs}};}
+\DoxyCodeLine{00192\ \}}
+\DoxyCodeLine{00193\ }
+\DoxyCodeLine{00194\ }
+\DoxyCodeLine{00195\ }
+\DoxyCodeLine{00196\ }
+\DoxyCodeLine{00197\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ lhs\_real,\ \textcolor{keyword}{typename}\ lhs\_imag,\ \textcolor{keyword}{typename}\ rhs\_type>}
+\DoxyCodeLine{00198\ \textcolor{keywordtype}{bool}\ operator==(\textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Complex\_number<lhs\_real,\ lhs\_imag>}}\&\ \mbox{\hyperlink{classComplex__number}{lhs}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Rational\_number<rhs\_type>}}\&\ \mbox{\hyperlink{classComplex__number}{rhs}})\ \{}
+\DoxyCodeLine{00199\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex__number}{lhs}}\ ==\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(\mbox{\hyperlink{classComplex__number}{rhs}});}
+\DoxyCodeLine{00200\ \}}
+\DoxyCodeLine{00201\ }
+\DoxyCodeLine{00202\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ lhs\_real,\ \textcolor{keyword}{typename}\ lhs\_imag,\ \textcolor{keyword}{typename}\ rhs\_type>}
+\DoxyCodeLine{00203\ \textcolor{keywordtype}{bool}\ operator!=(\textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Complex\_number<lhs\_real,\ lhs\_imag>}}\&\ \mbox{\hyperlink{classComplex__number}{lhs}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Rational\_number<rhs\_type>}}\&\ \mbox{\hyperlink{classComplex__number}{rhs}})\ \{}
+\DoxyCodeLine{00204\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex__number}{lhs}}\ !=\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(\mbox{\hyperlink{classComplex__number}{rhs}});}
+\DoxyCodeLine{00205\ \}}
+\DoxyCodeLine{00206\ }
+\DoxyCodeLine{00207\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ lhs\_real,\ \textcolor{keyword}{typename}\ lhs\_imag,\ \textcolor{keyword}{typename}\ rhs\_type>}
+\DoxyCodeLine{00208\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classComplex__number}{operator<}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Complex\_number<lhs\_real,\ lhs\_imag>}}\&\ \mbox{\hyperlink{classComplex__number}{lhs}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Rational\_number<rhs\_type>}}\&\ \mbox{\hyperlink{classComplex__number}{rhs}})\ \{}
+\DoxyCodeLine{00209\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex__number}{lhs}}.modulus()\ <\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(\mbox{\hyperlink{classComplex__number}{rhs}}).modulus();}
+\DoxyCodeLine{00210\ \}}
+\DoxyCodeLine{00211\ }
+\DoxyCodeLine{00212\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ lhs\_real,\ \textcolor{keyword}{typename}\ lhs\_imag,\ \textcolor{keyword}{typename}\ rhs\_type>}
+\DoxyCodeLine{00213\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classComplex__number}{operator<=}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Complex\_number<lhs\_real,\ lhs\_imag>}}\&\ \mbox{\hyperlink{classComplex__number}{lhs}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Rational\_number<rhs\_type>}}\&\ \mbox{\hyperlink{classComplex__number}{rhs}})\ \{}
+\DoxyCodeLine{00214\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex__number}{lhs}}.modulus()\ <=\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(\mbox{\hyperlink{classComplex__number}{rhs}}).modulus();}
+\DoxyCodeLine{00215\ \}}
+\DoxyCodeLine{00216\ }
+\DoxyCodeLine{00217\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ lhs\_real,\ \textcolor{keyword}{typename}\ lhs\_imag,\ \textcolor{keyword}{typename}\ rhs\_type>}
+\DoxyCodeLine{00218\ \textcolor{keywordtype}{bool}\ operator>(\textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Complex\_number<lhs\_real,\ lhs\_imag>}}\&\ \mbox{\hyperlink{classComplex__number}{lhs}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Rational\_number<rhs\_type>}}\&\ \mbox{\hyperlink{classComplex__number}{rhs}})\ \{}
+\DoxyCodeLine{00219\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex__number}{lhs}}.modulus()\ >\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(\mbox{\hyperlink{classComplex__number}{rhs}}).modulus();}
+\DoxyCodeLine{00220\ \}}
+\DoxyCodeLine{00221\ }
+\DoxyCodeLine{00222\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ lhs\_real,\ \textcolor{keyword}{typename}\ lhs\_imag,\ \textcolor{keyword}{typename}\ rhs\_type>}
+\DoxyCodeLine{00223\ \textcolor{keywordtype}{bool}\ operator>=(\textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Complex\_number<lhs\_real,\ lhs\_imag>}}\&\ \mbox{\hyperlink{classComplex__number}{lhs}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Rational\_number<rhs\_type>}}\&\ \mbox{\hyperlink{classComplex__number}{rhs}})\ \{}
+\DoxyCodeLine{00224\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex__number}{lhs}}.modulus()\ >=\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(\mbox{\hyperlink{classComplex__number}{rhs}}).modulus();}
+\DoxyCodeLine{00225\ \}}
+\DoxyCodeLine{00226\ }
+\DoxyCodeLine{00227\ }
+\DoxyCodeLine{00228\ }
+\DoxyCodeLine{00229\ }
+\DoxyCodeLine{00230\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ lhs\_type,\ \textcolor{keyword}{typename}\ rhs\_real,\ \textcolor{keyword}{typename}\ rhs\_imag>}
+\DoxyCodeLine{00231\ \textcolor{keywordtype}{bool}\ operator==(\textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Rational\_number<lhs\_type>}}\&\ \mbox{\hyperlink{classComplex__number}{lhs}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Complex\_number<rhs\_real,\ rhs\_imag>}}\&\ \mbox{\hyperlink{classComplex__number}{rhs}})\ \{}
+\DoxyCodeLine{00232\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(\mbox{\hyperlink{classComplex__number}{lhs}})\ ==\ \mbox{\hyperlink{classComplex__number}{rhs}};}
+\DoxyCodeLine{00233\ \}}
+\DoxyCodeLine{00234\ }
+\DoxyCodeLine{00235\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ lhs\_type,\ \textcolor{keyword}{typename}\ rhs\_real,\ \textcolor{keyword}{typename}\ rhs\_imag>}
+\DoxyCodeLine{00236\ \textcolor{keywordtype}{bool}\ operator!=(\textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Rational\_number<lhs\_type>}}\&\ \mbox{\hyperlink{classComplex__number}{lhs}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Complex\_number<rhs\_real,\ rhs\_imag>}}\&\ \mbox{\hyperlink{classComplex__number}{rhs}})\ \{}
+\DoxyCodeLine{00237\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(\mbox{\hyperlink{classComplex__number}{lhs}})\ !=\ \mbox{\hyperlink{classComplex__number}{rhs}};}
+\DoxyCodeLine{00238\ \}}
+\DoxyCodeLine{00239\ }
+\DoxyCodeLine{00240\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ lhs\_type,\ \textcolor{keyword}{typename}\ rhs\_real,\ \textcolor{keyword}{typename}\ rhs\_imag>}
+\DoxyCodeLine{00241\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classComplex__number}{operator<}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Rational\_number<lhs\_type>}}\&\ \mbox{\hyperlink{classComplex__number}{lhs}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Complex\_number<rhs\_real,\ rhs\_imag>}}\&\ \mbox{\hyperlink{classComplex__number}{rhs}})\ \{}
+\DoxyCodeLine{00242\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(\mbox{\hyperlink{classComplex__number}{lhs}})\ <\ \mbox{\hyperlink{classComplex__number}{rhs}};}
+\DoxyCodeLine{00243\ \}}
+\DoxyCodeLine{00244\ }
+\DoxyCodeLine{00245\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ lhs\_type,\ \textcolor{keyword}{typename}\ rhs\_real,\ \textcolor{keyword}{typename}\ rhs\_imag>}
+\DoxyCodeLine{00246\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classComplex__number}{operator<=}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Rational\_number<lhs\_type>}}\&\ \mbox{\hyperlink{classComplex__number}{lhs}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Complex\_number<rhs\_real,\ rhs\_imag>}}\&\ \mbox{\hyperlink{classComplex__number}{rhs}})\ \{}
+\DoxyCodeLine{00247\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(\mbox{\hyperlink{classComplex__number}{lhs}})\ <=\ \mbox{\hyperlink{classComplex__number}{rhs}};}
+\DoxyCodeLine{00248\ \}}
+\DoxyCodeLine{00249\ }
+\DoxyCodeLine{00250\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ lhs\_type,\ \textcolor{keyword}{typename}\ rhs\_real,\ \textcolor{keyword}{typename}\ rhs\_imag>}
+\DoxyCodeLine{00251\ \textcolor{keywordtype}{bool}\ operator>(\textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Rational\_number<lhs\_type>}}\&\ \mbox{\hyperlink{classComplex__number}{lhs}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Complex\_number<rhs\_real,\ rhs\_imag>}}\&\ \mbox{\hyperlink{classComplex__number}{rhs}})\ \{}
+\DoxyCodeLine{00252\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(\mbox{\hyperlink{classComplex__number}{lhs}})\ >\ \mbox{\hyperlink{classComplex__number}{rhs}};}
+\DoxyCodeLine{00253\ \}}
+\DoxyCodeLine{00254\ }
+\DoxyCodeLine{00255\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ lhs\_type,\ \textcolor{keyword}{typename}\ rhs\_real,\ \textcolor{keyword}{typename}\ rhs\_imag>}
+\DoxyCodeLine{00256\ \textcolor{keywordtype}{bool}\ operator>=(\textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Rational\_number<lhs\_type>}}\&\ \mbox{\hyperlink{classComplex__number}{lhs}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Complex\_number<rhs\_real,\ rhs\_imag>}}\&\ \mbox{\hyperlink{classComplex__number}{rhs}})\ \{}
+\DoxyCodeLine{00257\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(\mbox{\hyperlink{classComplex__number}{lhs}})\ >=\ \mbox{\hyperlink{classComplex__number}{rhs}};}
+\DoxyCodeLine{00258\ \}}
+\DoxyCodeLine{00259\ }
+\DoxyCodeLine{00260\ }
+\DoxyCodeLine{00261\ }
+\DoxyCodeLine{00262\ \textcolor{comment}{//\ КОмплексные\ +\ базовые}}
+\DoxyCodeLine{00263\ }
+\DoxyCodeLine{00264\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ lhs\_real,\ \textcolor{keyword}{typename}\ lhs\_imag,\ \textcolor{keyword}{typename}\ rhs\_type>}
+\DoxyCodeLine{00265\ \mbox{\hyperlink{classComplex__number}{Complex\_number<lhs\_real,\ lhs\_imag>}}\ operator+(\textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Complex\_number<lhs\_real,\ lhs\_imag>}}\&\ \mbox{\hyperlink{classComplex__number}{lhs}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{rhs\_type}}\&\ \mbox{\hyperlink{classComplex__number}{rhs}})\ \{}
+\DoxyCodeLine{00266\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex__number}{lhs}}\ +\ \mbox{\hyperlink{classComplex__number}{Complex\_number<lhs\_real,\ lhs\_imag>}}(\mbox{\hyperlink{classComplex__number}{rhs}});}
+\DoxyCodeLine{00267\ \}}
+\DoxyCodeLine{00268\ }
+\DoxyCodeLine{00269\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ lhs\_real,\ \textcolor{keyword}{typename}\ lhs\_imag,\ \textcolor{keyword}{typename}\ rhs\_type>}
+\DoxyCodeLine{00270\ \mbox{\hyperlink{classComplex__number}{Complex\_number<lhs\_real,\ lhs\_imag>}}\ operator-\/(\textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Complex\_number<lhs\_real,\ lhs\_imag>}}\&\ \mbox{\hyperlink{classComplex__number}{lhs}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{rhs\_type}}\&\ \mbox{\hyperlink{classComplex__number}{rhs}})\ \{}
+\DoxyCodeLine{00271\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex__number}{lhs}}\ -\/\ \mbox{\hyperlink{classComplex__number}{Complex\_number<lhs\_real,\ lhs\_imag>}}(\mbox{\hyperlink{classComplex__number}{rhs}});}
+\DoxyCodeLine{00272\ \}}
+\DoxyCodeLine{00273\ }
+\DoxyCodeLine{00274\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ lhs\_real,\ \textcolor{keyword}{typename}\ lhs\_imag,\ \textcolor{keyword}{typename}\ rhs\_type>}
+\DoxyCodeLine{00275\ \mbox{\hyperlink{classComplex__number}{Complex\_number<lhs\_real,\ lhs\_imag>}}\ operator*(\textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Complex\_number<lhs\_real,\ lhs\_imag>}}\&\ \mbox{\hyperlink{classComplex__number}{lhs}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{rhs\_type}}\&\ \mbox{\hyperlink{classComplex__number}{rhs}})\ \{}
+\DoxyCodeLine{00276\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex__number}{lhs}}\ *\ \mbox{\hyperlink{classComplex__number}{Complex\_number<lhs\_real,\ lhs\_imag>}}(\mbox{\hyperlink{classComplex__number}{rhs}});}
+\DoxyCodeLine{00277\ \}}
+\DoxyCodeLine{00278\ }
+\DoxyCodeLine{00279\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ lhs\_real,\ \textcolor{keyword}{typename}\ lhs\_imag,\ \textcolor{keyword}{typename}\ rhs\_type>}
+\DoxyCodeLine{00280\ \mbox{\hyperlink{classComplex__number}{Complex\_number<lhs\_real,\ lhs\_imag>}}\ operator/(\textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Complex\_number<lhs\_real,\ lhs\_imag>}}\&\ \mbox{\hyperlink{classComplex__number}{lhs}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{rhs\_type}}\&\ \mbox{\hyperlink{classComplex__number}{rhs}})\ \{}
+\DoxyCodeLine{00281\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex__number}{lhs}}\ /\ \mbox{\hyperlink{classComplex__number}{Complex\_number<lhs\_real,\ lhs\_imag>}}(\mbox{\hyperlink{classComplex__number}{rhs}});}
+\DoxyCodeLine{00282\ \}}
+\DoxyCodeLine{00283\ }
+\DoxyCodeLine{00284\ }
+\DoxyCodeLine{00285\ \textcolor{comment}{//\ Арифметика\ комплексных\ и\ рациональных.\ }}
+\DoxyCodeLine{00286\ }
+\DoxyCodeLine{00287\ }
+\DoxyCodeLine{00288\ \textcolor{comment}{//\ Нужно,\ потому\ что\ при\ попытке,\ например,\ сложения\ }}
+\DoxyCodeLine{00289\ \textcolor{comment}{//\ GoogleTests.hpp:162:17:\ error:\ ambiguous\ overload\ for\ ‘operator+’\ (operand\ types\ are\ ‘Complex\_number<int,\ int>’\ and\ ‘Rational\_number<int>’)}}
+\DoxyCodeLine{00290\ \textcolor{comment}{//\ \ \ 162\ |\ \ \ \ \ ASSERT\_EQ(c\ +\ r,\ sum1);}}
+\DoxyCodeLine{00291\ \textcolor{comment}{//\ \ \ \ \ \ \ |\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \string~\ \string^\ \string~}}
+\DoxyCodeLine{00292\ \textcolor{comment}{//\ \ \ \ \ \ \ |\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |\ \ \ |}}
+\DoxyCodeLine{00293\ \textcolor{comment}{//\ \ \ \ \ \ \ |\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |\ \ \ Rational\_number<int>}}
+\DoxyCodeLine{00294\ \textcolor{comment}{//\ \ \ \ \ \ \ |\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Complex\_number<int,\ int>}}
+\DoxyCodeLine{00295\ \textcolor{comment}{//\ In\ file\ included\ from\ main.cpp:2:}}
+\DoxyCodeLine{00296\ \textcolor{comment}{//\ Rational\_number.hpp:348:27:\ note:\ candidate:\ ‘Rational\_number<num\_type>\ operator+(T,\ Rational\_number<num\_type>)\ [with\ num\_type\ =\ int;\ T\ =\ Complex\_number<int,\ int>]’}}
+\DoxyCodeLine{00297\ \textcolor{comment}{//\ \ \ 348\ |\ Rational\_number<num\_type>\ operator+(T\ lhs,\ Rational\_number<num\_type>\ rhs)\ \{}}
+\DoxyCodeLine{00298\ \textcolor{comment}{//\ \ \ \ \ \ \ |\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \string^\string~\string~\string~\string~\string~\string~\string~}}
+\DoxyCodeLine{00299\ \textcolor{comment}{//\ In\ file\ included\ from\ GoogleTests.hpp:6:}}
+\DoxyCodeLine{00300\ \textcolor{comment}{//\ Complex\_number.hpp:75:36:\ note:\ candidate:\ ‘Complex\_number<lhs\_real,\ lhs\_imag>\ operator+(const\ Complex\_number<lhs\_real,\ lhs\_imag>\&,\ const\ rhs\_type\&)\ [with\ lhs\_real\ =\ int;\ lhs\_imag\ =\ int;\ rhs\_type\ =\ Rational\_number<int>]’}}
+\DoxyCodeLine{00301\ \textcolor{comment}{//\ \ \ \ 75\ |\ Complex\_number<lhs\_real,\ lhs\_imag>\ operator+(const\ Complex\_number<lhs\_real,\ lhs\_imag>\&\ lhs,\ const\ rhs\_type\&\ rhs)\ \{}}
+\DoxyCodeLine{00302\ }
+\DoxyCodeLine{00303\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ lhs\_real,\ \textcolor{keyword}{typename}\ lhs\_imag,\ \textcolor{keyword}{typename}\ rhs\_type>}
+\DoxyCodeLine{00304\ \mbox{\hyperlink{classComplex__number}{Complex\_number<lhs\_real,\ lhs\_imag>}}\ operator+(\textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Complex\_number<lhs\_real,\ lhs\_imag>}}\&\ \mbox{\hyperlink{classComplex__number}{lhs}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Rational\_number<rhs\_type>}}\&\ \mbox{\hyperlink{classComplex__number}{rhs}})\ \{}
+\DoxyCodeLine{00305\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex__number}{lhs}}\ +\ \mbox{\hyperlink{classComplex__number}{Complex\_number<lhs\_real,\ lhs\_imag>}}(\mbox{\hyperlink{classComplex__number}{rhs}});}
+\DoxyCodeLine{00306\ \}}
+\DoxyCodeLine{00307\ }
+\DoxyCodeLine{00308\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ lhs\_real,\ \textcolor{keyword}{typename}\ lhs\_imag,\ \textcolor{keyword}{typename}\ rhs\_type>}
+\DoxyCodeLine{00309\ \mbox{\hyperlink{classComplex__number}{Complex\_number<lhs\_real,\ lhs\_imag>}}\ operator-\/(\textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Complex\_number<lhs\_real,\ lhs\_imag>}}\&\ \mbox{\hyperlink{classComplex__number}{lhs}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Rational\_number<rhs\_type>}}\&\ \mbox{\hyperlink{classComplex__number}{rhs}})\ \{}
+\DoxyCodeLine{00310\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex__number}{lhs}}\ -\/\ \mbox{\hyperlink{classComplex__number}{Complex\_number<lhs\_real,\ lhs\_imag>}}(\mbox{\hyperlink{classComplex__number}{rhs}});}
+\DoxyCodeLine{00311\ \}}
+\DoxyCodeLine{00312\ }
+\DoxyCodeLine{00313\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ lhs\_real,\ \textcolor{keyword}{typename}\ lhs\_imag,\ \textcolor{keyword}{typename}\ rhs\_type>}
+\DoxyCodeLine{00314\ \mbox{\hyperlink{classComplex__number}{Complex\_number<lhs\_real,\ lhs\_imag>}}\ operator*(\textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Complex\_number<lhs\_real,\ lhs\_imag>}}\&\ \mbox{\hyperlink{classComplex__number}{lhs}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Rational\_number<rhs\_type>}}\&\ \mbox{\hyperlink{classComplex__number}{rhs}})\ \{}
+\DoxyCodeLine{00315\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex__number}{lhs}}\ *\ \mbox{\hyperlink{classComplex__number}{Complex\_number<lhs\_real,\ lhs\_imag>}}(\mbox{\hyperlink{classComplex__number}{rhs}});}
+\DoxyCodeLine{00316\ \}}
+\DoxyCodeLine{00317\ }
+\DoxyCodeLine{00318\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ lhs\_real,\ \textcolor{keyword}{typename}\ lhs\_imag,\ \textcolor{keyword}{typename}\ rhs\_type>}
+\DoxyCodeLine{00319\ \mbox{\hyperlink{classComplex__number}{Complex\_number<lhs\_real,\ lhs\_imag>}}\ operator/(\textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Complex\_number<lhs\_real,\ lhs\_imag>}}\&\ \mbox{\hyperlink{classComplex__number}{lhs}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Rational\_number<rhs\_type>}}\&\ \mbox{\hyperlink{classComplex__number}{rhs}})\ \{}
+\DoxyCodeLine{00320\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex__number}{lhs}}\ /\ \mbox{\hyperlink{classComplex__number}{Complex\_number<lhs\_real,\ lhs\_imag>}}(\mbox{\hyperlink{classComplex__number}{rhs}});}
+\DoxyCodeLine{00321\ \}}
+\DoxyCodeLine{00322\ }
+\DoxyCodeLine{00323\ }
+\DoxyCodeLine{00324\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ rhs\_real,\ \textcolor{keyword}{typename}\ rhs\_imag,\ \textcolor{keyword}{typename}\ lhs\_type>}
+\DoxyCodeLine{00325\ \mbox{\hyperlink{classComplex__number}{Complex\_number<rhs\_real,\ rhs\_imag>}}\ operator+(\textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Rational\_number<lhs\_type>}}\&\ \mbox{\hyperlink{classComplex__number}{lhs}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Complex\_number<rhs\_real,\ rhs\_imag>}}\&\ \mbox{\hyperlink{classComplex__number}{rhs}})\ \{}
+\DoxyCodeLine{00326\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex__number}{Complex\_number<rhs\_real,\ rhs\_imag>}}(\mbox{\hyperlink{classComplex__number}{lhs}})\ +\ \mbox{\hyperlink{classComplex__number}{rhs}};}
+\DoxyCodeLine{00327\ \}}
+\DoxyCodeLine{00328\ }
+\DoxyCodeLine{00329\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ rhs\_real,\ \textcolor{keyword}{typename}\ rhs\_imag,\ \textcolor{keyword}{typename}\ lhs\_type>}
+\DoxyCodeLine{00330\ \mbox{\hyperlink{classComplex__number}{Complex\_number<rhs\_real,\ rhs\_imag>}}\ operator-\/(\textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Rational\_number<lhs\_type>}}\&\ \mbox{\hyperlink{classComplex__number}{lhs}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Complex\_number<rhs\_real,\ rhs\_imag>}}\&\ \mbox{\hyperlink{classComplex__number}{rhs}})\ \{}
+\DoxyCodeLine{00331\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex__number}{Complex\_number<rhs\_real,\ rhs\_imag>}}(\mbox{\hyperlink{classComplex__number}{lhs}})\ -\/\ \mbox{\hyperlink{classComplex__number}{rhs}};}
+\DoxyCodeLine{00332\ \}}
+\DoxyCodeLine{00333\ }
+\DoxyCodeLine{00334\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ rhs\_real,\ \textcolor{keyword}{typename}\ rhs\_imag,\ \textcolor{keyword}{typename}\ lhs\_type>}
+\DoxyCodeLine{00335\ \mbox{\hyperlink{classComplex__number}{Complex\_number<rhs\_real,\ rhs\_imag>}}\ operator*(\textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Rational\_number<lhs\_type>}}\&\ \mbox{\hyperlink{classComplex__number}{lhs}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Complex\_number<rhs\_real,\ rhs\_imag>}}\&\ \mbox{\hyperlink{classComplex__number}{rhs}})\ \{}
+\DoxyCodeLine{00336\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex__number}{Complex\_number<rhs\_real,\ rhs\_imag>}}(\mbox{\hyperlink{classComplex__number}{lhs}})\ *\ \mbox{\hyperlink{classComplex__number}{rhs}};}
+\DoxyCodeLine{00337\ \}}
+\DoxyCodeLine{00338\ }
+\DoxyCodeLine{00339\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ rhs\_real,\ \textcolor{keyword}{typename}\ rhs\_imag,\ \textcolor{keyword}{typename}\ lhs\_type>}
+\DoxyCodeLine{00340\ \mbox{\hyperlink{classComplex__number}{Complex\_number<rhs\_real,\ rhs\_imag>}}\ operator/(\textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Rational\_number<lhs\_type>}}\&\ \mbox{\hyperlink{classComplex__number}{lhs}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Complex\_number<rhs\_real,\ rhs\_imag>}}\&\ \mbox{\hyperlink{classComplex__number}{rhs}})\ \{}
+\DoxyCodeLine{00341\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex__number}{Complex\_number<rhs\_real,\ rhs\_imag>}}(\mbox{\hyperlink{classComplex__number}{lhs}})\ /\ \mbox{\hyperlink{classComplex__number}{rhs}};}
+\DoxyCodeLine{00342\ \}}
+\DoxyCodeLine{00343\ }
+\DoxyCodeLine{00344\ \textcolor{comment}{//\ ++,\ +=\ и\ прочий\ ужас}}
+\DoxyCodeLine{00345\ }
+\DoxyCodeLine{00346\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ lhs\_real,\ \textcolor{keyword}{typename}\ lhs\_imag,\ \textcolor{keyword}{typename}\ rhs\_type>}
+\DoxyCodeLine{00347\ \mbox{\hyperlink{classComplex__number}{Complex\_number<lhs\_real,\ lhs\_imag>}}\&\ operator+=(\mbox{\hyperlink{classComplex__number}{Complex\_number<lhs\_real,\ lhs\_imag>}}\&\ \mbox{\hyperlink{classComplex__number}{lhs}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{rhs\_type}}\&\ \mbox{\hyperlink{classComplex__number}{rhs}})\ \{}
+\DoxyCodeLine{00348\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{lhs}}\ =\ \mbox{\hyperlink{classComplex__number}{lhs}}\ +\ \mbox{\hyperlink{classComplex__number}{Complex\_number<lhs\_real,\ lhs\_imag>}}(\mbox{\hyperlink{classComplex__number}{rhs}});}
+\DoxyCodeLine{00349\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex__number}{lhs}};}
+\DoxyCodeLine{00350\ \}}
+\DoxyCodeLine{00351\ }
+\DoxyCodeLine{00352\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ lhs\_real,\ \textcolor{keyword}{typename}\ lhs\_imag,\ \textcolor{keyword}{typename}\ rhs\_type>}
+\DoxyCodeLine{00353\ \mbox{\hyperlink{classComplex__number}{Complex\_number<lhs\_real,\ lhs\_imag>}}\&\ operator-\/=(\mbox{\hyperlink{classComplex__number}{Complex\_number<lhs\_real,\ lhs\_imag>}}\&\ \mbox{\hyperlink{classComplex__number}{lhs}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{rhs\_type}}\&\ \mbox{\hyperlink{classComplex__number}{rhs}})\ \{}
+\DoxyCodeLine{00354\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{lhs}}\ =\ \mbox{\hyperlink{classComplex__number}{lhs}}\ -\/\ \mbox{\hyperlink{classComplex__number}{Complex\_number<lhs\_real,\ lhs\_imag>}}(\mbox{\hyperlink{classComplex__number}{rhs}});}
+\DoxyCodeLine{00355\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex__number}{lhs}};}
+\DoxyCodeLine{00356\ \}}
+\DoxyCodeLine{00357\ }
+\DoxyCodeLine{00358\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ lhs\_real,\ \textcolor{keyword}{typename}\ lhs\_imag,\ \textcolor{keyword}{typename}\ rhs\_type>}
+\DoxyCodeLine{00359\ \mbox{\hyperlink{classComplex__number}{Complex\_number<lhs\_real,\ lhs\_imag>}}\&\ operator*=(\mbox{\hyperlink{classComplex__number}{Complex\_number<lhs\_real,\ lhs\_imag>}}\&\ \mbox{\hyperlink{classComplex__number}{lhs}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{rhs\_type}}\&\ \mbox{\hyperlink{classComplex__number}{rhs}})\ \{}
+\DoxyCodeLine{00360\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{lhs}}\ =\ \mbox{\hyperlink{classComplex__number}{lhs}}\ *\ \mbox{\hyperlink{classComplex__number}{Complex\_number<lhs\_real,\ lhs\_imag>}}(\mbox{\hyperlink{classComplex__number}{rhs}});}
+\DoxyCodeLine{00361\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex__number}{lhs}};}
+\DoxyCodeLine{00362\ \}}
+\DoxyCodeLine{00363\ }
+\DoxyCodeLine{00364\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ lhs\_real,\ \textcolor{keyword}{typename}\ lhs\_imag,\ \textcolor{keyword}{typename}\ rhs\_type>}
+\DoxyCodeLine{00365\ \mbox{\hyperlink{classComplex__number}{Complex\_number<lhs\_real,\ lhs\_imag>}}\&\ operator/=(\mbox{\hyperlink{classComplex__number}{Complex\_number<lhs\_real,\ lhs\_imag>}}\&\ \mbox{\hyperlink{classComplex__number}{lhs}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{rhs\_type}}\&\ \mbox{\hyperlink{classComplex__number}{rhs}})\ \{}
+\DoxyCodeLine{00366\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{lhs}}\ =\ \mbox{\hyperlink{classComplex__number}{lhs}}\ /\ \mbox{\hyperlink{classComplex__number}{Complex\_number<lhs\_real,\ lhs\_imag>}}(\mbox{\hyperlink{classComplex__number}{rhs}});}
+\DoxyCodeLine{00367\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex__number}{lhs}};}
+\DoxyCodeLine{00368\ \}}
+\DoxyCodeLine{00369\ }
+\DoxyCodeLine{00370\ }
+\DoxyCodeLine{00371\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ type\_real,\ \textcolor{keyword}{typename}\ type\_imag>}
+\DoxyCodeLine{00372\ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::ostream}}\&\ \mbox{\hyperlink{classComplex__number}{operator<<}}(\mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::ostream}}\&\ \mbox{\hyperlink{classComplex__number}{os}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classComplex__number}{Complex\_number<type\_real,\ type\_imag>}}\&\ c)\ \{}
+\DoxyCodeLine{00373\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{type\_imag}}\ image\ =\ c.getImage();}
+\DoxyCodeLine{00374\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{os}}\ <<\ c.getReal()\ <<\ (image\ <\ 0\ ?\ \textcolor{stringliteral}{"{}\ -\/\ "{}}\ :\ \textcolor{stringliteral}{"{}\ +\ "{}})\ <<\ (image\ <\ 0\ ?\ -\/image\ :\ image)\ <<\ \textcolor{stringliteral}{"{}i"{}};}
+\DoxyCodeLine{00375\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex__number}{os}};}
+\DoxyCodeLine{00376\ \}}
+
+\end{DoxyCode}

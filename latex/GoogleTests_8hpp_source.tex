@@ -1,0 +1,933 @@
+\doxysection{Google\+Tests.\+hpp}
+\hypertarget{GoogleTests_8hpp_source}{}\label{GoogleTests_8hpp_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ <gtest/gtest.h>}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <cmath>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <cstdint>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <stdexcept>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <chrono>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}Exceptions.hpp"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}Rational\_number.hpp"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}Utils.hpp"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}Complex\_number.hpp"{}}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}Vector.hpp"{}}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}Matrix.hpp"{}}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ "{}Matrix\_coords.hpp"{}}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ "{}Matrix\_proxy.hpp"{}}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ TEST(\mbox{\hyperlink{classComplex__number}{Utils}},\ \mbox{\hyperlink{classComplex__number}{Utils}})\ \{}
+\DoxyCodeLine{00017\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_TRUE}}(isInteger(\textcolor{stringliteral}{"{}5"{}}));}
+\DoxyCodeLine{00018\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_TRUE}}(isInteger(\textcolor{stringliteral}{"{}-\/5"{}}));}
+\DoxyCodeLine{00019\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_TRUE}}(isInteger(\textcolor{stringliteral}{"{}-\/\ 5"{}}));}
+\DoxyCodeLine{00020\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_TRUE}}(isInteger(\textcolor{stringliteral}{"{}\ \ -\/\(\backslash\)t5\ \(\backslash\)t\ "{}}));}
+\DoxyCodeLine{00021\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_FALSE}}(isInteger(\textcolor{stringliteral}{"{}5."{}}));}
+\DoxyCodeLine{00022\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_TRUE}}(isNumber(\textcolor{stringliteral}{"{}5"{}}));}
+\DoxyCodeLine{00023\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_TRUE}}(isNumber(\textcolor{stringliteral}{"{}-\/5"{}}));}
+\DoxyCodeLine{00024\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_TRUE}}(isNumber(\textcolor{stringliteral}{"{}5."{}}));}
+\DoxyCodeLine{00025\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_TRUE}}(isNumber(\textcolor{stringliteral}{"{}-\/5."{}}));}
+\DoxyCodeLine{00026\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_TRUE}}(isNumber(\textcolor{stringliteral}{"{}-\/5.67"{}}));}
+\DoxyCodeLine{00027\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{parseInteger<int>}}(\textcolor{stringliteral}{"{}5"{}}),\ 5);}
+\DoxyCodeLine{00028\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{parseInteger<int>}}(\textcolor{stringliteral}{"{}-\/5"{}}),\ -\/5);}
+\DoxyCodeLine{00029\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_DOUBLE\_EQ}}(parseDouble(\textcolor{stringliteral}{"{}5"{}}),\ 5);}
+\DoxyCodeLine{00030\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_DOUBLE\_EQ}}(parseDouble(\textcolor{stringliteral}{"{}-\/5"{}}),\ -\/5);}
+\DoxyCodeLine{00031\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_DOUBLE\_EQ}}(parseDouble(\textcolor{stringliteral}{"{}-\/5."{}}),\ -\/5);}
+\DoxyCodeLine{00032\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_DOUBLE\_EQ}}(parseDouble(\textcolor{stringliteral}{"{}-\/5.56"{}}),\ -\/5.56);}
+\DoxyCodeLine{00033\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_DOUBLE\_EQ}}(parseDouble(\textcolor{stringliteral}{"{}5."{}}),\ 5);}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \}}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ TEST(\mbox{\hyperlink{classComplex__number}{Rational\_numbers}},\ \mbox{\hyperlink{classComplex__number}{Constructors}})\ \{}
+\DoxyCodeLine{00038\ \ \ \ \ \mbox{\hyperlink{classRational__number}{Rational\_number}}\ r1(5);}
+\DoxyCodeLine{00039\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_TRUE}}(r1.getNumerator()\ ==\ 5\ \&\&\ r1.getDenominator()\ ==\ 1);}
+\DoxyCodeLine{00040\ \ \ \ \ \mbox{\hyperlink{classRational__number}{Rational\_number}}\ r2(5,\ 2);}
+\DoxyCodeLine{00041\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_TRUE}}(r2.getNumerator()\ ==\ 5\ \&\&\ r2.getDenominator()\ ==\ 2);}
+\DoxyCodeLine{00042\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Rational\_number<int>}}\ \mbox{\hyperlink{classComplex__number}{r3}}(\textcolor{stringliteral}{"{}5"{}});}
+\DoxyCodeLine{00043\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_TRUE}}(\mbox{\hyperlink{classComplex__number}{r3}}.getNumerator()\ ==\ 5\ \&\&\ \mbox{\hyperlink{classComplex__number}{r3}}.getDenominator()\ ==\ 1);}
+\DoxyCodeLine{00044\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Rational\_number<int>}}\ \mbox{\hyperlink{classComplex__number}{r4}}(\textcolor{stringliteral}{"{}5/2"{}});}
+\DoxyCodeLine{00045\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_TRUE}}(\mbox{\hyperlink{classComplex__number}{r4}}.getNumerator()\ ==\ 5\ \&\&\ \mbox{\hyperlink{classComplex__number}{r4}}.getDenominator()\ ==\ 2);}
+\DoxyCodeLine{00046\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Rational\_number<int>}}\ \mbox{\hyperlink{classComplex__number}{r5}};}
+\DoxyCodeLine{00047\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_TRUE}}(\mbox{\hyperlink{classComplex__number}{r5}}.getNumerator()\ ==\ 0\ \&\&\ \mbox{\hyperlink{classComplex__number}{r5}}.getDenominator()\ ==\ 1);}
+\DoxyCodeLine{00048\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_THROW}}(\mbox{\hyperlink{classComplex__number}{Rational\_number<int>}}(\textcolor{stringliteral}{"{}5/0"{}}),\ \mbox{\hyperlink{classZeroDivision}{ZeroDivision}});}
+\DoxyCodeLine{00049\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_THROW}}(\mbox{\hyperlink{classRational__number}{Rational\_number}}(1,\ 0),\ \mbox{\hyperlink{classZeroDivision}{ZeroDivision}});}
+\DoxyCodeLine{00050\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_THROW}}(\mbox{\hyperlink{classComplex__number}{Rational\_number<int>}}(std::to\_string(std::string::npos)),\ \mbox{\hyperlink{classOverflow}{Overflow}});\ \textcolor{comment}{//\ переполняем\ int}}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Rational\_number<int>}}\ \mbox{\hyperlink{classComplex__number}{r6}}(\textcolor{stringliteral}{"{}-\/5/2"{}});}
+\DoxyCodeLine{00054\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_TRUE}}(\mbox{\hyperlink{classComplex__number}{r6}}.getNumerator()\ ==\ -\/5\ \&\&\ \mbox{\hyperlink{classComplex__number}{r6}}.getDenominator()\ ==\ 2);}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \}}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ TEST(\mbox{\hyperlink{classComplex__number}{Rational\_numbers}},\ \mbox{\hyperlink{classComplex__number}{NumberChanging}})\ \{}
+\DoxyCodeLine{00059\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Rational\_number<int>}}\ r1;}
+\DoxyCodeLine{00060\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_THROW}}(r1.setDenominator(0),\ \mbox{\hyperlink{classZeroDivision}{ZeroDivision}});}
+\DoxyCodeLine{00061\ \ \ \ \ \mbox{\hyperlink{classRational__number}{Rational\_number}}\ r2(10,\ 5);}
+\DoxyCodeLine{00062\ \ \ \ \ \mbox{\hyperlink{classRational__number}{Rational\_number}}\ \mbox{\hyperlink{classComplex__number}{r3}}\ =\ r2.make\_canonical();}
+\DoxyCodeLine{00063\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_TRUE}}(\mbox{\hyperlink{classComplex__number}{r3}}.getNumerator()\ ==\ 2\ \&\&\ \mbox{\hyperlink{classComplex__number}{r3}}.getDenominator()\ ==\ 1);}
+\DoxyCodeLine{00064\ \ \ \ \ \mbox{\hyperlink{classRational__number}{Rational\_number}}\ \mbox{\hyperlink{classComplex__number}{r4}}(3,\ 2);}
+\DoxyCodeLine{00065\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}((\textcolor{keywordtype}{int})\mbox{\hyperlink{classComplex__number}{r4}},\ 1);}
+\DoxyCodeLine{00066\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_DOUBLE\_EQ}}((\textcolor{keywordtype}{double})\mbox{\hyperlink{classComplex__number}{r4}},\ 1.5);}
+\DoxyCodeLine{00067\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{r4}}.round(),\ 2);}
+\DoxyCodeLine{00068\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{r4}}.floor(),\ 1);}
+\DoxyCodeLine{00069\ \}}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00071\ TEST(\mbox{\hyperlink{classComplex__number}{Rational\_numbers}},\ \mbox{\hyperlink{classComplex__number}{Arythmetic}})\ \{}
+\DoxyCodeLine{00072\ \ \ \ \ \mbox{\hyperlink{classRational__number}{Rational\_number}}\ r1(10,\ 5);}
+\DoxyCodeLine{00073\ \ \ \ \ \mbox{\hyperlink{classRational__number}{Rational\_number}}\ r2(2,\ 3);}
+\DoxyCodeLine{00074\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(r1\ +\ r2,\ \mbox{\hyperlink{classRational__number}{Rational\_number}}(10*3\ +\ 2*5,\ 5*3));}
+\DoxyCodeLine{00075\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(r1\ +\ \mbox{\hyperlink{classComplex__number}{Rational\_number<unsigned>}}(2,\ 3),\ \mbox{\hyperlink{classRational__number}{Rational\_number}}(10*3\ +\ 2*5,\ 5*3));\ \textcolor{comment}{//\ проверка,\ что\ можно\ скложить\ числа\ с\ разным\ ипараметрами\ шаблона}}
+\DoxyCodeLine{00076\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(r1\ -\/\ r2,\ \mbox{\hyperlink{classRational__number}{Rational\_number}}(10*3\ -\/\ 2*5,\ 5*3));}
+\DoxyCodeLine{00077\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(r1\ -\/\ \mbox{\hyperlink{classComplex__number}{Rational\_number<unsigned>}}(2,\ 3),\ \mbox{\hyperlink{classRational__number}{Rational\_number}}(10*3\ -\/\ 2*5,\ 5*3));}
+\DoxyCodeLine{00078\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(r1\ *\ r2,\ \mbox{\hyperlink{classRational__number}{Rational\_number}}(10*2,\ 5*3));}
+\DoxyCodeLine{00079\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(r1\ /\ r2,\ \mbox{\hyperlink{classRational__number}{Rational\_number}}(10*3,\ 5*2));}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00081\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(r1\ +\ 1,\ \mbox{\hyperlink{classRational__number}{Rational\_number}}(15,\ 5));}
+\DoxyCodeLine{00082\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(r1\ -\/\ 1,\ \mbox{\hyperlink{classRational__number}{Rational\_number}}(5,\ 5));}
+\DoxyCodeLine{00083\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(r1\ +=\ 1,\ \mbox{\hyperlink{classRational__number}{Rational\_number}}(15,\ 5));}
+\DoxyCodeLine{00084\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(r1\ -\/=\ 1,\ \mbox{\hyperlink{classRational__number}{Rational\_number}}(10,\ 5));}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00086\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(r1\ *\ 2,\ \mbox{\hyperlink{classRational__number}{Rational\_number}}(20,\ 5));}
+\DoxyCodeLine{00087\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(r1\ /\ 2,\ \mbox{\hyperlink{classRational__number}{Rational\_number}}(5,\ 5));}
+\DoxyCodeLine{00088\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(r1\ *=\ 2,\ \mbox{\hyperlink{classRational__number}{Rational\_number}}(20,\ 5));}
+\DoxyCodeLine{00089\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(r1\ /=\ 2,\ \mbox{\hyperlink{classRational__number}{Rational\_number}}(10,\ 5));}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00091\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(1\ +\ r1,\ \mbox{\hyperlink{classRational__number}{Rational\_number}}(15,\ 5));}
+\DoxyCodeLine{00092\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(1\ -\/\ r1,\ \mbox{\hyperlink{classRational__number}{Rational\_number}}(-\/5,\ 5));}
+\DoxyCodeLine{00093\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(2\ *\ r1,\ \mbox{\hyperlink{classRational__number}{Rational\_number}}(20,\ 5));}
+\DoxyCodeLine{00094\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(2\ /\ r1,\ \mbox{\hyperlink{classRational__number}{Rational\_number}}(1));}
+\DoxyCodeLine{00095\ }
+\DoxyCodeLine{00096\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(-\/r1,\ \mbox{\hyperlink{classRational__number}{Rational\_number}}(-\/10,\ 5));}
+\DoxyCodeLine{00097\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_DOUBLE\_EQ}}(\mbox{\hyperlink{classRational__number}{Rational\_number}}(3,\ 2),\ 1.5);}
+\DoxyCodeLine{00098\ \}}
+\DoxyCodeLine{00099\ }
+\DoxyCodeLine{00100\ TEST(\mbox{\hyperlink{classComplex__number}{Rational\_numbers}},\ \mbox{\hyperlink{classComplex__number}{LogicOperators}})\ \{}
+\DoxyCodeLine{00101\ \ \ \ \ \mbox{\hyperlink{classRational__number}{Rational\_number}}\ r1(10,\ 5);}
+\DoxyCodeLine{00102\ \ \ \ \ \mbox{\hyperlink{classRational__number}{Rational\_number}}\ r2(2,\ 3);}
+\DoxyCodeLine{00103\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_TRUE}}(r1\ >\ r2);}
+\DoxyCodeLine{00104\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_TRUE}}(r1\ >=\ r2);}
+\DoxyCodeLine{00105\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_TRUE}}(r2\ <\ r1);}
+\DoxyCodeLine{00106\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_TRUE}}(r2\ <=\ r1);}
+\DoxyCodeLine{00107\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_TRUE}}(r2\ !=\ r1);}
+\DoxyCodeLine{00108\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_FALSE}}(r1\ ==\ r2);}
+\DoxyCodeLine{00109\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(r1,\ \mbox{\hyperlink{classRational__number}{Rational\_number}}(2));}
+\DoxyCodeLine{00110\ }
+\DoxyCodeLine{00111\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_TRUE}}\ (r1\ <\ 2.7);}
+\DoxyCodeLine{00112\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_TRUE}}\ (r1\ <=\ 2.7);}
+\DoxyCodeLine{00113\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_TRUE}}\ (r1\ >\ 1.7);}
+\DoxyCodeLine{00114\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_TRUE}}\ (r1\ >=\ 1.7);}
+\DoxyCodeLine{00115\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_TRUE}}(r1\ !=\ 2.1);}
+\DoxyCodeLine{00116\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_TRUE}}(r1\ ==\ 2.);}
+\DoxyCodeLine{00117\ \}}
+\DoxyCodeLine{00118\ }
+\DoxyCodeLine{00119\ TEST(\mbox{\hyperlink{classComplex__number}{Rational\_numbers}},\ \mbox{\hyperlink{classComplex__number}{OtherOperators}})\ \{}
+\DoxyCodeLine{00120\ \ \ \ \ \mbox{\hyperlink{classRational__number}{Rational\_number}}\ r1(3,\ 2);}
+\DoxyCodeLine{00121\ \ \ \ \ \mbox{\hyperlink{classRational__number}{Rational\_number}}\ r2\ =\ r1++;}
+\DoxyCodeLine{00122\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(r1,\ \mbox{\hyperlink{classRational__number}{Rational\_number}}(5,\ 2));}
+\DoxyCodeLine{00123\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(r2,\ \mbox{\hyperlink{classRational__number}{Rational\_number}}(3,\ 2));}
+\DoxyCodeLine{00124\ \ \ \ \ r2\ =\ r1-\/-\/;}
+\DoxyCodeLine{00125\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(r1,\ \mbox{\hyperlink{classRational__number}{Rational\_number}}(3,\ 2));}
+\DoxyCodeLine{00126\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(r2,\ \mbox{\hyperlink{classRational__number}{Rational\_number}}(5,\ 2));}
+\DoxyCodeLine{00127\ \}}
+\DoxyCodeLine{00128\ }
+\DoxyCodeLine{00129\ TEST(\mbox{\hyperlink{classComplex__number}{Complex\_numbers}},\ \mbox{\hyperlink{classComplex__number}{Constructors}})\ \{}
+\DoxyCodeLine{00130\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Complex\_number}}\ c1;}
+\DoxyCodeLine{00131\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_TRUE}}(c1.getReal()\ ==\ 0\ \&\&\ c1.getImage()\ ==\ 0);}
+\DoxyCodeLine{00132\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Complex\_number}}\ c2(1);}
+\DoxyCodeLine{00133\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_TRUE}}(c2.getReal()\ ==\ 1\ \&\&\ c2.getImage()\ ==\ 0);}
+\DoxyCodeLine{00134\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Complex\_number}}\ \mbox{\hyperlink{classComplex__number}{c3}}(1,\ 2);}
+\DoxyCodeLine{00135\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_TRUE}}(\mbox{\hyperlink{classComplex__number}{c3}}.getReal()\ ==\ 1\ \&\&\ \mbox{\hyperlink{classComplex__number}{c3}}.getImage()\ ==\ 2);}
+\DoxyCodeLine{00136\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Complex\_number<>}}\ \mbox{\hyperlink{classComplex__number}{c4}}(\textcolor{stringliteral}{"{}5,\ 5"{}});}
+\DoxyCodeLine{00137\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_TRUE}}(\mbox{\hyperlink{classComplex__number}{c4}}.getReal()\ ==\ 5\ \&\&\ \mbox{\hyperlink{classComplex__number}{c4}}.getImage()\ ==\ 5);}
+\DoxyCodeLine{00138\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Complex\_number<>}}\ \mbox{\hyperlink{classComplex__number}{c5}}(\textcolor{stringliteral}{"{}5"{}});}
+\DoxyCodeLine{00139\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_TRUE}}(\mbox{\hyperlink{classComplex__number}{c5}}.getReal()\ ==\ 5\ \&\&\ \mbox{\hyperlink{classComplex__number}{c5}}.getImage()\ ==\ 0);}
+\DoxyCodeLine{00140\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Complex\_number<>}}\ \mbox{\hyperlink{classComplex__number}{c6}}(\textcolor{stringliteral}{"{}5.5"{}});}
+\DoxyCodeLine{00141\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_TRUE}}(\mbox{\hyperlink{classComplex__number}{c6}}.getReal()\ ==\ 5.5\ \&\&\ \mbox{\hyperlink{classComplex__number}{c6}}.getImage()\ ==\ 0);}
+\DoxyCodeLine{00142\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Complex\_number<>}}\ \mbox{\hyperlink{classComplex__number}{c7}}(\textcolor{stringliteral}{"{}5.5,6.6"{}});}
+\DoxyCodeLine{00143\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_TRUE}}(\mbox{\hyperlink{classComplex__number}{c7}}.getReal()\ ==\ 5.5\ \&\&\ \mbox{\hyperlink{classComplex__number}{c7}}.getImage()\ ==\ 6.6);}
+\DoxyCodeLine{00144\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Complex\_number<>}}\ \mbox{\hyperlink{classComplex__number}{c8}}(\textcolor{stringliteral}{"{}5\ .\(\backslash\)t5\(\backslash\)t,\ 6\ .\ 6\ "{}});}
+\DoxyCodeLine{00145\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_TRUE}}(\mbox{\hyperlink{classComplex__number}{c8}}.getReal()\ ==\ 5.5\ \&\&\ \mbox{\hyperlink{classComplex__number}{c8}}.getImage()\ ==\ 6.6);}
+\DoxyCodeLine{00146\ \}}
+\DoxyCodeLine{00147\ }
+\DoxyCodeLine{00148\ TEST(\mbox{\hyperlink{classComplex__number}{Complex\_numbers}},\ \mbox{\hyperlink{classComplex__number}{Arythmetic}})\ \{}
+\DoxyCodeLine{00149\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Complex\_number}}\ c1(5,\ 5);}
+\DoxyCodeLine{00150\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Complex\_number<>}}\ c2(2,\ 2);}
+\DoxyCodeLine{00151\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(c1\ +\ c2,\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(7,\ 7));}
+\DoxyCodeLine{00152\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(c1\ -\/\ c2,\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(3,\ 3));}
+\DoxyCodeLine{00153\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(c1\ *\ c2,\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(0,\ 20));}
+\DoxyCodeLine{00154\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(c1\ /\ c2,\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(2,\ 0));}
+\DoxyCodeLine{00155\ \ \ \ \ c2.setReal(2.5);}
+\DoxyCodeLine{00156\ \ \ \ \ c2.setImage(2.5);}
+\DoxyCodeLine{00157\ \ \ \ \ \textcolor{comment}{//\ приведение\ к\ левостороннему\ значению}}
+\DoxyCodeLine{00158\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(c1\ +\ c2,\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(7,\ 7));}
+\DoxyCodeLine{00159\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(c2\ +\ c1,\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(7.5,\ 7.5));}
+\DoxyCodeLine{00160\ }
+\DoxyCodeLine{00161\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(c1\ +\ 1,\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(6,\ 5));}
+\DoxyCodeLine{00162\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(c1\ -\/\ 1,\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(4,\ 5));}
+\DoxyCodeLine{00163\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(c1\ *\ 2,\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(10,\ 10));}
+\DoxyCodeLine{00164\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(c1\ /\ 2,\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(2,\ 2));}
+\DoxyCodeLine{00165\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(c2\ /\ 2,\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(1.25,\ 1.25));}
+\DoxyCodeLine{00166\ }
+\DoxyCodeLine{00167\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(c1\ +\ 1.,\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(6,\ 5));}
+\DoxyCodeLine{00168\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(c1\ -\/\ 1.,\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(4,\ 5));}
+\DoxyCodeLine{00169\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(c1\ *\ 2.,\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(10,\ 10));}
+\DoxyCodeLine{00170\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(c1\ /\ 2,\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(2,\ 2));}
+\DoxyCodeLine{00171\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(c2\ /\ 2.,\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(1.25,\ 1.25));}
+\DoxyCodeLine{00172\ }
+\DoxyCodeLine{00173\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(c1\ +\ 1.5,\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(6,\ 5));}
+\DoxyCodeLine{00174\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(c1\ -\/\ 1.5,\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(4,\ 5));}
+\DoxyCodeLine{00175\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(c1\ *\ 2.5,\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(10,\ 10));}
+\DoxyCodeLine{00176\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(c2\ /\ 7.5,\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(1./3,\ 1./3));}
+\DoxyCodeLine{00177\ }
+\DoxyCodeLine{00178\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(c1\ +\ 1,\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(6,\ 5));}
+\DoxyCodeLine{00179\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(c1\ -\/\ 1,\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(4,\ 5));}
+\DoxyCodeLine{00180\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(c1\ *\ 2,\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(10,\ 10));}
+\DoxyCodeLine{00181\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(c1\ /\ 2,\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(2,\ 2));}
+\DoxyCodeLine{00182\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(c2\ /\ 2,\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(1.25,\ 1.25));}
+\DoxyCodeLine{00183\ }
+\DoxyCodeLine{00184\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(c1\ +\ 1.,\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(6,\ 5));}
+\DoxyCodeLine{00185\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(c1\ -\/\ 1.,\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(4,\ 5));}
+\DoxyCodeLine{00186\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(c1\ *\ 2.,\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(10,\ 10));}
+\DoxyCodeLine{00187\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(c1\ /\ 2,\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(2,\ 2));}
+\DoxyCodeLine{00188\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(c2\ /\ 2.,\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(1.25,\ 1.25));}
+\DoxyCodeLine{00189\ }
+\DoxyCodeLine{00190\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(c1\ +\ 1.5,\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(6,\ 5));}
+\DoxyCodeLine{00191\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(c1\ -\/\ 1.5,\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(4,\ 5));}
+\DoxyCodeLine{00192\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(c1\ *\ 2.5,\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(10,\ 10));}
+\DoxyCodeLine{00193\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(c2\ /\ 7.5,\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(1./3,\ 1./3));}
+\DoxyCodeLine{00194\ }
+\DoxyCodeLine{00195\ }
+\DoxyCodeLine{00196\ \textcolor{comment}{//\ Операторы\ приводят\ к\ типу\ левого\ операнда,\ поэтому\ для\ "{}математической\ корректности"{}}}
+\DoxyCodeLine{00197\ \textcolor{comment}{//\ параметризуем\ комплексное\ и\ рациональное\ числа\ конкретными\ типами.\ Если\ рациональное\ будет}}
+\DoxyCodeLine{00198\ \textcolor{comment}{//\ параметризовано\ чем-\/то\ другим,\ то\ из-\/за\ отсутствия\ оператора\ приведения\ }}
+\DoxyCodeLine{00199\ \textcolor{comment}{//\ (пр.\ Rat<int>\ -\/-\/-\/-\/>\ Rat<long>)\ код\ не\ скомпилируется:}}
+\DoxyCodeLine{00200\ }
+\DoxyCodeLine{00201\ \textcolor{comment}{//\ Complex\_number.hpp:116:18:\ error:\ no\ matching\ function\ for\ call\ to\ ‘Complex\_number<Rational\_number<>\ >::Complex\_number(const\ Rational\_number<int>\&)’}}
+\DoxyCodeLine{00202\ \textcolor{comment}{//\ \ \ 116\ |\ \ \ \ \ return\ lhs\ +\ Complex\_number<lhs\_real,\ lhs\_imag>(rhs);}}
+\DoxyCodeLine{00203\ }
+\DoxyCodeLine{00204\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Complex\_number<Rational\_number<>}}>\ c(1,\ 1);\ }
+\DoxyCodeLine{00205\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Rational\_number<>}}\ r(5,\ 3);}
+\DoxyCodeLine{00206\ }
+\DoxyCodeLine{00207\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Complex\_number}}\ \mbox{\hyperlink{classComplex__number}{sum1}}(\mbox{\hyperlink{classRational__number}{Rational\_number}}(8,\ 3),\ 1);}
+\DoxyCodeLine{00208\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(c\ +\ r,\ \mbox{\hyperlink{classComplex__number}{sum1}});}
+\DoxyCodeLine{00209\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Complex\_number}}\ \mbox{\hyperlink{classComplex__number}{sub1}}(\mbox{\hyperlink{classRational__number}{Rational\_number}}(-\/2,\ 3),\ 1);}
+\DoxyCodeLine{00210\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(c\ -\/\ r,\ \mbox{\hyperlink{classComplex__number}{sub1}});}
+\DoxyCodeLine{00211\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Complex\_number}}\ \mbox{\hyperlink{classComplex__number}{mul1}}(\mbox{\hyperlink{classRational__number}{Rational\_number}}(5,\ 3),\ \mbox{\hyperlink{classRational__number}{Rational\_number}}(5,\ 3));}
+\DoxyCodeLine{00212\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(c\ *\ r,\ \mbox{\hyperlink{classComplex__number}{mul1}});}
+\DoxyCodeLine{00213\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Complex\_number}}\ \mbox{\hyperlink{classComplex__number}{div1}}(\mbox{\hyperlink{classRational__number}{Rational\_number}}(3,\ 5),\ \mbox{\hyperlink{classRational__number}{Rational\_number}}(3,\ 5));}
+\DoxyCodeLine{00214\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(c\ /\ r,\ \mbox{\hyperlink{classComplex__number}{div1}});}
+\DoxyCodeLine{00215\ }
+\DoxyCodeLine{00216\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Complex\_number}}\ \mbox{\hyperlink{classComplex__number}{sum2}}(\mbox{\hyperlink{classRational__number}{Rational\_number}}(8,\ 3),\ 1);}
+\DoxyCodeLine{00217\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(r\ +\ c,\ \mbox{\hyperlink{classComplex__number}{sum2}});}
+\DoxyCodeLine{00218\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Complex\_number}}\ \mbox{\hyperlink{classComplex__number}{sub2}}(\mbox{\hyperlink{classRational__number}{Rational\_number}}(2,\ 3),\ -\/1);}
+\DoxyCodeLine{00219\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(r\ -\/\ c,\ \mbox{\hyperlink{classComplex__number}{sub2}});}
+\DoxyCodeLine{00220\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Complex\_number}}\ \mbox{\hyperlink{classComplex__number}{mul2}}(\mbox{\hyperlink{classRational__number}{Rational\_number}}(5,\ 3),\ \mbox{\hyperlink{classRational__number}{Rational\_number}}(5,\ 3));}
+\DoxyCodeLine{00221\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(r\ *\ c,\ \mbox{\hyperlink{classComplex__number}{mul2}});}
+\DoxyCodeLine{00222\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Complex\_number}}\ \mbox{\hyperlink{classComplex__number}{div2}}(\mbox{\hyperlink{classRational__number}{Rational\_number}}(5,\ 6),\ \mbox{\hyperlink{classRational__number}{Rational\_number}}(-\/5,\ 6));}
+\DoxyCodeLine{00223\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(r\ /\ c,\ \mbox{\hyperlink{classComplex__number}{div2}});}
+\DoxyCodeLine{00224\ }
+\DoxyCodeLine{00225\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Complex\_number}}\ \mbox{\hyperlink{classComplex__number}{sum22}}(1.0,\ 1.0);}
+\DoxyCodeLine{00226\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{sum22}}\ +\ \mbox{\hyperlink{classRational__number}{Rational\_number}}(1,\ 2),\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(1.5,\ 1));}
+\DoxyCodeLine{00227\ \}}
+\DoxyCodeLine{00228\ }
+\DoxyCodeLine{00229\ TEST(\mbox{\hyperlink{classComplex__number}{Complex\_numbers}},\ \mbox{\hyperlink{classComplex__number}{LogicalOperators}})\ \{}
+\DoxyCodeLine{00230\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Complex\_number}}\ c1(1,\ 1);}
+\DoxyCodeLine{00231\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Complex\_number}}\ c2(-\/1,\ 1.5);}
+\DoxyCodeLine{00232\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Complex\_number}}\ \mbox{\hyperlink{classComplex__number}{c3}}(3);}
+\DoxyCodeLine{00233\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(c1,\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(1,\ 1));}
+\DoxyCodeLine{00234\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_NE}}(c1,\ c2);}
+\DoxyCodeLine{00235\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_TRUE}}(c1\ <\ c2);}
+\DoxyCodeLine{00236\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_TRUE}}(c1\ <=\ c2);}
+\DoxyCodeLine{00237\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_TRUE}}(c2\ >\ c1);}
+\DoxyCodeLine{00238\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_TRUE}}(c2\ >=\ c1);}
+\DoxyCodeLine{00239\ }
+\DoxyCodeLine{00240\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_NE}}(c1,\ std::sqrt(2));}
+\DoxyCodeLine{00241\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_TRUE}}(c1\ <\ 1.5);}
+\DoxyCodeLine{00242\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_TRUE}}(c1\ <=\ 1.5);}
+\DoxyCodeLine{00243\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_TRUE}}(c1\ >\ 1);}
+\DoxyCodeLine{00244\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_TRUE}}(c1\ >=\ 1);}
+\DoxyCodeLine{00245\ }
+\DoxyCodeLine{00246\ \ \ \ \ \mbox{\hyperlink{classRational__number}{Rational\_number}}\ r(6,\ 2);}
+\DoxyCodeLine{00247\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{c3}},\ r);}
+\DoxyCodeLine{00248\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_TRUE}}(\mbox{\hyperlink{classComplex__number}{c3}}\ !=\ r\ +\ 1);}
+\DoxyCodeLine{00249\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_FALSE}}(\mbox{\hyperlink{classComplex__number}{c3}}\ <\ r);}
+\DoxyCodeLine{00250\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_TRUE}}(\mbox{\hyperlink{classComplex__number}{c3}}\ <=\ r);}
+\DoxyCodeLine{00251\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_FALSE}}(\mbox{\hyperlink{classComplex__number}{c3}}\ >\ r);}
+\DoxyCodeLine{00252\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_TRUE}}(\mbox{\hyperlink{classComplex__number}{c3}}\ >=\ r);}
+\DoxyCodeLine{00253\ }
+\DoxyCodeLine{00254\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(r,\ \mbox{\hyperlink{classComplex__number}{c3}});}
+\DoxyCodeLine{00255\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_TRUE}}(r\ +\ 1\ !=\ \mbox{\hyperlink{classComplex__number}{c3}});}
+\DoxyCodeLine{00256\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_FALSE}}(r\ >\ \mbox{\hyperlink{classComplex__number}{c3}});}
+\DoxyCodeLine{00257\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_TRUE}}(r\ >=\ \mbox{\hyperlink{classComplex__number}{c3}});}
+\DoxyCodeLine{00258\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_FALSE}}(r\ <\ \mbox{\hyperlink{classComplex__number}{c3}});}
+\DoxyCodeLine{00259\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_TRUE}}(r\ <=\ \mbox{\hyperlink{classComplex__number}{c3}});}
+\DoxyCodeLine{00260\ \}}
+\DoxyCodeLine{00261\ }
+\DoxyCodeLine{00262\ TEST(\mbox{\hyperlink{classComplex__number}{Vectors}},\ \mbox{\hyperlink{classComplex__number}{Constructors}})\ \{}
+\DoxyCodeLine{00263\ \ \ \ \ \mbox{\hyperlink{classVector}{Vector}}\ \mbox{\hyperlink{classComplex__number}{v1}}(10,\ 0.1,\ 2);}
+\DoxyCodeLine{00264\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{v1}}(4),\ 2);}
+\DoxyCodeLine{00265\ \ \ \ \ \mbox{\hyperlink{classVector}{Vector}}\ \mbox{\hyperlink{classComplex__number}{v2}}(\mbox{\hyperlink{classComplex__number}{v1}});}
+\DoxyCodeLine{00266\ \ \ \ \ \mbox{\hyperlink{classVector}{Vector}}\ \mbox{\hyperlink{classComplex__number}{v3}}(\mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::move}}(\mbox{\hyperlink{classVector}{Vector}}(5,\ 1,\ 5)));}
+\DoxyCodeLine{00267\ \ \ \ \ \mbox{\hyperlink{classVector}{Vector}}\ \mbox{\hyperlink{classComplex__number}{v4}}(5);}
+\DoxyCodeLine{00268\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{v4}}.getSize(),\ 5);}
+\DoxyCodeLine{00269\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{v4}}.getEpsilon(),\ 0);}
+\DoxyCodeLine{00270\ \ \ \ \ \mbox{\hyperlink{classVector}{Vector}}\ \mbox{\hyperlink{classComplex__number}{v5}}(5,\ 0.1);}
+\DoxyCodeLine{00271\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{v5}}.getSize(),\ 5);}
+\DoxyCodeLine{00272\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_DOUBLE\_EQ}}(\mbox{\hyperlink{classComplex__number}{v5}}.getEpsilon(),\ 0.1);}
+\DoxyCodeLine{00273\ \}}
+\DoxyCodeLine{00274\ }
+\DoxyCodeLine{00275\ TEST(\mbox{\hyperlink{classComplex__number}{Vectors}},\ \mbox{\hyperlink{classComplex__number}{Operators}})\ \{}
+\DoxyCodeLine{00276\ \ \ \ \ \mbox{\hyperlink{classVector}{Vector}}\ \mbox{\hyperlink{classComplex__number}{v1}}(10,\ 0.1,\ 1);}
+\DoxyCodeLine{00277\ \ \ \ \ \mbox{\hyperlink{classVector}{Vector}}\ \mbox{\hyperlink{classComplex__number}{v2}}(10,\ 0.2,\ (\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long})2);}
+\DoxyCodeLine{00278\ \ \ \ \ \mbox{\hyperlink{classVector}{Vector}}\ \mbox{\hyperlink{classComplex__number}{sum12}}(10,\ 0.2,\ 3);}
+\DoxyCodeLine{00279\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_TRUE}}(\mbox{\hyperlink{classComplex__number}{v1}}\ !=\ \mbox{\hyperlink{classComplex__number}{v2}});}
+\DoxyCodeLine{00280\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_FALSE}}(\mbox{\hyperlink{classComplex__number}{v1}}\ ==\ \mbox{\hyperlink{classComplex__number}{v2}});}
+\DoxyCodeLine{00281\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{v2}}+\mbox{\hyperlink{classComplex__number}{v1}},\ \mbox{\hyperlink{classComplex__number}{sum12}});}
+\DoxyCodeLine{00282\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{sum12}}-\/\mbox{\hyperlink{classComplex__number}{v1}},\ \mbox{\hyperlink{classComplex__number}{v2}});}
+\DoxyCodeLine{00283\ }
+\DoxyCodeLine{00284\ \ \ \ \ \mbox{\hyperlink{classVector}{Vector}}\ \mbox{\hyperlink{classComplex__number}{sum\_scalar1}}(10,\ 0.1,\ 2);}
+\DoxyCodeLine{00285\ \ \ \ \ \mbox{\hyperlink{classVector}{Vector}}\ \mbox{\hyperlink{classComplex__number}{sub\_scalar1}}(10,\ 0.2,\ -\/1);}
+\DoxyCodeLine{00286\ \ \ \ \ \mbox{\hyperlink{classVector}{Vector}}\ \mbox{\hyperlink{classComplex__number}{mul\_scalar1}}(10,\ 0.2,\ 10);}
+\DoxyCodeLine{00287\ \ \ \ \ \mbox{\hyperlink{classVector}{Vector}}\ \mbox{\hyperlink{classComplex__number}{div\_scalar1}}(10,\ 0.2,\ 1);}
+\DoxyCodeLine{00288\ }
+\DoxyCodeLine{00289\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{v1}}\ +\ 1,\ \mbox{\hyperlink{classComplex__number}{sum\_scalar1}});}
+\DoxyCodeLine{00290\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(1\ +\ \mbox{\hyperlink{classComplex__number}{v1}},\ \mbox{\hyperlink{classComplex__number}{sum\_scalar1}});}
+\DoxyCodeLine{00291\ \ \ \ \ }
+\DoxyCodeLine{00292\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{v2}}\ -\/\ 3,\ \mbox{\hyperlink{classComplex__number}{sub\_scalar1}});}
+\DoxyCodeLine{00293\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(1\ -\/\ \mbox{\hyperlink{classComplex__number}{v2}},\ \mbox{\hyperlink{classComplex__number}{sub\_scalar1}});}
+\DoxyCodeLine{00294\ \ \ \ \ }
+\DoxyCodeLine{00295\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{v2}}\ *\ 5,\ \mbox{\hyperlink{classComplex__number}{mul\_scalar1}});}
+\DoxyCodeLine{00296\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(5\ *\ \mbox{\hyperlink{classComplex__number}{v2}},\ \mbox{\hyperlink{classComplex__number}{mul\_scalar1}});}
+\DoxyCodeLine{00297\ \ \ \ \ }
+\DoxyCodeLine{00298\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{v2}}\ /\ 2,\ \mbox{\hyperlink{classComplex__number}{div\_scalar1}});}
+\DoxyCodeLine{00299\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(2\ /\ \mbox{\hyperlink{classComplex__number}{v2}},\ \mbox{\hyperlink{classComplex__number}{div\_scalar1}});}
+\DoxyCodeLine{00300\ }
+\DoxyCodeLine{00301\ \ \ \ \ }
+\DoxyCodeLine{00302\ \ \ \ \ \mbox{\hyperlink{classVector}{Vector}}\ \mbox{\hyperlink{classComplex__number}{v3}}(10,\ 0.2,\ 16.);}
+\DoxyCodeLine{00303\ \ \ \ \ \mbox{\hyperlink{classVector}{Vector}}\ \mbox{\hyperlink{classComplex__number}{sum\_scalar2}}(10,\ 0.2,\ 17.);}
+\DoxyCodeLine{00304\ \ \ \ \ \mbox{\hyperlink{classVector}{Vector}}\ \mbox{\hyperlink{classComplex__number}{sub\_scalar2}}(10,\ 0.2,\ -\/8.);}
+\DoxyCodeLine{00305\ \ \ \ \ \mbox{\hyperlink{classVector}{Vector}}\ \mbox{\hyperlink{classComplex__number}{mul\_scalar2}}(10,\ 0.2,\ 32.);}
+\DoxyCodeLine{00306\ \ \ \ \ \mbox{\hyperlink{classVector}{Vector}}\ \mbox{\hyperlink{classComplex__number}{div\_scalar2}}(10,\ 0.2,\ 2.);}
+\DoxyCodeLine{00307\ }
+\DoxyCodeLine{00308\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{v3}}\ +\ 1,\ \mbox{\hyperlink{classComplex__number}{sum\_scalar2}});}
+\DoxyCodeLine{00309\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(1\ +\ \mbox{\hyperlink{classComplex__number}{v3}},\ \mbox{\hyperlink{classComplex__number}{sum\_scalar2}});}
+\DoxyCodeLine{00310\ \ \ \ \ }
+\DoxyCodeLine{00311\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{v3}}\ -\/\ 24,\ \mbox{\hyperlink{classComplex__number}{sub\_scalar2}});}
+\DoxyCodeLine{00312\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(8\ -\/\ \mbox{\hyperlink{classComplex__number}{v3}},\ \mbox{\hyperlink{classComplex__number}{sub\_scalar2}});}
+\DoxyCodeLine{00313\ \ \ \ \ }
+\DoxyCodeLine{00314\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{v3}}\ *\ 2,\ \mbox{\hyperlink{classComplex__number}{mul\_scalar2}});}
+\DoxyCodeLine{00315\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(2\ *\ \mbox{\hyperlink{classComplex__number}{v3}},\ \mbox{\hyperlink{classComplex__number}{mul\_scalar2}});}
+\DoxyCodeLine{00316\ \ \ \ \ }
+\DoxyCodeLine{00317\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{v3}}\ /\ 8,\ \mbox{\hyperlink{classComplex__number}{div\_scalar2}});}
+\DoxyCodeLine{00318\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(32\ /\ \mbox{\hyperlink{classComplex__number}{v3}},\ \mbox{\hyperlink{classComplex__number}{div\_scalar2}});}
+\DoxyCodeLine{00319\ }
+\DoxyCodeLine{00320\ \ \ \ \ \mbox{\hyperlink{classVector}{Vector}}\ \mbox{\hyperlink{classComplex__number}{v4}}(10,\ 0.2,\ \mbox{\hyperlink{classRational__number}{Rational\_number}}(5,\ 4));}
+\DoxyCodeLine{00321\ \ \ \ \ \mbox{\hyperlink{classVector}{Vector}}\ \mbox{\hyperlink{classComplex__number}{sum\_scalar3}}(10,\ 0.2,\ \mbox{\hyperlink{classRational__number}{Rational\_number}}(6,\ 4));}
+\DoxyCodeLine{00322\ \ \ \ \ \mbox{\hyperlink{classVector}{Vector}}\ \mbox{\hyperlink{classComplex__number}{sub\_scalar3}}(10,\ 0.2,\ \mbox{\hyperlink{classRational__number}{Rational\_number}}(3,\ 4));}
+\DoxyCodeLine{00323\ \ \ \ \ \mbox{\hyperlink{classVector}{Vector}}\ \mbox{\hyperlink{classComplex__number}{mul\_scalar3}}(10,\ 0.2,\ \mbox{\hyperlink{classRational__number}{Rational\_number}}(10,\ 4));}
+\DoxyCodeLine{00324\ \ \ \ \ \mbox{\hyperlink{classVector}{Vector}}\ \mbox{\hyperlink{classComplex__number}{div\_scalar3}}(10,\ 0.2,\ \mbox{\hyperlink{classRational__number}{Rational\_number}}(1,\ 4));}
+\DoxyCodeLine{00325\ }
+\DoxyCodeLine{00326\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{v4}}\ +\ \mbox{\hyperlink{classRational__number}{Rational\_number}}(1,\ 4),\ \mbox{\hyperlink{classComplex__number}{sum\_scalar3}});}
+\DoxyCodeLine{00327\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classRational__number}{Rational\_number}}(1,\ 4)\ +\ \mbox{\hyperlink{classComplex__number}{v4}},\ \mbox{\hyperlink{classComplex__number}{sum\_scalar3}});}
+\DoxyCodeLine{00328\ \ \ \ \ }
+\DoxyCodeLine{00329\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{v4}}\ -\/\ \mbox{\hyperlink{classRational__number}{Rational\_number}}(2,\ 4),\ \mbox{\hyperlink{classComplex__number}{sub\_scalar3}});}
+\DoxyCodeLine{00330\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classRational__number}{Rational\_number}}(8,\ 4)\ -\/\ \mbox{\hyperlink{classComplex__number}{v4}},\ \mbox{\hyperlink{classComplex__number}{sub\_scalar3}});}
+\DoxyCodeLine{00331\ \ \ \ \ }
+\DoxyCodeLine{00332\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{v4}}\ *\ 2,\ \mbox{\hyperlink{classComplex__number}{mul\_scalar3}});}
+\DoxyCodeLine{00333\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(2\ *\ \mbox{\hyperlink{classComplex__number}{v4}},\ \mbox{\hyperlink{classComplex__number}{mul\_scalar3}});}
+\DoxyCodeLine{00334\ \ \ \ \ }
+\DoxyCodeLine{00335\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{v4}}\ /\ 5,\ \mbox{\hyperlink{classComplex__number}{div\_scalar3}});}
+\DoxyCodeLine{00336\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classRational__number}{Rational\_number}}(5,\ 16)\ /\ \mbox{\hyperlink{classComplex__number}{v4}},\ \mbox{\hyperlink{classComplex__number}{div\_scalar3}});}
+\DoxyCodeLine{00337\ }
+\DoxyCodeLine{00338\ }
+\DoxyCodeLine{00339\ \ \ \ \ \mbox{\hyperlink{classVector}{Vector}}\ \mbox{\hyperlink{classComplex__number}{v5}}(10,\ 0.2,\ 4);}
+\DoxyCodeLine{00340\ \ \ \ \ \mbox{\hyperlink{classVector}{Vector}}\ \mbox{\hyperlink{classComplex__number}{sum\_scalar4}}(10,\ 0.2,\ \mbox{\hyperlink{classRational__number}{Rational\_number}}(17,\ 4));}
+\DoxyCodeLine{00341\ \ \ \ \ \mbox{\hyperlink{classVector}{Vector}}\ \mbox{\hyperlink{classComplex__number}{sub\_scalar4}}(10,\ 0.2,\ \mbox{\hyperlink{classRational__number}{Rational\_number}}(7,\ 2));}
+\DoxyCodeLine{00342\ \ \ \ \ \mbox{\hyperlink{classVector}{Vector}}\ \mbox{\hyperlink{classComplex__number}{mul\_scalar4}}(10,\ 0.2,\ \mbox{\hyperlink{classRational__number}{Rational\_number}}(8));}
+\DoxyCodeLine{00343\ \ \ \ \ \mbox{\hyperlink{classVector}{Vector}}\ \mbox{\hyperlink{classComplex__number}{div\_scalar4}}(10,\ 0.2,\ \mbox{\hyperlink{classRational__number}{Rational\_number}}(1));}
+\DoxyCodeLine{00344\ }
+\DoxyCodeLine{00345\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{v5}}\ +\ \mbox{\hyperlink{classRational__number}{Rational\_number}}(1,\ 4),\ \mbox{\hyperlink{classComplex__number}{sum\_scalar4}});}
+\DoxyCodeLine{00346\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classRational__number}{Rational\_number}}(1,\ 4)\ +\ \mbox{\hyperlink{classComplex__number}{v5}},\ \mbox{\hyperlink{classComplex__number}{sum\_scalar4}});}
+\DoxyCodeLine{00347\ }
+\DoxyCodeLine{00348\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{v5}}\ -\/\ \mbox{\hyperlink{classRational__number}{Rational\_number}}(2,\ 4),\ \mbox{\hyperlink{classComplex__number}{sub\_scalar4}});}
+\DoxyCodeLine{00349\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classRational__number}{Rational\_number}}(15,\ 2)\ -\/\ \mbox{\hyperlink{classComplex__number}{v5}},\ \mbox{\hyperlink{classComplex__number}{sub\_scalar4}});}
+\DoxyCodeLine{00350\ \ \ \ \ }
+\DoxyCodeLine{00351\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{v5}}\ *\ \mbox{\hyperlink{classRational__number}{Rational\_number}}(2),\ \mbox{\hyperlink{classComplex__number}{mul\_scalar4}});}
+\DoxyCodeLine{00352\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classRational__number}{Rational\_number}}(2)\ *\ \mbox{\hyperlink{classComplex__number}{v5}},\ \mbox{\hyperlink{classComplex__number}{mul\_scalar4}});}
+\DoxyCodeLine{00353\ \ \ \ \ }
+\DoxyCodeLine{00354\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{v5}}\ /\ 4,\ \mbox{\hyperlink{classComplex__number}{div\_scalar4}});}
+\DoxyCodeLine{00355\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classRational__number}{Rational\_number}}(4)\ /\ \mbox{\hyperlink{classComplex__number}{v5}},\ \mbox{\hyperlink{classComplex__number}{div\_scalar4}});}
+\DoxyCodeLine{00356\ \}}
+\DoxyCodeLine{00357\ }
+\DoxyCodeLine{00358\ TEST(\mbox{\hyperlink{classComplex__number}{Vectors}},\ \mbox{\hyperlink{classComplex__number}{Complex}})\ \{}
+\DoxyCodeLine{00359\ \ \ \ \ \textcolor{comment}{//\ Работает\ только\ если\ типы\ комплексных\ чсел\ одинаковы,\ потому\ что\ иначе\ нужно\ было\ бы\ делать\ еще\ кучу\ }}
+\DoxyCodeLine{00360\ \ \ \ \ \textcolor{comment}{//\ специализаций\ шаблонных\ операторов\ (по\ крайней\ мере\ эта\ реализация\ того\ требует).\ И\ операции\ со\ скаляром}}
+\DoxyCodeLine{00361\ \ \ \ \ \textcolor{comment}{//\ слева(для\ случаев\ когда\ вектор<комп<рац,\ ...>>,\ вектор<комп<...,\ рац>>,\ вектор<комп<рац,\ рац>>,\ а\ скаляры\ }}
+\DoxyCodeLine{00362\ \ \ \ \ \textcolor{comment}{//\ -\/\ комплексные)\ отсутствуют\ по\ той\ же\ причине\ }}
+\DoxyCodeLine{00363\ \ \ \ \ \mbox{\hyperlink{classVector}{Vector}}\ \mbox{\hyperlink{classComplex__number}{v1}}(10,\ 0.1,\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(\mbox{\hyperlink{classRational__number}{Rational\_number}}(6,\ 2),\ \mbox{\hyperlink{classRational__number}{Rational\_number}}(2)));}
+\DoxyCodeLine{00364\ \ \ \ \ \mbox{\hyperlink{classVector}{Vector}}\ \mbox{\hyperlink{classComplex__number}{sum\_scalar1}}(10,\ 0.1,\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(\mbox{\hyperlink{classRational__number}{Rational\_number}}(11,\ 2),\ \mbox{\hyperlink{classRational__number}{Rational\_number}}(3)));}
+\DoxyCodeLine{00365\ \ \ \ \ \mbox{\hyperlink{classVector}{Vector}}\ \mbox{\hyperlink{classComplex__number}{sub\_scalar1}}(10,\ 0.1,\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(\mbox{\hyperlink{classRational__number}{Rational\_number}}(1,\ 2),\ \mbox{\hyperlink{classRational__number}{Rational\_number}}(1)));}
+\DoxyCodeLine{00366\ \ \ \ \ \mbox{\hyperlink{classVector}{Vector}}\ \mbox{\hyperlink{classComplex__number}{mul\_scalar1}}(10,\ 0.1,\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(\mbox{\hyperlink{classRational__number}{Rational\_number}}(11,\ 2),\ \mbox{\hyperlink{classRational__number}{Rational\_number}}(8)));}
+\DoxyCodeLine{00367\ \ \ \ \ \mbox{\hyperlink{classVector}{Vector}}\ \mbox{\hyperlink{classComplex__number}{div\_scalar1}}(10,\ 0.1,\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(\mbox{\hyperlink{classRational__number}{Rational\_number}}(152,\ 116),\ \mbox{\hyperlink{classRational__number}{Rational\_number}}(32,116)));}
+\DoxyCodeLine{00368\ }
+\DoxyCodeLine{00369\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Complex\_number}}\ c(\mbox{\hyperlink{classRational__number}{Rational\_number}}(5,\ 2),\ \mbox{\hyperlink{classRational__number}{Rational\_number}}(1));}
+\DoxyCodeLine{00370\ \ \ \ \ \textcolor{comment}{//\ std::cout\ <<\ v1\ +\ Complex\_number(Rational\_number(5,\ 2),\ Rational\_number(5,\ 2))\ <<\ std::endl;}}
+\DoxyCodeLine{00371\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{v1}}\ +\ c,\ \mbox{\hyperlink{classComplex__number}{sum\_scalar1}});}
+\DoxyCodeLine{00372\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{v1}}\ -\/\ c,\ \mbox{\hyperlink{classComplex__number}{sub\_scalar1}});}
+\DoxyCodeLine{00373\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{v1}}\ *\ c,\ \mbox{\hyperlink{classComplex__number}{mul\_scalar1}});}
+\DoxyCodeLine{00374\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{v1}}\ /\ c,\ \mbox{\hyperlink{classComplex__number}{div\_scalar1}});}
+\DoxyCodeLine{00375\ }
+\DoxyCodeLine{00376\ }
+\DoxyCodeLine{00377\ \ \ \ \ \mbox{\hyperlink{classVector}{Vector}}\ \mbox{\hyperlink{classComplex__number}{v4}}(10,\ 0.2,\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(5,\ 4));}
+\DoxyCodeLine{00378\ \ \ \ \ \mbox{\hyperlink{classVector}{Vector}}\ \mbox{\hyperlink{classComplex__number}{sum\_scalar3}}(10,\ 0.2,\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(6,\ 8));}
+\DoxyCodeLine{00379\ \ \ \ \ \mbox{\hyperlink{classVector}{Vector}}\ \mbox{\hyperlink{classComplex__number}{sub\_scalar3}}(10,\ 0.2,\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(3,\ 0));}
+\DoxyCodeLine{00380\ \ \ \ \ \mbox{\hyperlink{classVector}{Vector}}\ \mbox{\hyperlink{classComplex__number}{mul\_scalar3}}(10,\ 0.2,\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(10,\ 8));}
+\DoxyCodeLine{00381\ \ \ \ \ \mbox{\hyperlink{classVector}{Vector}}\ \mbox{\hyperlink{classComplex__number}{div\_scalar3}}(10,\ 0.2,\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(1));}
+\DoxyCodeLine{00382\ }
+\DoxyCodeLine{00383\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{v4}}\ +\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(1,\ 4),\ \mbox{\hyperlink{classComplex__number}{sum\_scalar3}});}
+\DoxyCodeLine{00384\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{Complex\_number}}(1,\ 4)\ +\ \mbox{\hyperlink{classComplex__number}{v4}},\ \mbox{\hyperlink{classComplex__number}{sum\_scalar3}});}
+\DoxyCodeLine{00385\ \ \ \ \ }
+\DoxyCodeLine{00386\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{v4}}\ -\/\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(2,\ 4),\ \mbox{\hyperlink{classComplex__number}{sub\_scalar3}});}
+\DoxyCodeLine{00387\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{Complex\_number}}(8,\ 4)\ -\/\ \mbox{\hyperlink{classComplex__number}{v4}},\ \mbox{\hyperlink{classComplex__number}{sub\_scalar3}});}
+\DoxyCodeLine{00388\ \ \ \ \ }
+\DoxyCodeLine{00389\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{v4}}\ *\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(2),\ \mbox{\hyperlink{classComplex__number}{mul\_scalar3}});}
+\DoxyCodeLine{00390\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{Complex\_number}}(2)\ *\ \mbox{\hyperlink{classComplex__number}{v4}},\ \mbox{\hyperlink{classComplex__number}{mul\_scalar3}});}
+\DoxyCodeLine{00391\ \ \ \ \ }
+\DoxyCodeLine{00392\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{v4}}\ /\ 5,\ \mbox{\hyperlink{classComplex__number}{div\_scalar3}});}
+\DoxyCodeLine{00393\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{Complex\_number}}(5,\ 4)\ /\ \mbox{\hyperlink{classComplex__number}{v4}},\ \mbox{\hyperlink{classComplex__number}{div\_scalar3}});}
+\DoxyCodeLine{00394\ \}}
+\DoxyCodeLine{00395\ }
+\DoxyCodeLine{00396\ TEST(\mbox{\hyperlink{classComplex__number}{Vectors}},\ \mbox{\hyperlink{classComplex__number}{BoolVector}})\ \{}
+\DoxyCodeLine{00397\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Vector<bool>}}\ \mbox{\hyperlink{classComplex__number}{v1}}(5);}
+\DoxyCodeLine{00398\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Vector<bool>}}\ \mbox{\hyperlink{classComplex__number}{v2}}(5,\ 0);}
+\DoxyCodeLine{00399\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Vector<bool>}}\ \mbox{\hyperlink{classComplex__number}{v3}}(5,\ 1);}
+\DoxyCodeLine{00400\ }
+\DoxyCodeLine{00401\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{v1}}(3),\ 0);}
+\DoxyCodeLine{00402\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{v2}}(3),\ 0);}
+\DoxyCodeLine{00403\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{v3}}(3),\ 1);}
+\DoxyCodeLine{00404\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{v3}}.set(3,\ 0);}
+\DoxyCodeLine{00405\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{v3}}(3),\ 0);}
+\DoxyCodeLine{00406\ }
+\DoxyCodeLine{00407\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_THROW}}(\mbox{\hyperlink{classComplex__number}{v1}}(5),\ \mbox{\hyperlink{classVectorIndexOutOfRangeException}{VectorIndexOutOfRangeException}});}
+\DoxyCodeLine{00408\ }
+\DoxyCodeLine{00409\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{v2}}\ *\ \mbox{\hyperlink{classComplex__number}{v3}},\ \mbox{\hyperlink{classComplex__number}{v2}});}
+\DoxyCodeLine{00410\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{v2}}\ +\ \mbox{\hyperlink{classComplex__number}{v3}},\ \mbox{\hyperlink{classComplex__number}{v3}});}
+\DoxyCodeLine{00411\ }
+\DoxyCodeLine{00412\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Vector<bool>}}\ \mbox{\hyperlink{classComplex__number}{v4}}(4);}
+\DoxyCodeLine{00413\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_THROW}}(\mbox{\hyperlink{classComplex__number}{v4}}\ +\ \mbox{\hyperlink{classComplex__number}{v3}},\ \mbox{\hyperlink{classVectorSizeMissmatch}{VectorSizeMissmatch}});}
+\DoxyCodeLine{00414\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_THROW}}(\mbox{\hyperlink{classComplex__number}{v4}}\ *\ \mbox{\hyperlink{classComplex__number}{v3}},\ \mbox{\hyperlink{classVectorSizeMissmatch}{VectorSizeMissmatch}});}
+\DoxyCodeLine{00415\ }
+\DoxyCodeLine{00416\ }
+\DoxyCodeLine{00417\ \}}
+\DoxyCodeLine{00418\ }
+\DoxyCodeLine{00419\ TEST(\mbox{\hyperlink{classComplex__number}{Matrices}},\ \mbox{\hyperlink{classComplex__number}{Constructors}})\ \{}
+\DoxyCodeLine{00420\ \ \ \ \ \mbox{\hyperlink{classMatrix}{Matrix}}\ \mbox{\hyperlink{classComplex__number}{m1}}(10,\ 10,\ 0.1,\ 2);}
+\DoxyCodeLine{00421\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{m1}}(4,\ 4),\ 2);}
+\DoxyCodeLine{00422\ \ \ \ \ \mbox{\hyperlink{classMatrix}{Matrix}}\ \mbox{\hyperlink{classComplex__number}{m2}}(\mbox{\hyperlink{classComplex__number}{m1}});}
+\DoxyCodeLine{00423\ \ \ \ \ \mbox{\hyperlink{classMatrix}{Matrix}}\ \mbox{\hyperlink{classComplex__number}{m3}}(\mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::move}}(\mbox{\hyperlink{classMatrix}{Matrix}}(5,\ 1,\ 5)));}
+\DoxyCodeLine{00424\ \ \ \ \ \mbox{\hyperlink{classMatrix}{Matrix}}\ \mbox{\hyperlink{classComplex__number}{m4}}(5,\ 5);}
+\DoxyCodeLine{00425\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{m4}}.getRows(),\ 5);}
+\DoxyCodeLine{00426\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{m4}}.getColumns(),\ 5);}
+\DoxyCodeLine{00427\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{m4}}.getEpsilon(),\ 0);}
+\DoxyCodeLine{00428\ \ \ \ \ \mbox{\hyperlink{classMatrix}{Matrix}}\ \mbox{\hyperlink{classComplex__number}{m5}}(5,\ 6,\ 0.1);}
+\DoxyCodeLine{00429\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{m5}}.getRows(),\ 5);}
+\DoxyCodeLine{00430\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{m5}}.getColumns(),\ 6);}
+\DoxyCodeLine{00431\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_DOUBLE\_EQ}}(\mbox{\hyperlink{classComplex__number}{m5}}.getEpsilon(),\ 0.1);}
+\DoxyCodeLine{00432\ \}}
+\DoxyCodeLine{00433\ }
+\DoxyCodeLine{00434\ TEST(\mbox{\hyperlink{classComplex__number}{Matrices}},\ \mbox{\hyperlink{classComplex__number}{Operators}})\ \{}
+\DoxyCodeLine{00435\ \ \ \ \ \mbox{\hyperlink{classMatrix}{Matrix}}\ \mbox{\hyperlink{classComplex__number}{simple1}}(10,\ 3,\ 0.1);}
+\DoxyCodeLine{00436\ \ \ \ \ \mbox{\hyperlink{classMatrix}{Matrix}}\ \mbox{\hyperlink{classComplex__number}{simple2}}(10,\ 3,\ 0.2);}
+\DoxyCodeLine{00437\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{simple1}}.set(0,\ 0,\ 1);}
+\DoxyCodeLine{00438\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{simple1}}.set(1,\ 1,\ 2);}
+\DoxyCodeLine{00439\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{simple1}}.set(2,\ 2,\ 3);}
+\DoxyCodeLine{00440\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{simple2}}.set(1,\ 0,\ 0.15);}
+\DoxyCodeLine{00441\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{simple2}}.set(2,\ 1,\ 20);}
+\DoxyCodeLine{00442\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{simple2}}.set(3,\ 2,\ 30);}
+\DoxyCodeLine{00443\ \ \ \ \ \mbox{\hyperlink{classMatrix}{Matrix}}\ \mbox{\hyperlink{classComplex__number}{simple\_sum}}(10,\ 3,\ 0.1);}
+\DoxyCodeLine{00444\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{simple\_sum}}.set(0,\ 0,\ 1);}
+\DoxyCodeLine{00445\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{simple\_sum}}.set(1,\ 1,\ 2);}
+\DoxyCodeLine{00446\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{simple\_sum}}.set(2,\ 2,\ 3);}
+\DoxyCodeLine{00447\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{simple\_sum}}.set(2,\ 1,\ 20);}
+\DoxyCodeLine{00448\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{simple\_sum}}.set(3,\ 2,\ 30);}
+\DoxyCodeLine{00449\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{simple1}}\ +\ \mbox{\hyperlink{classComplex__number}{simple2}},\ \mbox{\hyperlink{classComplex__number}{simple\_sum}});}
+\DoxyCodeLine{00450\ }
+\DoxyCodeLine{00451\ \ \ \ \ \mbox{\hyperlink{classMatrix}{Matrix}}\ \mbox{\hyperlink{classComplex__number}{simple3}}(10,\ 3,\ 0.1);}
+\DoxyCodeLine{00452\ \ \ \ \ \mbox{\hyperlink{classMatrix}{Matrix}}\ \mbox{\hyperlink{classComplex__number}{simple4}}(10,\ 3,\ 0.2);}
+\DoxyCodeLine{00453\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{simple3}}.set(0,\ 0,\ 1);}
+\DoxyCodeLine{00454\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{simple3}}.set(1,\ 1,\ 2);}
+\DoxyCodeLine{00455\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{simple3}}.set(2,\ 2,\ 3);}
+\DoxyCodeLine{00456\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{simple3}}.set(1,\ 0,\ 1);}
+\DoxyCodeLine{00457\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{simple3}}.set(2,\ 1,\ 2);}
+\DoxyCodeLine{00458\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{simple3}}.set(3,\ 2,\ 3);}
+\DoxyCodeLine{00459\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{simple4}}.set(1,\ 0,\ 0.15);}
+\DoxyCodeLine{00460\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{simple4}}.set(2,\ 1,\ 20);}
+\DoxyCodeLine{00461\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{simple4}}.set(3,\ 2,\ 30);}
+\DoxyCodeLine{00462\ \ \ \ \ \mbox{\hyperlink{classMatrix}{Matrix}}\ \mbox{\hyperlink{classComplex__number}{simple\_sub}}(10,\ 3,\ 0.1);}
+\DoxyCodeLine{00463\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{simple\_sub}}.set(0,\ 0,\ 1);}
+\DoxyCodeLine{00464\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{simple\_sub}}.set(1,\ 1,\ 2);}
+\DoxyCodeLine{00465\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{simple\_sub}}.set(2,\ 2,\ 3);}
+\DoxyCodeLine{00466\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{simple\_sub}}.set(2,\ 1,\ -\/18);}
+\DoxyCodeLine{00467\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{simple\_sub}}.set(3,\ 2,\ -\/27);}
+\DoxyCodeLine{00468\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{simple\_sub}}.set(1,\ 0,\ 1);}
+\DoxyCodeLine{00469\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{simple3}}\ -\/\ \mbox{\hyperlink{classComplex__number}{simple4}},\ \mbox{\hyperlink{classComplex__number}{simple\_sub}});}
+\DoxyCodeLine{00470\ }
+\DoxyCodeLine{00471\ }
+\DoxyCodeLine{00472\ \ \ \ \ \mbox{\hyperlink{classMatrix}{Matrix}}\ \mbox{\hyperlink{classComplex__number}{m1}}(10,\ 10,\ 0.1,\ 1);}
+\DoxyCodeLine{00473\ \ \ \ \ \mbox{\hyperlink{classMatrix}{Matrix}}\ \mbox{\hyperlink{classComplex__number}{m2}}(10,\ 10,\ 0.2,\ 2LL);}
+\DoxyCodeLine{00474\ \ \ \ \ \mbox{\hyperlink{classMatrix}{Matrix}}\ \mbox{\hyperlink{classComplex__number}{sum12}}(10,\ 10,\ 0.2,\ 3);}
+\DoxyCodeLine{00475\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_TRUE}}(\mbox{\hyperlink{classComplex__number}{m1}}\ !=\ \mbox{\hyperlink{classComplex__number}{m2}});}
+\DoxyCodeLine{00476\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_FALSE}}(\mbox{\hyperlink{classComplex__number}{m1}}\ ==\ \mbox{\hyperlink{classComplex__number}{m2}});}
+\DoxyCodeLine{00477\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{m2}}+\mbox{\hyperlink{classComplex__number}{m1}},\ \mbox{\hyperlink{classComplex__number}{sum12}});}
+\DoxyCodeLine{00478\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{sum12}}-\/\mbox{\hyperlink{classComplex__number}{m1}},\ \mbox{\hyperlink{classComplex__number}{m2}});}
+\DoxyCodeLine{00479\ }
+\DoxyCodeLine{00480\ \ \ \ \ \mbox{\hyperlink{classMatrix}{Matrix}}\ \mbox{\hyperlink{classComplex__number}{sum\_scalar1}}(10,\ 10,\ 0.1,\ 2);}
+\DoxyCodeLine{00481\ \ \ \ \ \mbox{\hyperlink{classMatrix}{Matrix}}\ \mbox{\hyperlink{classComplex__number}{sub\_scalar1}}(10,\ 10,\ 0.2,\ -\/1);}
+\DoxyCodeLine{00482\ \ \ \ \ \mbox{\hyperlink{classMatrix}{Matrix}}\ \mbox{\hyperlink{classComplex__number}{mul\_scalar1}}(10,\ 10,\ 0.2,\ 10);}
+\DoxyCodeLine{00483\ \ \ \ \ \mbox{\hyperlink{classMatrix}{Matrix}}\ \mbox{\hyperlink{classComplex__number}{div\_scalar1}}(10,\ 10,\ 0.2,\ 1);}
+\DoxyCodeLine{00484\ }
+\DoxyCodeLine{00485\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{m1}}\ +\ 1,\ \mbox{\hyperlink{classComplex__number}{sum\_scalar1}});}
+\DoxyCodeLine{00486\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(1\ +\ \mbox{\hyperlink{classComplex__number}{m1}},\ \mbox{\hyperlink{classComplex__number}{sum\_scalar1}});}
+\DoxyCodeLine{00487\ \ \ \ \ }
+\DoxyCodeLine{00488\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{m2}}\ -\/\ 3,\ \mbox{\hyperlink{classComplex__number}{sub\_scalar1}});}
+\DoxyCodeLine{00489\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(1\ -\/\ \mbox{\hyperlink{classComplex__number}{m2}},\ \mbox{\hyperlink{classComplex__number}{sub\_scalar1}});}
+\DoxyCodeLine{00490\ \ \ \ \ }
+\DoxyCodeLine{00491\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{m2}}\ *\ 5,\ \mbox{\hyperlink{classComplex__number}{mul\_scalar1}});}
+\DoxyCodeLine{00492\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(5\ *\ \mbox{\hyperlink{classComplex__number}{m2}},\ \mbox{\hyperlink{classComplex__number}{mul\_scalar1}});}
+\DoxyCodeLine{00493\ \ \ \ \ }
+\DoxyCodeLine{00494\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{m2}}\ /\ 2,\ \mbox{\hyperlink{classComplex__number}{div\_scalar1}});}
+\DoxyCodeLine{00495\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(2\ /\ \mbox{\hyperlink{classComplex__number}{m2}},\ \mbox{\hyperlink{classComplex__number}{div\_scalar1}});}
+\DoxyCodeLine{00496\ }
+\DoxyCodeLine{00497\ \ \ \ \ }
+\DoxyCodeLine{00498\ \ \ \ \ \mbox{\hyperlink{classMatrix}{Matrix}}\ \mbox{\hyperlink{classComplex__number}{m3}}(10,\ 10,\ 0.2,\ 16.);}
+\DoxyCodeLine{00499\ \ \ \ \ \mbox{\hyperlink{classMatrix}{Matrix}}\ \mbox{\hyperlink{classComplex__number}{sum\_scalar2}}(10,\ 10,\ 0.2,\ 17.);}
+\DoxyCodeLine{00500\ \ \ \ \ \mbox{\hyperlink{classMatrix}{Matrix}}\ \mbox{\hyperlink{classComplex__number}{sub\_scalar2}}(10,\ 10,\ 0.2,\ -\/8.);}
+\DoxyCodeLine{00501\ \ \ \ \ \mbox{\hyperlink{classMatrix}{Matrix}}\ \mbox{\hyperlink{classComplex__number}{mul\_scalar2}}(10,\ 10,\ 0.2,\ 32.);}
+\DoxyCodeLine{00502\ \ \ \ \ \mbox{\hyperlink{classMatrix}{Matrix}}\ \mbox{\hyperlink{classComplex__number}{div\_scalar2}}(10,\ 10,\ 0.2,\ 2.);}
+\DoxyCodeLine{00503\ }
+\DoxyCodeLine{00504\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{m3}}\ +\ 1,\ \mbox{\hyperlink{classComplex__number}{sum\_scalar2}});}
+\DoxyCodeLine{00505\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(1\ +\ \mbox{\hyperlink{classComplex__number}{m3}},\ \mbox{\hyperlink{classComplex__number}{sum\_scalar2}});}
+\DoxyCodeLine{00506\ \ \ \ \ }
+\DoxyCodeLine{00507\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{m3}}\ -\/\ 24,\ \mbox{\hyperlink{classComplex__number}{sub\_scalar2}});}
+\DoxyCodeLine{00508\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(8\ -\/\ \mbox{\hyperlink{classComplex__number}{m3}},\ \mbox{\hyperlink{classComplex__number}{sub\_scalar2}});}
+\DoxyCodeLine{00509\ \ \ \ \ }
+\DoxyCodeLine{00510\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{m3}}\ *\ 2,\ \mbox{\hyperlink{classComplex__number}{mul\_scalar2}});}
+\DoxyCodeLine{00511\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(2\ *\ \mbox{\hyperlink{classComplex__number}{m3}},\ \mbox{\hyperlink{classComplex__number}{mul\_scalar2}});}
+\DoxyCodeLine{00512\ \ \ \ \ }
+\DoxyCodeLine{00513\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{m3}}\ /\ 8,\ \mbox{\hyperlink{classComplex__number}{div\_scalar2}});}
+\DoxyCodeLine{00514\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(32\ /\ \mbox{\hyperlink{classComplex__number}{m3}},\ \mbox{\hyperlink{classComplex__number}{div\_scalar2}});}
+\DoxyCodeLine{00515\ }
+\DoxyCodeLine{00516\ \ \ \ \ \mbox{\hyperlink{classMatrix}{Matrix}}\ \mbox{\hyperlink{classComplex__number}{m4}}(10,\ 10,\ 0.2,\ \mbox{\hyperlink{classRational__number}{Rational\_number}}(5,\ 4));}
+\DoxyCodeLine{00517\ \ \ \ \ \mbox{\hyperlink{classMatrix}{Matrix}}\ \mbox{\hyperlink{classComplex__number}{sum\_scalar3}}(10,\ 10,\ 0.2,\ \mbox{\hyperlink{classRational__number}{Rational\_number}}(6,\ 4));}
+\DoxyCodeLine{00518\ \ \ \ \ \mbox{\hyperlink{classMatrix}{Matrix}}\ \mbox{\hyperlink{classComplex__number}{sub\_scalar3}}(10,\ 10,\ 0.2,\ \mbox{\hyperlink{classRational__number}{Rational\_number}}(3,\ 4));}
+\DoxyCodeLine{00519\ \ \ \ \ \mbox{\hyperlink{classMatrix}{Matrix}}\ \mbox{\hyperlink{classComplex__number}{mul\_scalar3}}(10,\ 10,\ 0.2,\ \mbox{\hyperlink{classRational__number}{Rational\_number}}(10,\ 4));}
+\DoxyCodeLine{00520\ \ \ \ \ \mbox{\hyperlink{classMatrix}{Matrix}}\ \mbox{\hyperlink{classComplex__number}{div\_scalar3}}(10,\ 10,\ 0.2,\ \mbox{\hyperlink{classRational__number}{Rational\_number}}(1,\ 4));}
+\DoxyCodeLine{00521\ }
+\DoxyCodeLine{00522\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{m4}}\ +\ \mbox{\hyperlink{classRational__number}{Rational\_number}}(1,\ 4),\ \mbox{\hyperlink{classComplex__number}{sum\_scalar3}});}
+\DoxyCodeLine{00523\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classRational__number}{Rational\_number}}(1,\ 4)\ +\ \mbox{\hyperlink{classComplex__number}{m4}},\ \mbox{\hyperlink{classComplex__number}{sum\_scalar3}});}
+\DoxyCodeLine{00524\ \ \ \ \ }
+\DoxyCodeLine{00525\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{m4}}\ -\/\ \mbox{\hyperlink{classRational__number}{Rational\_number}}(2,\ 4),\ \mbox{\hyperlink{classComplex__number}{sub\_scalar3}});}
+\DoxyCodeLine{00526\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classRational__number}{Rational\_number}}(8,\ 4)\ -\/\ \mbox{\hyperlink{classComplex__number}{m4}},\ \mbox{\hyperlink{classComplex__number}{sub\_scalar3}});}
+\DoxyCodeLine{00527\ \ \ \ \ }
+\DoxyCodeLine{00528\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{m4}}\ *\ 2,\ \mbox{\hyperlink{classComplex__number}{mul\_scalar3}});}
+\DoxyCodeLine{00529\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(2\ *\ \mbox{\hyperlink{classComplex__number}{m4}},\ \mbox{\hyperlink{classComplex__number}{mul\_scalar3}});}
+\DoxyCodeLine{00530\ \ \ \ \ }
+\DoxyCodeLine{00531\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{m4}}\ /\ 5,\ \mbox{\hyperlink{classComplex__number}{div\_scalar3}});}
+\DoxyCodeLine{00532\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classRational__number}{Rational\_number}}(5,\ 16)\ /\ \mbox{\hyperlink{classComplex__number}{m4}},\ \mbox{\hyperlink{classComplex__number}{div\_scalar3}});}
+\DoxyCodeLine{00533\ }
+\DoxyCodeLine{00534\ }
+\DoxyCodeLine{00535\ \ \ \ \ \mbox{\hyperlink{classMatrix}{Matrix}}\ \mbox{\hyperlink{classComplex__number}{m5}}(10,\ 10,\ 0.2,\ 4);}
+\DoxyCodeLine{00536\ \ \ \ \ \mbox{\hyperlink{classMatrix}{Matrix}}\ \mbox{\hyperlink{classComplex__number}{sum\_scalar4}}(10,\ 10,\ 0.2,\ \mbox{\hyperlink{classRational__number}{Rational\_number}}(17,\ 4));}
+\DoxyCodeLine{00537\ \ \ \ \ \mbox{\hyperlink{classMatrix}{Matrix}}\ \mbox{\hyperlink{classComplex__number}{sub\_scalar4}}(10,\ 10,\ 0.2,\ \mbox{\hyperlink{classRational__number}{Rational\_number}}(7,\ 2));}
+\DoxyCodeLine{00538\ \ \ \ \ \mbox{\hyperlink{classMatrix}{Matrix}}\ \mbox{\hyperlink{classComplex__number}{mul\_scalar4}}(10,\ 10,\ 0.2,\ \mbox{\hyperlink{classRational__number}{Rational\_number}}(8));}
+\DoxyCodeLine{00539\ \ \ \ \ \mbox{\hyperlink{classMatrix}{Matrix}}\ \mbox{\hyperlink{classComplex__number}{div\_scalar4}}(10,\ 10,\ 0.2,\ \mbox{\hyperlink{classRational__number}{Rational\_number}}(1));}
+\DoxyCodeLine{00540\ }
+\DoxyCodeLine{00541\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{m5}}\ +\ \mbox{\hyperlink{classRational__number}{Rational\_number}}(1,\ 4),\ \mbox{\hyperlink{classComplex__number}{sum\_scalar4}});}
+\DoxyCodeLine{00542\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classRational__number}{Rational\_number}}(1,\ 4)\ +\ \mbox{\hyperlink{classComplex__number}{m5}},\ \mbox{\hyperlink{classComplex__number}{sum\_scalar4}});}
+\DoxyCodeLine{00543\ }
+\DoxyCodeLine{00544\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{m5}}\ -\/\ \mbox{\hyperlink{classRational__number}{Rational\_number}}(2,\ 4),\ \mbox{\hyperlink{classComplex__number}{sub\_scalar4}});}
+\DoxyCodeLine{00545\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classRational__number}{Rational\_number}}(15,\ 2)\ -\/\ \mbox{\hyperlink{classComplex__number}{m5}},\ \mbox{\hyperlink{classComplex__number}{sub\_scalar4}});}
+\DoxyCodeLine{00546\ \ \ \ \ }
+\DoxyCodeLine{00547\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{m5}}\ *\ \mbox{\hyperlink{classRational__number}{Rational\_number}}(2),\ \mbox{\hyperlink{classComplex__number}{mul\_scalar4}});}
+\DoxyCodeLine{00548\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classRational__number}{Rational\_number}}(2)\ *\ \mbox{\hyperlink{classComplex__number}{m5}},\ \mbox{\hyperlink{classComplex__number}{mul\_scalar4}});}
+\DoxyCodeLine{00549\ \ \ \ \ }
+\DoxyCodeLine{00550\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{m5}}\ /\ 4,\ \mbox{\hyperlink{classComplex__number}{div\_scalar4}});}
+\DoxyCodeLine{00551\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classRational__number}{Rational\_number}}(4)\ /\ \mbox{\hyperlink{classComplex__number}{m5}},\ \mbox{\hyperlink{classComplex__number}{div\_scalar4}});}
+\DoxyCodeLine{00552\ \}}
+\DoxyCodeLine{00553\ }
+\DoxyCodeLine{00554\ TEST(\mbox{\hyperlink{classComplex__number}{Matrices}},\ \mbox{\hyperlink{classComplex__number}{Complex}})\ \{}
+\DoxyCodeLine{00555\ \ \ \ \ \textcolor{comment}{//\ Работает\ только\ если\ типы\ комплексных\ чсел\ одинаковы,\ потому\ что\ иначе\ нужно\ было\ бы\ делать\ еще\ кучу\ }}
+\DoxyCodeLine{00556\ \ \ \ \ \textcolor{comment}{//\ специализаций\ шаблонных\ операторов\ (по\ крайней\ мере\ эта\ реализация\ того\ требует).\ И\ операции\ со\ скаляром}}
+\DoxyCodeLine{00557\ \ \ \ \ \textcolor{comment}{//\ слева(для\ случаев\ когда\ вектор<комп<рац,\ ...>>,\ вектор<комп<...,\ рац>>,\ вектор<комп<рац,\ рац>>,\ а\ скаляры\ }}
+\DoxyCodeLine{00558\ \ \ \ \ \textcolor{comment}{//\ -\/\ комплексные)\ отсутствуют\ по\ той\ же\ причине\ }}
+\DoxyCodeLine{00559\ }
+\DoxyCodeLine{00560\ \ \ \ \ \textcolor{comment}{//UPD:\ после\ добавления\ приведения\ комплексных\ к\ комплексным\ должно\ работать\ больше,\ наверное.\ И\ по\ идее\ огромное\ количество\ }}
+\DoxyCodeLine{00561\ \ \ \ \ \textcolor{comment}{//\ специализацй\ шаблонов\ можно\ удалить.}}
+\DoxyCodeLine{00562\ \ \ \ \ \mbox{\hyperlink{classMatrix}{Matrix}}\ \mbox{\hyperlink{classComplex__number}{m1}}(10,\ 10,\ 0.1,\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(\mbox{\hyperlink{classRational__number}{Rational\_number}}(6,\ 2),\ \mbox{\hyperlink{classRational__number}{Rational\_number}}(2)));}
+\DoxyCodeLine{00563\ \ \ \ \ \mbox{\hyperlink{classMatrix}{Matrix}}\ \mbox{\hyperlink{classComplex__number}{sum\_scalar1}}(10,\ 10,\ 0.1,\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(\mbox{\hyperlink{classRational__number}{Rational\_number}}(11,\ 2),\ \mbox{\hyperlink{classRational__number}{Rational\_number}}(3)));}
+\DoxyCodeLine{00564\ \ \ \ \ \mbox{\hyperlink{classMatrix}{Matrix}}\ \mbox{\hyperlink{classComplex__number}{sub\_scalar1}}(10,\ 10,\ 0.1,\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(\mbox{\hyperlink{classRational__number}{Rational\_number}}(1,\ 2),\ \mbox{\hyperlink{classRational__number}{Rational\_number}}(1)));}
+\DoxyCodeLine{00565\ \ \ \ \ \mbox{\hyperlink{classMatrix}{Matrix}}\ \mbox{\hyperlink{classComplex__number}{mul\_scalar1}}(10,\ 10,\ 0.1,\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(\mbox{\hyperlink{classRational__number}{Rational\_number}}(11,\ 2),\ \mbox{\hyperlink{classRational__number}{Rational\_number}}(8)));}
+\DoxyCodeLine{00566\ \ \ \ \ \mbox{\hyperlink{classMatrix}{Matrix}}\ \mbox{\hyperlink{classComplex__number}{div\_scalar1}}(10,\ 10,\ 0.1,\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(\mbox{\hyperlink{classRational__number}{Rational\_number}}(152,\ 116),\ \mbox{\hyperlink{classRational__number}{Rational\_number}}(32,116)));}
+\DoxyCodeLine{00567\ }
+\DoxyCodeLine{00568\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Complex\_number}}\ c(\mbox{\hyperlink{classRational__number}{Rational\_number}}(5,\ 2),\ \mbox{\hyperlink{classRational__number}{Rational\_number}}(1));}
+\DoxyCodeLine{00569\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{m1}}\ +\ c,\ \mbox{\hyperlink{classComplex__number}{sum\_scalar1}});}
+\DoxyCodeLine{00570\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{m1}}\ -\/\ c,\ \mbox{\hyperlink{classComplex__number}{sub\_scalar1}});}
+\DoxyCodeLine{00571\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{m1}}\ *\ c,\ \mbox{\hyperlink{classComplex__number}{mul\_scalar1}});}
+\DoxyCodeLine{00572\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{m1}}\ /\ c,\ \mbox{\hyperlink{classComplex__number}{div\_scalar1}});}
+\DoxyCodeLine{00573\ }
+\DoxyCodeLine{00574\ }
+\DoxyCodeLine{00575\ \ \ \ \ \mbox{\hyperlink{classMatrix}{Matrix}}\ \mbox{\hyperlink{classComplex__number}{m4}}(10,\ 10,\ 0.2,\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(5,\ 4));}
+\DoxyCodeLine{00576\ \ \ \ \ \mbox{\hyperlink{classMatrix}{Matrix}}\ \mbox{\hyperlink{classComplex__number}{sum\_scalar3}}(10,\ 10,\ 0.2,\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(6,\ 8));}
+\DoxyCodeLine{00577\ \ \ \ \ \mbox{\hyperlink{classMatrix}{Matrix}}\ \mbox{\hyperlink{classComplex__number}{sub\_scalar3}}(10,\ 10,\ 0.2,\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(3,\ 0));}
+\DoxyCodeLine{00578\ \ \ \ \ \mbox{\hyperlink{classMatrix}{Matrix}}\ \mbox{\hyperlink{classComplex__number}{mul\_scalar3}}(10,\ 10,\ 0.2,\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(10,\ 8));}
+\DoxyCodeLine{00579\ \ \ \ \ \mbox{\hyperlink{classMatrix}{Matrix}}\ \mbox{\hyperlink{classComplex__number}{div\_scalar3}}(10,\ 10,\ 0.2,\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(1));}
+\DoxyCodeLine{00580\ }
+\DoxyCodeLine{00581\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{m4}}\ +\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(1,\ 4),\ \mbox{\hyperlink{classComplex__number}{sum\_scalar3}});}
+\DoxyCodeLine{00582\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{Complex\_number}}(1,\ 4)\ +\ \mbox{\hyperlink{classComplex__number}{m4}},\ \mbox{\hyperlink{classComplex__number}{sum\_scalar3}});}
+\DoxyCodeLine{00583\ \ \ \ \ }
+\DoxyCodeLine{00584\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{m4}}\ -\/\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(2,\ 4),\ \mbox{\hyperlink{classComplex__number}{sub\_scalar3}});}
+\DoxyCodeLine{00585\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{Complex\_number}}(8,\ 4)\ -\/\ \mbox{\hyperlink{classComplex__number}{m4}},\ \mbox{\hyperlink{classComplex__number}{sub\_scalar3}});}
+\DoxyCodeLine{00586\ \ \ \ \ }
+\DoxyCodeLine{00587\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{m4}}\ *\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(2),\ \mbox{\hyperlink{classComplex__number}{mul\_scalar3}});}
+\DoxyCodeLine{00588\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{Complex\_number}}(2)\ *\ \mbox{\hyperlink{classComplex__number}{m4}},\ \mbox{\hyperlink{classComplex__number}{mul\_scalar3}});}
+\DoxyCodeLine{00589\ \ \ \ \ }
+\DoxyCodeLine{00590\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{m4}}\ /\ \mbox{\hyperlink{classComplex__number}{Complex\_number}}(5),\ \mbox{\hyperlink{classComplex__number}{div\_scalar3}});}
+\DoxyCodeLine{00591\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{Complex\_number}}(5,\ 4)\ /\ \mbox{\hyperlink{classComplex__number}{m4}},\ \mbox{\hyperlink{classComplex__number}{div\_scalar3}});}
+\DoxyCodeLine{00592\ \}}
+\DoxyCodeLine{00593\ }
+\DoxyCodeLine{00594\ TEST(\mbox{\hyperlink{classComplex__number}{Matrices}},\ \mbox{\hyperlink{classComplex__number}{BoolMatrix}})\ \{}
+\DoxyCodeLine{00595\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Matrix<bool>}}\ \mbox{\hyperlink{classComplex__number}{m1}}(5,\ 5);}
+\DoxyCodeLine{00596\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Matrix<bool>}}\ \mbox{\hyperlink{classComplex__number}{m2}}(5,\ 5,\ 0);}
+\DoxyCodeLine{00597\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Matrix<bool>}}\ \mbox{\hyperlink{classComplex__number}{m3}}(5,\ 5,\ 1);}
+\DoxyCodeLine{00598\ }
+\DoxyCodeLine{00599\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{m1}}(3,\ 2),\ 0);}
+\DoxyCodeLine{00600\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{m2}}(3,\ 2),\ 0);}
+\DoxyCodeLine{00601\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{m3}}(3,2\ ),\ 1);}
+\DoxyCodeLine{00602\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{m3}}.set(3,\ 2,\ 0);}
+\DoxyCodeLine{00603\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{m3}}(3,2\ ),\ 0);}
+\DoxyCodeLine{00604\ }
+\DoxyCodeLine{00605\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_THROW}}(\mbox{\hyperlink{classComplex__number}{m1}}(5,\ 4),\ \mbox{\hyperlink{classMatrixIndexOutOfRangeException}{MatrixIndexOutOfRangeException}});}
+\DoxyCodeLine{00606\ }
+\DoxyCodeLine{00607\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{m2}}\ *\ \mbox{\hyperlink{classComplex__number}{m3}},\ \mbox{\hyperlink{classComplex__number}{m2}});}
+\DoxyCodeLine{00608\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{m2}}\ +\ \mbox{\hyperlink{classComplex__number}{m3}},\ \mbox{\hyperlink{classComplex__number}{m3}});}
+\DoxyCodeLine{00609\ }
+\DoxyCodeLine{00610\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Matrix<bool>}}\ \mbox{\hyperlink{classComplex__number}{m4}}(5,\ 4);}
+\DoxyCodeLine{00611\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_THROW}}(\mbox{\hyperlink{classComplex__number}{m4}}\ +\ \mbox{\hyperlink{classComplex__number}{m3}},\ \mbox{\hyperlink{classMatrixSizeMissmatch}{MatrixSizeMissmatch}});}
+\DoxyCodeLine{00612\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_THROW}}(\mbox{\hyperlink{classComplex__number}{m4}}\ *\ \mbox{\hyperlink{classComplex__number}{m3}},\ \mbox{\hyperlink{classMatrixSizeMissmatch}{MatrixSizeMissmatch}});}
+\DoxyCodeLine{00613\ \}}
+\DoxyCodeLine{00614\ }
+\DoxyCodeLine{00615\ TEST(\mbox{\hyperlink{classComplex__number}{Vectors}},\ \mbox{\hyperlink{classComplex__number}{VecMatMul}})\ \{}
+\DoxyCodeLine{00616\ \ \ \ \ \mbox{\hyperlink{classVector}{Vector}}\ \mbox{\hyperlink{classComplex__number}{v}}(3);}
+\DoxyCodeLine{00617\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{v}}(0)\ =\ 10;}
+\DoxyCodeLine{00618\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{v}}(1)\ =\ 20;}
+\DoxyCodeLine{00619\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{v}}(2)\ =\ 30;}
+\DoxyCodeLine{00620\ \ \ \ \ \mbox{\hyperlink{classMatrix}{Matrix}}\ \mbox{\hyperlink{classComplex__number}{m}}(3,\ 4);}
+\DoxyCodeLine{00621\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{m}}(0,\ 0)\ =\ 1;}
+\DoxyCodeLine{00622\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{m}}(0,\ 1)\ =\ 2;}
+\DoxyCodeLine{00623\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{m}}(0,\ 2)\ =\ 3;}
+\DoxyCodeLine{00624\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{m}}(0,\ 3)\ =\ 4;}
+\DoxyCodeLine{00625\ }
+\DoxyCodeLine{00626\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{m}}(1,\ 0)\ =\ 5;}
+\DoxyCodeLine{00627\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{m}}(1,\ 1)\ =\ 6;}
+\DoxyCodeLine{00628\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{m}}(1,\ 2)\ =\ 7;}
+\DoxyCodeLine{00629\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{m}}(1,\ 3)\ =\ 8;}
+\DoxyCodeLine{00630\ }
+\DoxyCodeLine{00631\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{m}}(2,\ 0)\ =\ 9;}
+\DoxyCodeLine{00632\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{m}}(2,\ 1)\ =\ 10;}
+\DoxyCodeLine{00633\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{m}}(2,\ 2)\ =\ 11;}
+\DoxyCodeLine{00634\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{m}}(2,\ 3)\ =\ 12;}
+\DoxyCodeLine{00635\ }
+\DoxyCodeLine{00636\ }
+\DoxyCodeLine{00637\ \ \ \ \ \mbox{\hyperlink{classVector}{Vector}}\ \mbox{\hyperlink{classComplex__number}{res\_mul}}(4,\ 0);}
+\DoxyCodeLine{00638\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{res\_mul}}(0)\ =\ 380;}
+\DoxyCodeLine{00639\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{res\_mul}}(1)\ =\ 440;}
+\DoxyCodeLine{00640\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{res\_mul}}(2)\ =\ 500;}
+\DoxyCodeLine{00641\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{res\_mul}}(3)\ =\ 560;}
+\DoxyCodeLine{00642\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{v}}\ *\ \mbox{\hyperlink{classComplex__number}{m}},\ \mbox{\hyperlink{classComplex__number}{res\_mul}});}
+\DoxyCodeLine{00643\ \}}
+\DoxyCodeLine{00644\ }
+\DoxyCodeLine{00645\ }
+\DoxyCodeLine{00646\ \textcolor{comment}{//\ Простые\ ситуации\ с\ прокси.\ прокси\ убивается\ раньше,\ чем\ матрица}}
+\DoxyCodeLine{00647\ TEST(\mbox{\hyperlink{classComplex__number}{Slices}},\ \mbox{\hyperlink{classComplex__number}{SimpleMatriceslices}})\ \{}
+\DoxyCodeLine{00648\ \ \ \ \ \mbox{\hyperlink{classMatrix}{Matrix}}\ \mbox{\hyperlink{classComplex__number}{m}}(3,\ 4);}
+\DoxyCodeLine{00649\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{m}}(0,\ 0)\ =\ 1;}
+\DoxyCodeLine{00650\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{m}}(0,\ 1)\ =\ 2;}
+\DoxyCodeLine{00651\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{m}}(0,\ 2)\ =\ 3;}
+\DoxyCodeLine{00652\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{m}}(0,\ 3)\ =\ 4;}
+\DoxyCodeLine{00653\ }
+\DoxyCodeLine{00654\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{m}}(1,\ 0)\ =\ 5;}
+\DoxyCodeLine{00655\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{m}}(1,\ 1)\ =\ 6;}
+\DoxyCodeLine{00656\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{m}}(1,\ 2)\ =\ 7;}
+\DoxyCodeLine{00657\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{m}}(1,\ 3)\ =\ 8;}
+\DoxyCodeLine{00658\ }
+\DoxyCodeLine{00659\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{m}}(2,\ 0)\ =\ 9;}
+\DoxyCodeLine{00660\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{m}}(2,\ 1)\ =\ 10;}
+\DoxyCodeLine{00661\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{m}}(2,\ 2)\ =\ 11;}
+\DoxyCodeLine{00662\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{m}}(2,\ 3)\ =\ 12;}
+\DoxyCodeLine{00663\ }
+\DoxyCodeLine{00664\ }
+\DoxyCodeLine{00665\ \ \ \ \ \mbox{\hyperlink{classMatrix__coords}{Matrix\_coords}}\ \mbox{\hyperlink{classComplex__number}{coord}}(1,\ 1,\ 2,\ 3);}
+\DoxyCodeLine{00666\ \ \ \ \ \textcolor{keyword}{auto}\ \mbox{\hyperlink{classComplex__number}{proxy\_p1}}\ =\ \mbox{\hyperlink{classComplex__number}{m}}[\mbox{\hyperlink{classComplex__number}{coord}}];\ \textcolor{comment}{//\ Используем\ auto\ потому\ что\ параметры\ шаблона\ матрицы\ были\ по\ умолчанию\ и\ не\ хочется\ их\ указывать}}
+\DoxyCodeLine{00667\ \ \ \ \ }
+\DoxyCodeLine{00668\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}((*\mbox{\hyperlink{classComplex__number}{proxy\_p1}})(0,\ 0),\ \mbox{\hyperlink{classComplex__number}{m}}(1,\ 1));}
+\DoxyCodeLine{00669\ \ \ \ \ (*proxy\_p1).set(0,\ 0,\ 123);}
+\DoxyCodeLine{00670\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_NE}}((*\mbox{\hyperlink{classComplex__number}{proxy\_p1}})(0,\ 0),\ \mbox{\hyperlink{classComplex__number}{m}}(1,\ 1));}
+\DoxyCodeLine{00671\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_THROW}}((*proxy\_p1).set(0,\ 123),\ \mbox{\hyperlink{classInvalidArgument}{InvalidArgument}});}
+\DoxyCodeLine{00672\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_THROW}}((*\mbox{\hyperlink{classComplex__number}{proxy\_p1}})(0,\ 123),\ \mbox{\hyperlink{classMatrixIndexOutOfRangeException}{MatrixIndexOutOfRangeException}});}
+\DoxyCodeLine{00673\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_THROW}}((*\mbox{\hyperlink{classComplex__number}{proxy\_p1}})(0),\ \mbox{\hyperlink{classInvalidArgument}{InvalidArgument}});}
+\DoxyCodeLine{00674\ }
+\DoxyCodeLine{00675\ \ \ \ \ \mbox{\hyperlink{classMatrix__row__coord}{Matrix\_row\_coord}}\ \mbox{\hyperlink{classComplex__number}{row\_coord}}(1,\ 1,\ 2);}
+\DoxyCodeLine{00676\ \ \ \ \ \textcolor{keyword}{auto}\ \mbox{\hyperlink{classComplex__number}{proxy\_row}}\ =\ \mbox{\hyperlink{classComplex__number}{m}}[\mbox{\hyperlink{classComplex__number}{row\_coord}}];\ \textcolor{comment}{//\ Используем\ auto\ потому\ что\ параметры\ шаблона\ матрицы\ были\ по\ умолчанию\ и\ не\ хочется\ их\ указывать}}
+\DoxyCodeLine{00677\ \ \ \ \ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::cout}}\ <<\ \textcolor{stringliteral}{"{}m\ "{}}\ <<\ \mbox{\hyperlink{classComplex__number}{m}}(1,\ 1)\ <<\ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::endl}};}
+\DoxyCodeLine{00678\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}((*\mbox{\hyperlink{classComplex__number}{proxy\_row}})(0),\ \mbox{\hyperlink{classComplex__number}{m}}(1,\ 1));}
+\DoxyCodeLine{00679\ \ \ \ \ (*proxy\_row).set(0,\ 123);}
+\DoxyCodeLine{00680\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_NE}}((*\mbox{\hyperlink{classComplex__number}{proxy\_row}})(0),\ \mbox{\hyperlink{classComplex__number}{m}}(1,\ 1));}
+\DoxyCodeLine{00681\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_THROW}}((*proxy\_row).set(0,\ 0,\ 123),\ \mbox{\hyperlink{classInvalidArgument}{InvalidArgument}});}
+\DoxyCodeLine{00682\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_THROW}}((*\mbox{\hyperlink{classComplex__number}{proxy\_row}})(123),\ \mbox{\hyperlink{classVectorIndexOutOfRangeException}{VectorIndexOutOfRangeException}});}
+\DoxyCodeLine{00683\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_THROW}}((*\mbox{\hyperlink{classComplex__number}{proxy\_row}})(0,\ 0),\ \mbox{\hyperlink{classInvalidArgument}{InvalidArgument}});}
+\DoxyCodeLine{00684\ }
+\DoxyCodeLine{00685\ }
+\DoxyCodeLine{00686\ \ \ \ \ \mbox{\hyperlink{classMatrix__col__coord}{Matrix\_col\_coord}}\ \mbox{\hyperlink{classComplex__number}{col\_coord}}(1,\ 1,\ 2);}
+\DoxyCodeLine{00687\ \ \ \ \ \textcolor{keyword}{auto}\ \mbox{\hyperlink{classComplex__number}{proxy\_col}}\ =\ \mbox{\hyperlink{classComplex__number}{m}}[\mbox{\hyperlink{classComplex__number}{row\_coord}}];\ \textcolor{comment}{//\ Используем\ auto\ потому\ что\ параметры\ шаблона\ матрицы\ были\ по\ умолчанию\ и\ не\ хочется\ их\ указывать}}
+\DoxyCodeLine{00688\ \ \ \ \ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::cout}}\ <<\ \textcolor{stringliteral}{"{}m\ "{}}\ <<\ \mbox{\hyperlink{classComplex__number}{m}}(1,\ 1)\ <<\ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{std::endl}};}
+\DoxyCodeLine{00689\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}((*\mbox{\hyperlink{classComplex__number}{proxy\_col}})(0),\ \mbox{\hyperlink{classComplex__number}{m}}(1,\ 1));}
+\DoxyCodeLine{00690\ \ \ \ \ (*proxy\_col).set(0,\ 123);}
+\DoxyCodeLine{00691\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_NE}}((*\mbox{\hyperlink{classComplex__number}{proxy\_col}})(0),\ \mbox{\hyperlink{classComplex__number}{m}}(1,\ 1));}
+\DoxyCodeLine{00692\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_THROW}}((*proxy\_col).set(0,\ 0,\ 123),\ \mbox{\hyperlink{classInvalidArgument}{InvalidArgument}});}
+\DoxyCodeLine{00693\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_THROW}}((*\mbox{\hyperlink{classComplex__number}{proxy\_col}})(123),\ \mbox{\hyperlink{classVectorIndexOutOfRangeException}{VectorIndexOutOfRangeException}});}
+\DoxyCodeLine{00694\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_THROW}}((*\mbox{\hyperlink{classComplex__number}{proxy\_col}})(0,\ 0),\ \mbox{\hyperlink{classInvalidArgument}{InvalidArgument}});}
+\DoxyCodeLine{00695\ }
+\DoxyCodeLine{00696\ }
+\DoxyCodeLine{00697\ }
+\DoxyCodeLine{00698\ \ \ \ \ \textcolor{keyword}{delete}\ \mbox{\hyperlink{classComplex__number}{proxy\_p1}};\ \textcolor{comment}{//\ освободим\ выделенный\ в\ m[]\ указатель}}
+\DoxyCodeLine{00699\ \ \ \ \ \textcolor{keyword}{delete}\ \mbox{\hyperlink{classComplex__number}{proxy\_row}};\ \textcolor{comment}{//\ освободим\ выделенный\ в\ m[]\ указатель}}
+\DoxyCodeLine{00700\ \ \ \ \ \textcolor{keyword}{delete}\ \mbox{\hyperlink{classComplex__number}{proxy\_col}};\ \textcolor{comment}{//\ освободим\ выделенный\ в\ m[]\ указатель}}
+\DoxyCodeLine{00701\ \}}
+\DoxyCodeLine{00702\ }
+\DoxyCodeLine{00703\ TEST(\mbox{\hyperlink{classComplex__number}{Slices}},\ \mbox{\hyperlink{classComplex__number}{KillMatrix}})\ \{}
+\DoxyCodeLine{00704\ \ \ \ \ \mbox{\hyperlink{classMatrix}{Matrix}}\ \mbox{\hyperlink{classComplex__number}{m}}(3,\ 4);}
+\DoxyCodeLine{00705\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{m}}(0,\ 0)\ =\ 1;}
+\DoxyCodeLine{00706\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{m}}(0,\ 1)\ =\ 2;}
+\DoxyCodeLine{00707\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{m}}(0,\ 2)\ =\ 3;}
+\DoxyCodeLine{00708\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{m}}(0,\ 3)\ =\ 4;}
+\DoxyCodeLine{00709\ }
+\DoxyCodeLine{00710\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{m}}(1,\ 0)\ =\ 5;}
+\DoxyCodeLine{00711\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{m}}(1,\ 1)\ =\ 6;}
+\DoxyCodeLine{00712\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{m}}(1,\ 2)\ =\ 7;}
+\DoxyCodeLine{00713\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{m}}(1,\ 3)\ =\ 8;}
+\DoxyCodeLine{00714\ }
+\DoxyCodeLine{00715\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{m}}(2,\ 0)\ =\ 9;}
+\DoxyCodeLine{00716\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{m}}(2,\ 1)\ =\ 10;}
+\DoxyCodeLine{00717\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{m}}(2,\ 2)\ =\ 11;}
+\DoxyCodeLine{00718\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{m}}(2,\ 3)\ =\ 12;}
+\DoxyCodeLine{00719\ }
+\DoxyCodeLine{00720\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Matrix<>}}*\ \mbox{\hyperlink{classComplex__number}{m1}}\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classMatrix}{Matrix}}(\mbox{\hyperlink{classComplex__number}{m}});\ }
+\DoxyCodeLine{00721\ \ \ \ \ \textcolor{comment}{//\ Matrix<>*\ m2\ =\ new\ Matrix(m);\ }}
+\DoxyCodeLine{00722\ }
+\DoxyCodeLine{00723\ \ \ \ \ \mbox{\hyperlink{classMatrix__coords}{Matrix\_coords}}\ \mbox{\hyperlink{classComplex__number}{coord}}(1,\ 1,\ 2,\ 3);}
+\DoxyCodeLine{00724\ \ \ \ \ \textcolor{keyword}{auto}\ \mbox{\hyperlink{classComplex__number}{proxy\_matrix}}\ =\ (*m1)[\mbox{\hyperlink{classComplex__number}{coord}}];\ \textcolor{comment}{//\ Используем\ auto\ потому\ что\ параметры\ шаблона\ матрицы\ были\ по\ умолчанию\ и\ не\ хочется\ их\ указывать}}
+\DoxyCodeLine{00725\ \ \ \ \ \textcolor{keyword}{auto}\ \mbox{\hyperlink{classComplex__number}{proxy\_matrix\_local}}\ =\ (*m1)[\mbox{\hyperlink{classComplex__number}{coord}}];\ \textcolor{comment}{//\ для\ этого\ прокси\ создадим\ локальную\ копию}}
+\DoxyCodeLine{00726\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{proxy\_matrix\_local}}-\/>set(0,\ 0,\ 50);}
+\DoxyCodeLine{00727\ }
+\DoxyCodeLine{00728\ \ \ \ \ \mbox{\hyperlink{classMatrix__row__coord}{Matrix\_row\_coord}}\ \mbox{\hyperlink{classComplex__number}{row\_coord}}(1,\ 1,\ 2);}
+\DoxyCodeLine{00729\ \ \ \ \ \textcolor{keyword}{auto}\ \mbox{\hyperlink{classComplex__number}{proxy\_row}}\ =\ (*m1)[\mbox{\hyperlink{classComplex__number}{row\_coord}}];\ \textcolor{comment}{//\ Используем\ auto\ потому\ что\ параметры\ шаблона\ матрицы\ были\ по\ умолчанию\ и\ не\ хочется\ их\ указывать}}
+\DoxyCodeLine{00730\ \ \ \ \ \textcolor{keyword}{auto}\ \mbox{\hyperlink{classComplex__number}{proxy\_row\_local}}\ =\ (*m1)[\mbox{\hyperlink{classComplex__number}{row\_coord}}];\ \textcolor{comment}{//\ для\ этого\ прокси\ создадим\ локальную\ копию}}
+\DoxyCodeLine{00731\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{proxy\_row\_local}}-\/>set(0,\ 100);}
+\DoxyCodeLine{00732\ }
+\DoxyCodeLine{00733\ \ \ \ \ \mbox{\hyperlink{classMatrix__col__coord}{Matrix\_col\_coord}}\ \mbox{\hyperlink{classComplex__number}{col\_coord}}(1,\ 1,\ 2);}
+\DoxyCodeLine{00734\ \ \ \ \ \textcolor{keyword}{auto}\ \mbox{\hyperlink{classComplex__number}{proxy\_col}}\ =\ (*m1)[\mbox{\hyperlink{classComplex__number}{row\_coord}}];\ \textcolor{comment}{//\ Используем\ auto\ потому\ что\ параметры\ шаблона\ матрицы\ были\ по\ умолчанию\ и\ не\ хочется\ их\ указывать}}
+\DoxyCodeLine{00735\ \ \ \ \ \textcolor{keyword}{auto}\ \mbox{\hyperlink{classComplex__number}{proxy\_col\_local}}\ =\ (*m1)[\mbox{\hyperlink{classComplex__number}{row\_coord}}];\ \textcolor{comment}{//\ для\ этого\ прокси\ создадим\ локальную\ копию}}
+\DoxyCodeLine{00736\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{proxy\_col\_local}}-\/>set(0,\ 150);}
+\DoxyCodeLine{00737\ }
+\DoxyCodeLine{00738\ }
+\DoxyCodeLine{00739\ \ \ \ \ \textcolor{keyword}{delete}\ \mbox{\hyperlink{classComplex__number}{m1}};}
+\DoxyCodeLine{00740\ \ \ \ \ \textcolor{comment}{//\ delete\ m2;}}
+\DoxyCodeLine{00741\ }
+\DoxyCodeLine{00742\ \ \ \ \ \textcolor{keyword}{delete}\ \mbox{\hyperlink{classComplex__number}{proxy\_matrix}};\ \textcolor{comment}{//\ освободим\ выделенный\ в\ m[]\ указатель}}
+\DoxyCodeLine{00743\ \ \ \ \ \textcolor{keyword}{delete}\ \mbox{\hyperlink{classComplex__number}{proxy\_row}};\ \textcolor{comment}{//\ освободим\ выделенный\ в\ m[]\ указатель}}
+\DoxyCodeLine{00744\ \ \ \ \ \textcolor{keyword}{delete}\ \mbox{\hyperlink{classComplex__number}{proxy\_col}};\ \textcolor{comment}{//\ освободим\ выделенный\ в\ m[]\ указатель}}
+\DoxyCodeLine{00745\ \ \ \ \ \textcolor{keyword}{delete}\ \mbox{\hyperlink{classComplex__number}{proxy\_matrix\_local}};\ \textcolor{comment}{//\ освободим\ выделенный\ в\ m[]\ указатель}}
+\DoxyCodeLine{00746\ \ \ \ \ \textcolor{keyword}{delete}\ \mbox{\hyperlink{classComplex__number}{proxy\_row\_local}};\ \textcolor{comment}{//\ освободим\ выделенный\ в\ m[]\ указательclea}}
+\DoxyCodeLine{00747\ \ \ \ \ \textcolor{keyword}{delete}\ \mbox{\hyperlink{classComplex__number}{proxy\_col\_local}};\ \textcolor{comment}{//\ освободим\ выделенный\ в\ m[]\ указатель}}
+\DoxyCodeLine{00748\ \}}
+\DoxyCodeLine{00749\ }
+\DoxyCodeLine{00750\ TEST(\mbox{\hyperlink{classComplex__number}{Slices}},\ \mbox{\hyperlink{classComplex__number}{VecMulRowSlice}})\ \{\ }
+\DoxyCodeLine{00751\ \ \ \ \ \mbox{\hyperlink{classVector}{Vector}}\ \mbox{\hyperlink{classComplex__number}{v}}(10);}
+\DoxyCodeLine{00752\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{v}}(0)\ =\ 1;}
+\DoxyCodeLine{00753\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{v}}(1)\ =\ 2;}
+\DoxyCodeLine{00754\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{v}}(2)\ =\ 3;}
+\DoxyCodeLine{00755\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{v}}(3)\ =\ 4;}
+\DoxyCodeLine{00756\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{v}}(4)\ =\ 5;}
+\DoxyCodeLine{00757\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{v}}(5)\ =\ 6;}
+\DoxyCodeLine{00758\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{v}}(6)\ =\ 7;}
+\DoxyCodeLine{00759\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{v}}(7)\ =\ 8;}
+\DoxyCodeLine{00760\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{v}}(8)\ =\ 9;}
+\DoxyCodeLine{00761\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{v}}(9)\ =\ 10;}
+\DoxyCodeLine{00762\ }
+\DoxyCodeLine{00763\ \ \ \ \ \mbox{\hyperlink{classMatrix}{Matrix}}\ \mbox{\hyperlink{classComplex__number}{m}}(10,\ 10);}
+\DoxyCodeLine{00764\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{m}}(3,0)\ =\ 1;}
+\DoxyCodeLine{00765\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{m}}(3,1)\ =\ 2;}
+\DoxyCodeLine{00766\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{m}}(3,2)\ =\ 3;}
+\DoxyCodeLine{00767\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{m}}(3,3)\ =\ 4;}
+\DoxyCodeLine{00768\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{m}}(3,4)\ =\ 5;}
+\DoxyCodeLine{00769\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{m}}(3,5)\ =\ 6;}
+\DoxyCodeLine{00770\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{m}}(3,6)\ =\ 7;}
+\DoxyCodeLine{00771\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{m}}(3,7)\ =\ 8;}
+\DoxyCodeLine{00772\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{m}}(3,8)\ =\ 9;}
+\DoxyCodeLine{00773\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{m}}(3,9)\ =\ 10;}
+\DoxyCodeLine{00774\ }
+\DoxyCodeLine{00775\ \ \ \ \ \textcolor{keyword}{auto}\ \mbox{\hyperlink{classComplex__number}{proxy\_row}}\ =\ \mbox{\hyperlink{classComplex__number}{m}}[\mbox{\hyperlink{classMatrix__row__coord}{Matrix\_row\_coord}}(3,\ -\/1,\ -\/1)];}
+\DoxyCodeLine{00776\ \ \ \ \ \mbox{\hyperlink{classVector}{Vector}}\ \mbox{\hyperlink{classComplex__number}{v\_copy}}\ =\ *\mbox{\hyperlink{classComplex__number}{proxy\_row}};}
+\DoxyCodeLine{00777\ \ \ \ \ \mbox{\hyperlink{classVector}{Vector}}\ \mbox{\hyperlink{classComplex__number}{copy\_result}}(10,\ 0);}
+\DoxyCodeLine{00778\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{copy\_result}}(0)\ =\ 1;}
+\DoxyCodeLine{00779\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{copy\_result}}(1)\ =\ 2;}
+\DoxyCodeLine{00780\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{copy\_result}}(2)\ =\ 3;}
+\DoxyCodeLine{00781\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{copy\_result}}(3)\ =\ 4;}
+\DoxyCodeLine{00782\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{copy\_result}}(4)\ =\ 5;}
+\DoxyCodeLine{00783\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{copy\_result}}(5)\ =\ 6;}
+\DoxyCodeLine{00784\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{copy\_result}}(6)\ =\ 7;}
+\DoxyCodeLine{00785\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{copy\_result}}(7)\ =\ 8;}
+\DoxyCodeLine{00786\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{copy\_result}}(8)\ =\ 9;}
+\DoxyCodeLine{00787\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{copy\_result}}(9)\ =\ 10;}
+\DoxyCodeLine{00788\ }
+\DoxyCodeLine{00789\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{v\_copy}},\ \mbox{\hyperlink{classComplex__number}{copy\_result}});}
+\DoxyCodeLine{00790\ }
+\DoxyCodeLine{00791\ \ \ \ \ \textcolor{keyword}{delete}\ \mbox{\hyperlink{classComplex__number}{proxy\_row}};}
+\DoxyCodeLine{00792\ \}}
+\DoxyCodeLine{00793\ }
+\DoxyCodeLine{00794\ TEST(\mbox{\hyperlink{classComplex__number}{Parsing}},\ \mbox{\hyperlink{classComplex__number}{Vector\_parse}})\ \{}
+\DoxyCodeLine{00795\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Vector<Complex\_number<double,\ double>}}>\ \mbox{\hyperlink{classComplex__number}{vcff}}(\textcolor{stringliteral}{"{}parsing/VCFF.txt"{}});}
+\DoxyCodeLine{00796\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Vector<Complex\_number<double,\ double>}}>\ \mbox{\hyperlink{classComplex__number}{rvcff}}(50000);}
+\DoxyCodeLine{00797\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{rvcff}}(0)\ =\ \mbox{\hyperlink{classComplex__number}{Complex\_number<double>}}(100);}
+\DoxyCodeLine{00798\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{rvcff}}(5999)\ =\ \mbox{\hyperlink{classComplex__number}{Complex\_number<double>}}(23,\ 5.1);}
+\DoxyCodeLine{00799\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{rvcff}}(6)\ =\ \mbox{\hyperlink{classComplex__number}{Complex\_number<double>}}(5.5,\ 3.5);}
+\DoxyCodeLine{00800\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{rvcff}}(21)\ =\ \mbox{\hyperlink{classComplex__number}{Complex\_number<double>}}(44,\ 1.1);}
+\DoxyCodeLine{00801\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{vcff}},\ \mbox{\hyperlink{classComplex__number}{rvcff}});}
+\DoxyCodeLine{00802\ }
+\DoxyCodeLine{00803\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Vector<Complex\_number<int,\ int>}}>\ \mbox{\hyperlink{classComplex__number}{vcii}}(\textcolor{stringliteral}{"{}parsing/VCII.txt"{}});}
+\DoxyCodeLine{00804\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Vector<Complex\_number<int,\ int>}}>\ \mbox{\hyperlink{classComplex__number}{rvcii}}(50000);}
+\DoxyCodeLine{00805\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{rvcii}}(0)\ =\ \mbox{\hyperlink{classComplex__number}{Complex\_number<int>}}(100);}
+\DoxyCodeLine{00806\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{rvcii}}(5999)\ =\ \mbox{\hyperlink{classComplex__number}{Complex\_number<int>}}(23,\ 5);}
+\DoxyCodeLine{00807\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{rvcii}}(6)\ =\ \mbox{\hyperlink{classComplex__number}{Complex\_number<int>}}(5,\ 3);}
+\DoxyCodeLine{00808\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{rvcii}}(21)\ =\ \mbox{\hyperlink{classComplex__number}{Complex\_number<int>}}(44,\ 1);}
+\DoxyCodeLine{00809\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{vcii}},\ \mbox{\hyperlink{classComplex__number}{rvcii}});}
+\DoxyCodeLine{00810\ }
+\DoxyCodeLine{00811\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Vector<Complex\_number<int,\ double>}}>\ \mbox{\hyperlink{classComplex__number}{vcif}}(\textcolor{stringliteral}{"{}parsing/VCIF.txt"{}});}
+\DoxyCodeLine{00812\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Vector<Complex\_number<int,\ double>}}>\ \mbox{\hyperlink{classComplex__number}{rvcif}}(50000);}
+\DoxyCodeLine{00813\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{rvcif}}(0)\ =\ \mbox{\hyperlink{classComplex__number}{Complex\_number<int,\ double>}}(100);}
+\DoxyCodeLine{00814\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{rvcif}}(5999)\ =\ \mbox{\hyperlink{classComplex__number}{Complex\_number<int,\ double>}}(23,\ 5.1);}
+\DoxyCodeLine{00815\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{rvcif}}(6)\ =\ \mbox{\hyperlink{classComplex__number}{Complex\_number<int,\ double>}}(5,\ 3.5);}
+\DoxyCodeLine{00816\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{rvcif}}(21)\ =\ \mbox{\hyperlink{classComplex__number}{Complex\_number<int,\ double>}}(44,\ 1.1);}
+\DoxyCodeLine{00817\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{vcif}},\ \mbox{\hyperlink{classComplex__number}{rvcif}});}
+\DoxyCodeLine{00818\ }
+\DoxyCodeLine{00819\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Vector<Complex\_number<double,\ int>}}>\ \mbox{\hyperlink{classComplex__number}{vcfi}}(\textcolor{stringliteral}{"{}parsing/VCFI.txt"{}});}
+\DoxyCodeLine{00820\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Vector<Complex\_number<double,\ int>}}>\ \mbox{\hyperlink{classComplex__number}{rvcfi}}(50000);}
+\DoxyCodeLine{00821\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{rvcfi}}(0)\ =\ \mbox{\hyperlink{classComplex__number}{Complex\_number<double,\ int>}}(100);}
+\DoxyCodeLine{00822\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{rvcfi}}(5999)\ =\ \mbox{\hyperlink{classComplex__number}{Complex\_number<double,\ int>}}(23,\ 5);}
+\DoxyCodeLine{00823\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{rvcfi}}(6)\ =\ \mbox{\hyperlink{classComplex__number}{Complex\_number<double,\ int>}}(5.5,\ 3);}
+\DoxyCodeLine{00824\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{rvcfi}}(21)\ =\ \mbox{\hyperlink{classComplex__number}{Complex\_number<double,\ int>}}(44,\ 1);}
+\DoxyCodeLine{00825\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{vcfi}},\ \mbox{\hyperlink{classComplex__number}{rvcfi}});}
+\DoxyCodeLine{00826\ }
+\DoxyCodeLine{00827\ }
+\DoxyCodeLine{00828\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Vector<Rational\_number<int>}}>\ \mbox{\hyperlink{classComplex__number}{vr}}(\textcolor{stringliteral}{"{}parsing/VR.txt"{}});}
+\DoxyCodeLine{00829\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Vector<Rational\_number<int>}}>\ \mbox{\hyperlink{classComplex__number}{rvr}}(50000);}
+\DoxyCodeLine{00830\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{rvr}}(0)\ =\ \mbox{\hyperlink{classComplex__number}{Rational\_number<int>}}(100);}
+\DoxyCodeLine{00831\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{rvr}}(5999)\ =\ \mbox{\hyperlink{classComplex__number}{Rational\_number<int>}}(23,\ 5);}
+\DoxyCodeLine{00832\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{rvr}}(6)\ =\ \mbox{\hyperlink{classComplex__number}{Rational\_number<int>}}(5,\ 3);}
+\DoxyCodeLine{00833\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{rvr}}(21)\ =\ \mbox{\hyperlink{classComplex__number}{Rational\_number<int>}}(44,\ 1);}
+\DoxyCodeLine{00834\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{vr}},\ \mbox{\hyperlink{classComplex__number}{rvr}});}
+\DoxyCodeLine{00835\ }
+\DoxyCodeLine{00836\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Vector<bool>}}\ \mbox{\hyperlink{classComplex__number}{vb}}(\textcolor{stringliteral}{"{}parsing/VB.txt"{}});}
+\DoxyCodeLine{00837\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Vector<bool>}}\ \mbox{\hyperlink{classComplex__number}{rvb}}(50000);}
+\DoxyCodeLine{00838\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{rvb}}.set(0,\ 1);}
+\DoxyCodeLine{00839\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{rvb}}.set(5999,\ 1);}
+\DoxyCodeLine{00840\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{rvb}}.set(6,\ 1);}
+\DoxyCodeLine{00841\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{rvb}}.set(21,\ 1);}
+\DoxyCodeLine{00842\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{vb}},\ \mbox{\hyperlink{classComplex__number}{rvb}});}
+\DoxyCodeLine{00843\ \}}
+\DoxyCodeLine{00844\ }
+\DoxyCodeLine{00845\ TEST(\mbox{\hyperlink{classComplex__number}{Parsing}},\ \mbox{\hyperlink{classComplex__number}{Matrix\_parse}})\ \{}
+\DoxyCodeLine{00846\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Matrix<Complex\_number<double,\ double>}}>\ \mbox{\hyperlink{classComplex__number}{mcff}}(\textcolor{stringliteral}{"{}parsing/MCFF.txt"{}});}
+\DoxyCodeLine{00847\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Matrix<Complex\_number<double,\ double>}}>\ \mbox{\hyperlink{classComplex__number}{rmcff}}(50000,\ 500);}
+\DoxyCodeLine{00848\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{rmcff}}(0,\ 0)\ =\ \mbox{\hyperlink{classComplex__number}{Complex\_number<double>}}(100);}
+\DoxyCodeLine{00849\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{rmcff}}(5999,\ 1)\ =\ \mbox{\hyperlink{classComplex__number}{Complex\_number<double>}}(23,\ 5.1);}
+\DoxyCodeLine{00850\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{rmcff}}(6,\ 0)\ =\ \mbox{\hyperlink{classComplex__number}{Complex\_number<double>}}(5.5,\ 3.5);}
+\DoxyCodeLine{00851\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{rmcff}}(21,\ 1)\ =\ \mbox{\hyperlink{classComplex__number}{Complex\_number<double>}}(44,\ 1.1);}
+\DoxyCodeLine{00852\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{mcff}},\ \mbox{\hyperlink{classComplex__number}{rmcff}});}
+\DoxyCodeLine{00853\ \ \ \ \ }
+\DoxyCodeLine{00854\ \ \ \ \ }
+\DoxyCodeLine{00855\ \ \ \ \ }
+\DoxyCodeLine{00856\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Matrix<Complex\_number<int,\ int>}}>\ \mbox{\hyperlink{classComplex__number}{mcii}}(\textcolor{stringliteral}{"{}parsing/MCII.txt"{}});}
+\DoxyCodeLine{00857\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Matrix<Complex\_number<int,\ int>}}>\ \mbox{\hyperlink{classComplex__number}{rmcii}}(50000,\ 500);}
+\DoxyCodeLine{00858\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{rmcii}}(0,\ 0)\ =\ \mbox{\hyperlink{classComplex__number}{Complex\_number<int>}}(100);}
+\DoxyCodeLine{00859\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{rmcii}}(5999,\ 1)\ =\ \mbox{\hyperlink{classComplex__number}{Complex\_number<int>}}(23,\ 5);}
+\DoxyCodeLine{00860\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{rmcii}}(6,\ 0)\ =\ \mbox{\hyperlink{classComplex__number}{Complex\_number<int>}}(5,\ 3);}
+\DoxyCodeLine{00861\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{rmcii}}(21,\ 1)\ =\ \mbox{\hyperlink{classComplex__number}{Complex\_number<int>}}(44,\ 1);}
+\DoxyCodeLine{00862\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{mcii}},\ \mbox{\hyperlink{classComplex__number}{rmcii}});}
+\DoxyCodeLine{00863\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Matrix<Complex\_number<int,\ double>}}>\ \mbox{\hyperlink{classComplex__number}{mcif}}(\textcolor{stringliteral}{"{}parsing/MCIF.txt"{}});}
+\DoxyCodeLine{00864\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Matrix<Complex\_number<int,\ double>}}>\ \mbox{\hyperlink{classComplex__number}{rmcif}}(50000,\ 500);}
+\DoxyCodeLine{00865\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{rmcif}}(0,\ 0)\ =\ \mbox{\hyperlink{classComplex__number}{Complex\_number<int,\ double>}}(100);}
+\DoxyCodeLine{00866\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{rmcif}}(5999,\ 1)\ =\ \mbox{\hyperlink{classComplex__number}{Complex\_number<int,\ double>}}(23,\ 5.1);}
+\DoxyCodeLine{00867\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{rmcif}}(6,\ 0)\ =\ \mbox{\hyperlink{classComplex__number}{Complex\_number<int,\ double>}}(5,\ 3.5);}
+\DoxyCodeLine{00868\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{rmcif}}(21,\ 1)\ =\ \mbox{\hyperlink{classComplex__number}{Complex\_number<int,\ double>}}(44,\ 1.1);}
+\DoxyCodeLine{00869\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{mcif}},\ \mbox{\hyperlink{classComplex__number}{rmcif}});}
+\DoxyCodeLine{00870\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Matrix<Complex\_number<double,\ int>}}>\ \mbox{\hyperlink{classComplex__number}{mcfi}}(\textcolor{stringliteral}{"{}parsing/MCFI.txt"{}});}
+\DoxyCodeLine{00871\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Matrix<Complex\_number<double,\ int>}}>\ \mbox{\hyperlink{classComplex__number}{rmcfi}}(50000,\ 500);}
+\DoxyCodeLine{00872\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{rmcfi}}(0,\ 0)\ =\ \mbox{\hyperlink{classComplex__number}{Complex\_number<double,\ int>}}(100);}
+\DoxyCodeLine{00873\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{rmcfi}}(5999,\ 1)\ =\ \mbox{\hyperlink{classComplex__number}{Complex\_number<double,\ int>}}(23,\ 5);}
+\DoxyCodeLine{00874\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{rmcfi}}(6,\ 0)\ =\ \mbox{\hyperlink{classComplex__number}{Complex\_number<double,\ int>}}(5.5,\ 3);}
+\DoxyCodeLine{00875\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{rmcfi}}(21,\ 1)\ =\ \mbox{\hyperlink{classComplex__number}{Complex\_number<double,\ int>}}(44,\ 1);}
+\DoxyCodeLine{00876\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{mcfi}},\ \mbox{\hyperlink{classComplex__number}{rmcfi}});}
+\DoxyCodeLine{00877\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Matrix<Rational\_number<int>}}>\ \mbox{\hyperlink{classComplex__number}{mr}}(\textcolor{stringliteral}{"{}parsing/MR.txt"{}});}
+\DoxyCodeLine{00878\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Matrix<Rational\_number<int>}}>\ \mbox{\hyperlink{classComplex__number}{rmr}}(50000,\ 5000);}
+\DoxyCodeLine{00879\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{rmr}}(0,\ 0)\ =\ \mbox{\hyperlink{classComplex__number}{Rational\_number<int>}}(100);}
+\DoxyCodeLine{00880\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{rmr}}(5999,\ 1)\ =\ \mbox{\hyperlink{classComplex__number}{Rational\_number<int>}}(23,\ 5);}
+\DoxyCodeLine{00881\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{rmr}}(6,\ 0)\ =\ \mbox{\hyperlink{classComplex__number}{Rational\_number<int>}}(5,\ 3);}
+\DoxyCodeLine{00882\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{rmr}}(21,\ 1)\ =\ \mbox{\hyperlink{classComplex__number}{Rational\_number<int>}}(44,\ 1);}
+\DoxyCodeLine{00883\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{mr}},\ \mbox{\hyperlink{classComplex__number}{rmr}});}
+\DoxyCodeLine{00884\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Matrix<bool>}}\ \mbox{\hyperlink{classComplex__number}{mb}}(\textcolor{stringliteral}{"{}parsing/MB.txt"{}});}
+\DoxyCodeLine{00885\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{Matrix<bool>}}\ \mbox{\hyperlink{classComplex__number}{rmb}}(50000,\ 500);}
+\DoxyCodeLine{00886\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{rmb}}.set(0,\ 0,\ 1);}
+\DoxyCodeLine{00887\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{rmb}}.set(5999,\ 1,\ 1);}
+\DoxyCodeLine{00888\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{rmb}}.set(6,\ 0,\ 1);}
+\DoxyCodeLine{00889\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{rmb}}.set(21,\ 1,\ 1);}
+\DoxyCodeLine{00890\ \ \ \ \ \mbox{\hyperlink{classComplex__number}{EXPECT\_EQ}}(\mbox{\hyperlink{classComplex__number}{mb}},\ \mbox{\hyperlink{classComplex__number}{rmb}});}
+\DoxyCodeLine{00891\ \}}
+\DoxyCodeLine{00892\ }
+\DoxyCodeLine{00893\ \textcolor{comment}{//\ TEST(MatricesMulTest,\ MulSpeed)\ \{}}
+\DoxyCodeLine{00894\ \textcolor{comment}{//\ \ \ \ \ try\ \{}}
+\DoxyCodeLine{00895\ \textcolor{comment}{//\ \ \ \ \ Matrix<Complex\_number<int,\ int>>\ m1("{}file1.txt"{});}}
+\DoxyCodeLine{00896\ \textcolor{comment}{//\ \ \ \ \ Matrix<Complex\_number<int,\ int>>\ m2("{}file2.txt"{});}}
+\DoxyCodeLine{00897\ \textcolor{comment}{//\ \ \ \ \ //\ EXPECT\_ANY\_THROW(m1*m2);}}
+\DoxyCodeLine{00898\ \textcolor{comment}{//\ \ \ \ \ auto\ start\ =\ std::chrono::high\_resolution\_clock::now();}}
+\DoxyCodeLine{00899\ \textcolor{comment}{//\ \ \ \ \ Matrix<Complex\_number<int,\ int>>\ res1\ =\ m1\ *\ m2;}}
+\DoxyCodeLine{00900\ \textcolor{comment}{//\ \ \ \ \ auto\ end\ =\ std::chrono::high\_resolution\_clock::now();}}
+\DoxyCodeLine{00901\ \textcolor{comment}{//\ \ \ \ \ std::chrono::duration<double>\ elapsed\ =\ end\ -\/\ start;}}
+\DoxyCodeLine{00902\ \textcolor{comment}{//\ \ \ \ \ std::cout\ <<\ "{}обычное\ умножение:\ "{}\ <<\ elapsed.count()\ <<\ "{}\ сек"{}\ <<\ std::endl;}}
+\DoxyCodeLine{00903\ \textcolor{comment}{//\ \ \ \ \ start\ =\ std::chrono::high\_resolution\_clock::now();}}
+\DoxyCodeLine{00904\ \textcolor{comment}{//\ \ \ \ \ Matrix<Complex\_number<int,\ int>>\ res2\ =\ fast\_or\_no\_mul(m1,\ m2);}}
+\DoxyCodeLine{00905\ \textcolor{comment}{//\ \ \ \ \ end\ =\ std::chrono::high\_resolution\_clock::now();}}
+\DoxyCodeLine{00906\ \textcolor{comment}{//\ \ \ \ \ elapsed\ =\ end\ -\/\ start;}}
+\DoxyCodeLine{00907\ \textcolor{comment}{//\ \ \ \ \ std::cout\ <<\ "{}(не)\ быстрое\ умножение:\ "{}\ <<\ elapsed.count()\ <<\ "{}\ сек"{}\ <<\ std::endl;}}
+\DoxyCodeLine{00908\ \textcolor{comment}{//\ \ \ \ \ //\ EXPECT\_EQ(res1,\ res2);}}
+\DoxyCodeLine{00909\ \textcolor{comment}{//\ \ \ \ \ res1\ ==\ res2;}}
+\DoxyCodeLine{00910\ \textcolor{comment}{//\ \ \ \ \ //\ \}}}
+\DoxyCodeLine{00911\ \textcolor{comment}{//\ \ \ \ \ //\ catch\ (MatrixSizeMissmatch\ e)\ \{}}
+\DoxyCodeLine{00912\ \textcolor{comment}{//\ \ \ \ \ //\ \ \ \ \ std::cout\ <<\ e.getMessage()\ <<\ std::endl;}}
+\DoxyCodeLine{00913\ \textcolor{comment}{//\ \ \ \ \ //\ \}\ catch\ (WrongFileException\ e)\ \{}}
+\DoxyCodeLine{00914\ \textcolor{comment}{//\ \ \ \ \ //\ \ \ \ \ std::cout\ <<\ e.getMessage()\ <<\ std::endl;}}
+\DoxyCodeLine{00915\ \textcolor{comment}{//\ \ \ \ \ \}\ catch\ (MyBaseException\&\ e)\ \{}}
+\DoxyCodeLine{00916\ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ std::cout\ <<\ e.getMessage()\ <<\ std::endl;}}
+\DoxyCodeLine{00917\ \textcolor{comment}{//\ \ \ \ \ \}\ catch\ (std::exception\&\ e)\ \{}}
+\DoxyCodeLine{00918\ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ std::cout\ <<\ "{}std:\ "{}\ <<\ e.what()\ <<\ std::endl;}}
+\DoxyCodeLine{00919\ \textcolor{comment}{//\ \ \ \ \ \}\ catch\ (...)\ \{}}
+\DoxyCodeLine{00920\ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ std::cout\ <<\ "{}ффф"{}\ <<\ std::endl;}}
+\DoxyCodeLine{00921\ \textcolor{comment}{//\ \ \ \ \ \}\ \ \ \ }}
+\DoxyCodeLine{00922\ \textcolor{comment}{//\ \}}}
+\DoxyCodeLine{00923\ }
+\DoxyCodeLine{00924\ }
+\DoxyCodeLine{00925\ \textcolor{keywordtype}{int}\ run\_all\_my\_tests(\textcolor{keywordtype}{int}\ \mbox{\hyperlink{classComplex__number}{argc}},\ \textcolor{keywordtype}{char}\ **\mbox{\hyperlink{classComplex__number}{argv}})\ \{}
+\DoxyCodeLine{00926\ \ \ \ \ \mbox{\hyperlink{classComplex__number_a5723b771583d8ffcbbac70e80af1b419}{testing::InitGoogleTest}}(\&\mbox{\hyperlink{classComplex__number}{argc}},\ \mbox{\hyperlink{classComplex__number}{argv}});}
+\DoxyCodeLine{00927\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classComplex__number}{RUN\_ALL\_TESTS}}();}
+\DoxyCodeLine{00928\ \}}
+
+\end{DoxyCode}
